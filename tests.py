@@ -1,6 +1,6 @@
 from uuid import uuid4
 import unittest
-from db import Db
+from db import Db, CHANGE_FRESH, CHANGE_DELETED, CHANGE_UPDATED
 
 
 class DbTest(unittest.TestCase):
@@ -19,15 +19,51 @@ class DbTest(unittest.TestCase):
         self.assertEqual(item.rev[:2], '1-')
         self.assertEqual(item.value, value)
 
+        changes = db.changes()
+        self.assertEqual(len(changes), 1)
+        self.assertEqual(changes[0].change, CHANGE_FRESH)
+        self.assertEqual(changes[0].rev, item.rev)
+
     def test_put(self):
         db = Db()
         value = str(uuid4())
         value2 = str(uuid4())
         item = db.post(value)
-        item = db.put(item.uid, value2)
+        item2 = db.put(item.uid, value2)
 
-        self.assertEqual(item.rev[:2], '2-')
-        self.assertEqual(item.value, value2)
+        self.assertEqual(item2.rev[:2], '2-')
+        self.assertEqual(item2.value, value2)
+
+        changes = db.changes()
+        self.assertEqual(len(changes), 2)
+        self.assertEqual(changes[0].change, CHANGE_FRESH)
+        self.assertEqual(changes[0].rev, item.rev)
+        self.assertEqual(changes[1].change, CHANGE_UPDATED)
+        self.assertEqual(changes[1].rev, item2.rev)
+
+    def test_delete(self):
+        db = Db()
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+        item2 = db.put(item.uid, value2)
+        item3 = db.delete(item.uid)
+
+        self.assertFalse(item3.deleted)
+        self.assertTrue(item2.deleted)
+        self.assertTrue(item.deleted)
+
+        changes = db.changes()
+        self.assertEqual(len(changes), 3)
+        self.assertEqual(changes[0].change, CHANGE_FRESH)
+        self.assertEqual(changes[0].rev, item.rev)
+        self.assertEqual(changes[1].change, CHANGE_UPDATED)
+        self.assertEqual(changes[1].rev, item2.rev)
+        self.assertEqual(changes[2].change, CHANGE_DELETED)
+        self.assertEqual(changes[2].rev, item3.rev)
+
+        with self.assertRaises(LookupError):
+            item = db.get(item.uid)
 
     def test_get(self):
         db = Db()
@@ -56,22 +92,6 @@ class DbTest(unittest.TestCase):
         item = db.get_by_rev(rev2)
         self.assertEqual(item.rev, rev2)
         self.assertEqual(item.value, value2)
-
-    def test_delete(self):
-        db = Db()
-        value = str(uuid4())
-        value2 = str(uuid4())
-        item = db.post(value)
-        item = db.put(item.uid, value2)
-        item = db.delete(item.uid)
-
-        with self.assertRaises(LookupError):
-            item = db.get(item.uid)
-
-    # def test_changes(self):
-    #     db = Db()
-    #     value = str(uuid4())
-    #     item = db.post(value)
 
 
 if __name__ == '__main__':

@@ -15,6 +15,16 @@ class Item(object):
         self.deleted = False
 
 
+class Change(object):
+    def __init__(self, change, rev, deleted):
+        if change not in [CHANGE_FRESH, CHANGE_UPDATED, CHANGE_DELETED]:
+            raise ValueError
+
+        self.change = change
+        self.rev = rev
+        self.deleted = deleted
+
+
 class Db(object):
     def __init__(self):
         self.data = []
@@ -57,15 +67,12 @@ class Db(object):
         self.data.append(item)
         return item
 
-    def changes(self, since):
-        pass
+    def changes(self, since=0):
+        return self.changes[since:]
 
-    # def _add_change(self, change, uid, rev):
-    #     if change not in [CHANGE_FRESH, CHANGE_UPDATED, CHANGE_DELETED]:
-    #         raise ValueError
-    #     self.changes.append({
-    #         K_UID: K_REV
-    #     })
+    def _add_change(self, change, rev, deleted=False):
+        c = Change(change, rev, deleted)
+        self.changes.append(c)
 
     def _get_item_by_uid(self, uid):
         for i in reversed(self.data):
