@@ -8,11 +8,11 @@ CHANGE_DELETED = 'deleted'
 
 
 class Item(object):
-    def __init__(self, uid, rev, value):
+    def __init__(self, uid, rev, value, deleted=False):
         self.uid = uid
         self.rev = rev
         self.value = value
-        self.deleted = False
+        self.deleted = deleted
 
 
 class Change(object):
@@ -49,6 +49,7 @@ class Db(object):
             value=value
         )
         self.data.append(new_item)
+        self._add_change(CHANGE_FRESH, new_item.rev)
         return new_item
 
     def put(self, uid, value):
@@ -59,15 +60,22 @@ class Db(object):
             value=value
         )
         self.data.append(new_item)
+        self._add_change(CHANGE_UPDATED, new_item.rev)
         return new_item
 
     def delete(self, uid):
         item = self._get_item_by_uid(uid)
-        item.deleted = True
-        self.data.append(item)
-        return item
+        new_item = Item(
+            uid=item.uid,
+            rev=self._get_rev(item.rev),
+            value=item.value,
+            deleted=True
+        )
+        self.data.append(new_item)
+        self._add_change(CHANGE_DELETED, new_item.rev, new_item.deleted)
+        return new_item
 
-    def changes(self, since=0):
+    def get_changes(self, since=0):
         return self.changes[since:]
 
     def _add_change(self, change, rev, deleted=False):

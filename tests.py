@@ -19,7 +19,7 @@ class DbTest(unittest.TestCase):
         self.assertEqual(item.rev[:2], '1-')
         self.assertEqual(item.value, value)
 
-        changes = db.changes()
+        changes = db.get_changes()
         self.assertEqual(len(changes), 1)
         self.assertEqual(changes[0].change, CHANGE_FRESH)
         self.assertEqual(changes[0].rev, item.rev)
@@ -34,7 +34,7 @@ class DbTest(unittest.TestCase):
         self.assertEqual(item2.rev[:2], '2-')
         self.assertEqual(item2.value, value2)
 
-        changes = db.changes()
+        changes = db.get_changes()
         self.assertEqual(len(changes), 2)
         self.assertEqual(changes[0].change, CHANGE_FRESH)
         self.assertEqual(changes[0].rev, item.rev)
@@ -49,11 +49,11 @@ class DbTest(unittest.TestCase):
         item2 = db.put(item.uid, value2)
         item3 = db.delete(item.uid)
 
-        self.assertFalse(item3.deleted)
-        self.assertTrue(item2.deleted)
-        self.assertTrue(item.deleted)
+        self.assertTrue(item3.deleted)
+        self.assertFalse(item2.deleted)
+        self.assertFalse(item.deleted)
 
-        changes = db.changes()
+        changes = db.get_changes()
         self.assertEqual(len(changes), 3)
         self.assertEqual(changes[0].change, CHANGE_FRESH)
         self.assertEqual(changes[0].rev, item.rev)
