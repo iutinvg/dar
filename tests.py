@@ -16,40 +16,62 @@ class DbTest(unittest.TestCase):
         value = str(uuid4())
         item = db.post(value)
 
-        self.assertEqual(item['rev'][:2], '1-')
-        self.assertEqual(item['value'], value)
+        self.assertEqual(item.rev[:2], '1-')
+        self.assertEqual(item.value, value)
 
     def test_put(self):
         db = Db()
         value = str(uuid4())
         value2 = str(uuid4())
         item = db.post(value)
-        item = db.put(item['uid'], value2)
+        item = db.put(item.uid, value2)
 
-        self.assertEqual(item['rev'][:2], '2-')
-        self.assertEqual(item['value'], value2)
+        self.assertEqual(item.rev[:2], '2-')
+        self.assertEqual(item.value, value2)
 
     def test_get(self):
         db = Db()
         value = str(uuid4())
         value2 = str(uuid4())
         item = db.post(value)
-        item = db.put(item['uid'], value2)
+        item = db.put(item.uid, value2)
 
-        item = db.get(item['uid'])
-        self.assertEqual(item['rev'][:2], '2-')
-        self.assertEqual(item['value'], value2)
+        item = db.get(item.uid)
+        self.assertEqual(item.rev[:2], '2-')
+        self.assertEqual(item.value, value2)
+
+    def test_get_by_rev(self):
+        db = Db()
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+        rev1 = item.rev
+        item = db.put(item.uid, value2)
+        rev2 = item.rev
+
+        item = db.get_by_rev(rev1)
+        self.assertEqual(item.rev, rev1)
+        self.assertEqual(item.value, value)
+
+        item = db.get_by_rev(rev2)
+        self.assertEqual(item.rev, rev2)
+        self.assertEqual(item.value, value2)
 
     def test_delete(self):
         db = Db()
         value = str(uuid4())
         value2 = str(uuid4())
         item = db.post(value)
-        item = db.put(item['uid'], value2)
-        item = db.delete(item['uid'])
+        item = db.put(item.uid, value2)
+        item = db.delete(item.uid)
 
         with self.assertRaises(LookupError):
-            item = db.get(item['uid'])
+            item = db.get(item.uid)
+
+    # def test_changes(self):
+    #     db = Db()
+    #     value = str(uuid4())
+    #     item = db.post(value)
 
 
 if __name__ == '__main__':
