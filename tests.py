@@ -152,6 +152,32 @@ class ReplacationTest(unittest.TestCase):
         }
         self.assertEqual(diff, d)
 
+    def test_rev_diff_2(self):
+        db = Db('s')
+        db2 = Db('t')
+        value = str(uuid4())
+        value2 = str(uuid4())
+
+        item = db.post(value)
+        item2 = db.put(item.uid, value2)
+
+        item4 = db.post(uuid4())
+
+        r = Replacation(db, db2)
+        changes = db.get_changes()
+        prepared = r.prepare_changes(changes)
+
+        diff = db2.get_rev_diff(prepared)
+
+        d = {
+            item.uid: {
+                'missing': [item.rev, item2.rev]
+            },
+            item4.uid: {
+                'missing': [item4.rev]
+            }
+        }
+        self.assertEqual(diff, d)
 
 if __name__ == '__main__':
     unittest.main()
