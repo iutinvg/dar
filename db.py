@@ -118,6 +118,12 @@ class Db(object):
 
         return str(num) + '-' + str(uuid4())
 
+    def _conflict(self, parent_rev):
+        parent_item = self._get_item_by_rev(parent_rev)
+        latest_item = self._get_item_by_uid(parent_item.uid)
+        if parent_item.rev != latest_item.rev:
+            raise ValueError('conflict')
+
 
 class Replacation(object):
     def __init__(self, source, target):
@@ -137,6 +143,10 @@ class Replacation(object):
 
         # step 4
         source_changes = self.source.get_changes(source_seq)
+        source_changes_prepared = self.prepare_changes(source_changes)
+
+        # step 5: diff
+        self.target.get_rev_diff(source_changes_prepared)
 
     def prepare_changes(self, changes):
         result = {}
