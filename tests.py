@@ -1,6 +1,7 @@
 from uuid import uuid4
 import unittest
 from db import Db, CHANGE_FRESH, CHANGE_DELETED, CHANGE_UPDATED
+from db import Replacation
 
 
 class DbTest(unittest.TestCase):
@@ -92,6 +93,64 @@ class DbTest(unittest.TestCase):
         item = db.get_by_rev(rev2)
         self.assertEqual(item.rev, rev2)
         self.assertEqual(item.value, value2)
+
+
+class ReplacationTest(unittest.TestCase):
+    def test_prepare_changes(self):
+        db = Db('s')
+        db2 = Db('t')
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+        item2 = db.put(item.uid, value2)
+        item3 = db.delete(item.uid)
+
+        r = Replacation(db, db2)
+
+        changes = db.get_changes()
+        prepared = r.prepare_changes(changes)
+        d = {item.uid: [item.rev, item2.rev, item3.rev]}
+        self.assertEqual(prepared, d)
+
+    def test_prepare_changes_2(self):
+        db = Db('s')
+        db2 = Db('t')
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+        item2 = db.put(item.uid, value2)
+        item3 = db.delete(item.uid)
+
+        item4 = db.post(uuid4())
+
+        r = Replacation(db, db2)
+
+        changes = db.get_changes()
+        prepared = r.prepare_changes(changes)
+        d = {
+            item.uid: [item.rev, item2.rev, item3.rev],
+            item4.uid: [item4.rev],
+        }
+        self.assertEqual(prepared, d)
+
+    def test_rev_diff(self):
+        db = Db('s')
+        db2 = Db('t')
+        value = str(uuid4())
+        item = db.post(value)
+
+        r = Replacation(db, db2)
+        changes = db.get_changes()
+        prepared = r.prepare_changes(changes)
+
+        diff = db2.get_rev_diff(prepared)
+
+        d = {
+            item.uid: {
+                'missing': [item.rev]
+            }
+        }
+        self.assertEqual(diff, d)
 
 
 if __name__ == '__main__':
