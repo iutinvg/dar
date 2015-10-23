@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0047)http://wiki.apache.org/couchdb/HttpPostRevsDiff -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="robots" content="index,nofollow">
+
+<title>HttpPostRevsDiff - Couchdb Wiki</title>
+<script type="text/javascript" src="./HttpPostRevsDiff - Couchdb Wiki_files/common.js"></script><style type="text/css"></style>
+
+<script type="text/javascript">
+<!--
+var search_hint = "Search";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="./HttpPostRevsDiff - Couchdb Wiki_files/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="./HttpPostRevsDiff - Couchdb Wiki_files/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="./HttpPostRevsDiff - Couchdb Wiki_files/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="./HttpPostRevsDiff - Couchdb Wiki_files/projection.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/wiki/modernized/css/msie.css">
+<![endif]-->
+
+
+<link rel="alternate" title="Couchdb Wiki: HttpPostRevsDiff" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?diffs=1&show_att=1&action=rss_rc&unique=0&page=HttpPostRevsDiff&ddiffs=1" type="application/rss+xml">
+
+
+<link rel="Start" href="http://wiki.apache.org/couchdb/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=print">
+<link rel="Search" href="http://wiki.apache.org/couchdb/FindPage">
+<link rel="Index" href="http://wiki.apache.org/couchdb/TitleIndex">
+<link rel="Glossary" href="http://wiki.apache.org/couchdb/WordIndex">
+<link rel="Help" href="http://wiki.apache.org/couchdb/HelpOnFormatting">
+</head>
+
+<body lang="en" dir="ltr">
+
+<div id="header">
+
+<form id="searchform" method="get" action="./HttpPostRevsDiff - Couchdb Wiki_files/HttpPostRevsDiff - Couchdb Wiki.html">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput" style="display: none;">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20" onfocus="searchFocus(this)" onblur="searchBlur(this)" onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search" class="disabled">
+<input id="titlesearch" name="titlesearch" type="submit" value="Titles" alt="Search Titles" disabled="">
+<input id="fullsearch" name="fullsearch" type="submit" value="Text" alt="Search Full Text" disabled="">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<div id="logo"><a href="http://wiki.apache.org/couchdb/FrontPage">Couchdb Wiki</a></div>
+<div id="username"><a href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=login" id="login" rel="nofollow">Login</a></div>
+<h1 id="locationline">
+
+<span id="pagelocation"><a class="backlink" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=fullsearch&value=linkto%3A%22HttpPostRevsDiff%22&context=180" rel="nofollow" title="Click to do a full-text search for this title">HttpPostRevsDiff</a></span>
+</h1>
+
+
+<ul id="navibar">
+<li class="wikilink"><a href="http://wiki.apache.org/couchdb/FrontPage">FrontPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/FindPage">FindPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/HelpContents">HelpContents</a></li><li class="current"><a href="./HttpPostRevsDiff - Couchdb Wiki_files/HttpPostRevsDiff - Couchdb Wiki.html">HttpPostRevsDiff</a></li>
+</ul>
+
+<div id="pageline"><hr style="display:none;"></div>
+
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HttpPostRevsDiff#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="./HttpPostRevsDiff - Couchdb Wiki_files/HttpPostRevsDiff - Couchdb Wiki.html">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"></p><div dir="ltr" id="EditTheWiki.content" lang="en"><span class="anchor" id="EditTheWiki.top"></span>
+<span class="anchor" id="EditTheWiki.line-1"></span><span class="anchor" id="EditTheWiki.line-2"></span><span class="anchor" id="EditTheWiki.line-3"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">We have a <a class="https" href="https://cwiki.apache.org/confluence/display/COUCHDB/Apache+CouchDB+Wiki">new wiki</a>. The migration is not 100% complete. You can help out by moving pages across. This wiki will exist for as long as there are pages left.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-4"></span><span class="anchor" id="EditTheWiki.line-5"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">The official documentation has moved to <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> — The transition is not 100% complete, but <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> should be seen as having the latest info. In some cases, the wiki still has some more or older info on certain topics inside CouchDB.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-6"></span><span class="anchor" id="EditTheWiki.line-7"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line891"><small>You need to be added to the <a href="http://wiki.apache.org/couchdb/ContributorsGroup">ContributorsGroup</a> to edit the wiki. But don't worry! Just email any <a class="http" href="http://wiki.apache.org/couchdb/Mailing%20lists">Mailing List</a> or grab us on <a class="irc" href="irc://irc.freenode.net/couchdb">IRC</a> and let us know your user name.</small></p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-8"></span><span class="anchor" id="EditTheWiki.bottom"></span></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+</p><h1 id="HTTP_POST__revs_diff">HTTP POST _revs_diff</h1>
+<span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><div><table><tbody><tr>  <td><p class="line891"><strong>Method</strong></p></td>
+  <td colspan="2"><p class="line862">POST</p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-6"></span><p class="line891"><strong>Path</strong></p></td>
+  <td colspan="2"><p class="line862">/_revs_diff</p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-7"></span><p class="line891"><strong>Query args</strong></p></td>
+  <td colspan="2"><p class="line862">None</p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-8"></span><p class="line891"><strong>Request body</strong></p></td>
+  <td colspan="2"><p class="line862">JSON object whose keys are document IDs and values arrays of revision IDs</p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-9"></span><p class="line891"><strong>Response body</strong></p></td>
+  <td colspan="2"><p class="line862">JSON object describing which revisions are not in the database</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span><p class="line867">
+</p><h2 id="Description">Description</h2>
+<span class="anchor" id="line-12"></span><span class="anchor" id="line-13"></span><p class="line862">Given a set of document/revision IDs, returns the subset of those that do <em>not</em> correspond to revisions stored in the database. <span class="anchor" id="line-14"></span><span class="anchor" id="line-15"></span></p><p class="line874">Its primary use is by the replicator, as an important optimization: after receiving a set of new revision IDs from the source database, the replicator sends this set to the destination database's _revs_diff to find out which of them already exist there. It can then avoid fetching and sending already-known document bodies. <span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span></p><p class="line874">Both the request and response bodies are JSON objects whose keys are document IDs; but the values are structured differently: <span class="anchor" id="line-18"></span><span class="anchor" id="line-19"></span></p><ul><li><p class="line862">In the <em>request</em>, a value is an array of revision IDs for that document. <span class="anchor" id="line-20"></span></p></li><li><p class="line862">In the <em>response</em>, a value is an object with a <tt>"missing":</tt> key, whose value is a list of revision IDs for that document (the ones that are not stored in the database) and optionally a <tt>"possible_ancestors"</tt> key, whose value is an array of revision IDs that <em>are</em> known that might be ancestors of the missing revisions. <span class="anchor" id="line-21"></span><span class="anchor" id="line-22"></span></p></li></ul><p class="line867"><strong>Disclaimer:</strong> This information was derived from mailing-list posts and experimentation and has not yet been reviewed by someone familiar with the implementation. --<a href="http://wiki.apache.org/couchdb/JensAlfke">JensAlfke</a>, Dec. 2011 <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span></p><p class="line867">
+</p><h2 id="Example">Example</h2>
+<span class="anchor" id="line-25"></span><p class="line867"><span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span></p><pre><span class="anchor" id="line-1"></span>POST /_revs_diff HTTP/1.1
+<span class="anchor" id="line-2"></span>Content-Type: application/json
+<span class="anchor" id="line-3"></span>
+<span class="anchor" id="line-4"></span>{"03ee06461a12f3c288bb865b22000170": ["1-b2e54331db828310f3c772d6e042ac9c", "2-3a24009a9525bde9e4bfa8a99046b00d"],
+<span class="anchor" id="line-5"></span> "82e04f650661c9bdb88c57e044000a4b": ["3-bb39f8c740c6ffb8614c7031b46ac162"]}</pre><p class="line867"><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span></p><pre><span class="anchor" id="line-1-1"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-1"></span>Cache-Control: must-revalidate
+<span class="anchor" id="line-3-1"></span>
+<span class="anchor" id="line-4-1"></span>{"03ee06461a12f3c288bb865b22000170": {"missing": ["2-3a24009a9525bde9e4bfa8a99046b00d"]}}</pre><span class="anchor" id="line-37"></span><span class="anchor" id="bottom"></span></div><p id="pageinfo" class="info" lang="en" dir="ltr">HttpPostRevsDiff  (last edited 2012-02-07 02:09:29 by <span title="JensAlfke @ 12.218.209.66[12.218.209.66]"><a href="http://wiki.apache.org/couchdb/JensAlfke" title="JensAlfke @ 12.218.209.66[12.218.209.66]">JensAlfke</a></span>)</p>
+
+<div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HttpPostRevsDiff#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HttpPostRevsDiff?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="./HttpPostRevsDiff - Couchdb Wiki_files/HttpPostRevsDiff - Couchdb Wiki.html">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<ul id="credits">
+<li><a href="http://moinmo.in/" title="This site uses the MoinMoin Wiki software.">MoinMoin Powered</a></li><li><a href="http://moinmo.in/Python" title="MoinMoin is written in Python.">Python Powered</a></li><li><a href="http://moinmo.in/GPL" title="MoinMoin is GPL licensed.">GPL licensed</a></li><li><a href="http://validator.w3.org/check?uri=referer" title="Click here to validate this page.">Valid HTML 4.01</a></li>
+</ul>
+
+
+</div>
+
+
+
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; if (typeof(lastpass_f.lpsubmitorig2)=='object'){ continue;}lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i.toString(); } else { d.textContent=i.toString(); } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }}catch(e){}</script></body></html>

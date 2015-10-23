@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0053)http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="robots" content="index,nofollow">
+
+<title>HTTP_Bulk_Document_API - Couchdb Wiki</title>
+<script type="text/javascript" src="./HTTP_Bulk_Document_API - Couchdb Wiki_files/common.js"></script><style type="text/css"></style>
+
+<script type="text/javascript">
+<!--
+var search_hint = "Search";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="./HTTP_Bulk_Document_API - Couchdb Wiki_files/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="./HTTP_Bulk_Document_API - Couchdb Wiki_files/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="./HTTP_Bulk_Document_API - Couchdb Wiki_files/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="./HTTP_Bulk_Document_API - Couchdb Wiki_files/projection.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/wiki/modernized/css/msie.css">
+<![endif]-->
+
+
+<link rel="alternate" title="Couchdb Wiki: HTTP_Bulk_Document_API" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?diffs=1&show_att=1&action=rss_rc&unique=0&page=HTTP_Bulk_Document_API&ddiffs=1" type="application/rss+xml">
+
+
+<link rel="Start" href="http://wiki.apache.org/couchdb/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=print">
+<link rel="Search" href="http://wiki.apache.org/couchdb/FindPage">
+<link rel="Index" href="http://wiki.apache.org/couchdb/TitleIndex">
+<link rel="Glossary" href="http://wiki.apache.org/couchdb/WordIndex">
+<link rel="Help" href="http://wiki.apache.org/couchdb/HelpOnFormatting">
+</head>
+
+<body lang="en" dir="ltr">
+
+<div id="header">
+
+<form id="searchform" method="get" action="./HTTP_Bulk_Document_API - Couchdb Wiki_files/HTTP_Bulk_Document_API - Couchdb Wiki.html">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput" style="display: none;">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20" onfocus="searchFocus(this)" onblur="searchBlur(this)" onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search" class="disabled">
+<input id="titlesearch" name="titlesearch" type="submit" value="Titles" alt="Search Titles" disabled="">
+<input id="fullsearch" name="fullsearch" type="submit" value="Text" alt="Search Full Text" disabled="">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<div id="logo"><a href="http://wiki.apache.org/couchdb/FrontPage">Couchdb Wiki</a></div>
+<div id="username"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=login" id="login" rel="nofollow">Login</a></div>
+<h1 id="locationline">
+
+<span id="pagelocation"><a class="backlink" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=fullsearch&value=linkto%3A%22HTTP_Bulk_Document_API%22&context=180" rel="nofollow" title="Click to do a full-text search for this title">HTTP_Bulk_Document_API</a></span>
+</h1>
+
+
+<ul id="navibar">
+<li class="wikilink"><a href="http://wiki.apache.org/couchdb/FrontPage">FrontPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/FindPage">FindPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/HelpContents">HelpContents</a></li><li class="current"><a href="./HTTP_Bulk_Document_API - Couchdb Wiki_files/HTTP_Bulk_Document_API - Couchdb Wiki.html">HTTP_Bulk_Document_API</a></li>
+</ul>
+
+<div id="pageline"><hr style="display:none;"></div>
+
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="./HTTP_Bulk_Document_API - Couchdb Wiki_files/HTTP_Bulk_Document_API - Couchdb Wiki.html">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"></p><div dir="ltr" id="EditTheWiki.content" lang="en"><span class="anchor" id="EditTheWiki.top"></span>
+<span class="anchor" id="EditTheWiki.line-1"></span><span class="anchor" id="EditTheWiki.line-2"></span><span class="anchor" id="EditTheWiki.line-3"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">We have a <a class="https" href="https://cwiki.apache.org/confluence/display/COUCHDB/Apache+CouchDB+Wiki">new wiki</a>. The migration is not 100% complete. You can help out by moving pages across. This wiki will exist for as long as there are pages left.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-4"></span><span class="anchor" id="EditTheWiki.line-5"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">The official documentation has moved to <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> — The transition is not 100% complete, but <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> should be seen as having the latest info. In some cases, the wiki still has some more or older info on certain topics inside CouchDB.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-6"></span><span class="anchor" id="EditTheWiki.line-7"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line891"><small>You need to be added to the <a href="http://wiki.apache.org/couchdb/ContributorsGroup">ContributorsGroup</a> to edit the wiki. But don't worry! Just email any <a class="http" href="http://wiki.apache.org/couchdb/Mailing%20lists">Mailing List</a> or grab us on <a class="irc" href="irc://irc.freenode.net/couchdb">IRC</a> and let us know your user name.</small></p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-8"></span><span class="anchor" id="EditTheWiki.bottom"></span></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+</p><h1 id="HTTP_Bulk_Document_API-1">HTTP Bulk Document API</h1>
+<span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line862">See also the official documentation for the <a class="http" href="http://docs.couchdb.org/en/latest/api/database.html#get-db-all-docs">read</a> and <a class="http" href="http://docs.couchdb.org/en/latest/api/database.html#post-db-bulk-docs">write</a> portions of this topic. <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span></p><p class="line867"></p><div class="table-of-contents"><p class="table-of-contents-heading">Contents</p><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#HTTP_Bulk_Document_API-1">HTTP Bulk Document API</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#Fetch_Multiple_Documents_With_a_Single_Request">Fetch Multiple Documents With a Single Request</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#Modify_Multiple_Documents_With_a_Single_Request">Modify Multiple Documents With a Single Request</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#Transactional_Semantics_with_Bulk_Updates">Transactional Semantics with Bulk Updates</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#Posting_Existing_Revisions">Posting Existing Revisions</a></li></ol></li></ol></li></ol></div> <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line867">
+</p><h2 id="Fetch_Multiple_Documents_With_a_Single_Request">Fetch Multiple Documents With a Single Request</h2>
+<span class="anchor" id="line-10"></span><p class="line867"><tt>_all_docs</tt> implements the <a href="http://wiki.apache.org/couchdb/HTTP_view_API">HTTP_view_API</a> where each <em>key</em> is the doc _id, and each <em>value</em> is a JSON object containing the rev. This means that: <span class="anchor" id="line-11"></span><span class="anchor" id="line-12"></span></p><ul><li><p class="line862">By adding <tt>?include_docs=true</tt> you can get the documents themselves, not just their id and rev <span class="anchor" id="line-13"></span></p></li><li><p class="line862">By adding <tt>?startkey="xx"&amp;endkey="yy"</tt> you can get the documents with keys in a certain range <span class="anchor" id="line-14"></span></p></li><li>By POSTing to _all_docs you can get a set of documents with arbitrary keys <span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span></li></ul><p class="line862">Simple example to fetch the keys <tt>bar</tt> and <tt>baz</tt> and include the complete document in the result set: <span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span></p><p class="line867"><span class="anchor" id="line-19"></span><span class="anchor" id="line-20"></span></p><pre><span class="anchor" id="line-1"></span>curl -d '{"keys":["bar","baz"]}' -X POST http://127.0.0.1:5984/foo/_all_docs?include_docs=true</pre><span class="anchor" id="line-21"></span><p class="line874">Result: <span class="anchor" id="line-22"></span><span class="anchor" id="line-23"></span></p><p class="line867"><span class="anchor" id="line-24"></span><span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><span class="anchor" id="line-1-1"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+function isnumbered(obj) {
+  return obj.childNodes.length && obj.firstChild.childNodes.length && obj.firstChild.firstChild.className == 'LineNumber';
+}
+function nformat(num,chrs,add) {
+  var nlen = Math.max(0,chrs-(''+num).length), res = '';
+  while (nlen>0) { res += ' '; nlen-- }
+  return res+num+add;
+}
+function addnumber(did, nstart, nstep) {
+  var c = document.getElementById(did), l = c.firstChild, n = 1;
+  if (!isnumbered(c)) {
+    if (typeof nstart == 'undefined') nstart = 1;
+    if (typeof nstep  == 'undefined') nstep = 1;
+    var n = nstart;
+    while (l != null) {
+      if (l.tagName == 'SPAN') {
+        var s = document.createElement('SPAN');
+        var a = document.createElement('A');
+        s.className = 'LineNumber';
+        a.appendChild(document.createTextNode(nformat(n,4,'')));
+        a.href = '#' + did + '_' + n;
+        s.appendChild(a);
+        s.appendChild(document.createTextNode(' '));
+        n += nstep;
+        if (l.childNodes.length) {
+          l.insertBefore(s, l.firstChild);
+        }
+        else {
+          l.appendChild(s);
+        }
+      }
+      l = l.nextSibling;
+    }
+  }
+  return false;
+}
+function remnumber(did) {
+  var c = document.getElementById(did), l = c.firstChild;
+  if (isnumbered(c)) {
+    while (l != null) {
+      if (l.tagName == 'SPAN' && l.firstChild.className == 'LineNumber') l.removeChild(l.firstChild);
+      l = l.nextSibling;
+    }
+  }
+  return false;
+}
+function togglenumber(did, nstart, nstep) {
+  var c = document.getElementById(did);
+  if (isnumbered(c)) {
+    remnumber(did);
+  } else {
+    addnumber(did,nstart,nstep);
+  }
+  return false;
+}
+</script>
+
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f1565ddcf5b051014fe76a28162631f84aa063dc\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-f1565ddcf5b051014fe76a28162631f84aa063dc&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc_1">   1</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc_1"></span><span class="anchor" id="line-1-2"></span>{<span class="String">"total_rows"</span>:<span class="Number">3</span>,<span class="String">"offset"</span>:<span class="Number">0</span>,<span class="String">"rows"</span>:[</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc_2">   2</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc_2"></span><span class="anchor" id="line-2-1"></span>{<span class="String">"id"</span>:<span class="String">"bar"</span>,<span class="String">"key"</span>:<span class="String">"bar"</span>,<span class="String">"value"</span>:{<span class="String">"rev"</span>:<span class="String">"1-4057566831"</span>},<span class="String">"doc"</span>:{<span class="String">"_id"</span>:<span class="String">"bar"</span>,<span class="String">"_rev"</span>:<span class="String">"1-4057566831"</span>,<span class="String">"name"</span>:<span class="String">"jim"</span>}},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc_3">   3</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc_3"></span><span class="anchor" id="line-3-1"></span>{<span class="String">"id"</span>:<span class="String">"baz"</span>,<span class="String">"key"</span>:<span class="String">"baz"</span>,<span class="String">"value"</span>:{<span class="String">"rev"</span>:<span class="String">"1-2842770487"</span>},<span class="String">"doc"</span>:{<span class="String">"_id"</span>:<span class="String">"baz"</span>,<span class="String">"_rev"</span>:<span class="String">"1-2842770487"</span>,<span class="String">"name"</span>:<span class="String">"trunky"</span>}}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc_4">   4</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc_4"></span><span class="anchor" id="line-4-1"></span>]}</span>
+</pre></div></div><span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><ul><li>The rows are returned in the same order as the supplied "keys" array. <span class="anchor" id="line-31"></span></li><li>The row for a deleted document will have the revision ID of the deletion, and an extra key "deleted":true in the "value" property. <span class="anchor" id="line-32"></span></li><li>The row for a nonexistent document will just contain an "error" property with the value "not_found". <span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span></li></ul><p class="line862">Example with startkey and endkey (<strong>be aware</strong> of correct url encoding!): <span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span></p><p class="line867"><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span></p><pre><span class="anchor" id="line-1-1"></span>curl 'http://127.0.0.1:5984/foo/_all_docs?include_docs=true&amp;startkey="ba"&amp;endkey="bb"'</pre><span class="anchor" id="line-39"></span><p class="line874">Result: <span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span></p><p class="line867"><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><span class="anchor" id="line-1-3"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_1">   1</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_1"></span><span class="anchor" id="line-1-4"></span>{<span class="String">"total_rows"</span>:<span class="Number">3</span>,<span class="String">"offset"</span>:<span class="Number">0</span>,<span class="String">"rows"</span>:[</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_2">   2</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_2"></span><span class="anchor" id="line-2-2"></span>{<span class="String">"id"</span>:<span class="String">"bar"</span>,<span class="String">"key"</span>:<span class="String">"bar"</span>,<span class="String">"value"</span>:{<span class="String">"rev"</span>:<span class="String">"1-4057566831"</span>},<span class="String">"doc"</span>:{<span class="String">"_id"</span>:<span class="String">"bar"</span>,<span class="String">"_rev"</span>:<span class="String">"1-4057566831"</span>,<span class="String">"name"</span>:<span class="String">"jim"</span>}},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_3">   3</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_3"></span><span class="anchor" id="line-3-2"></span>{<span class="String">"id"</span>:<span class="String">"baz"</span>,<span class="String">"key"</span>:<span class="String">"baz"</span>,<span class="String">"value"</span>:{<span class="String">"rev"</span>:<span class="String">"1-2842770487"</span>},<span class="String">"doc"</span>:{<span class="String">"_id"</span>:<span class="String">"baz"</span>,<span class="String">"_rev"</span>:<span class="String">"1-2842770487"</span>,<span class="String">"name"</span>:<span class="String">"trunky"</span>}}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_4">   4</a> </span><span class="LineAnchor" id="CA-f1565ddcf5b051014fe76a28162631f84aa063dc-1_4"></span><span class="anchor" id="line-4-2"></span>]}</span>
+</pre></div></div><span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><p class="line867">
+</p><h2 id="Modify_Multiple_Documents_With_a_Single_Request">Modify Multiple Documents With a Single Request</h2>
+<span class="anchor" id="line-49"></span><p class="line862">CouchDB provides a bulk insert/update feature. To use this, you make a <em>POST</em> request to the URI <em>/{dbname}/_bulk_docs</em>, with the request body being a JSON document containing a list of new documents to be inserted or updated. <span class="anchor" id="line-50"></span><span class="anchor" id="line-51"></span></p><p class="line874">For example (with curl): <span class="anchor" id="line-52"></span><span class="anchor" id="line-53"></span></p><p class="line867"><span class="anchor" id="line-54"></span><span class="anchor" id="line-55"></span><span class="anchor" id="line-56"></span><span class="anchor" id="line-57"></span></p><pre><span class="anchor" id="line-1-2"></span>$ DB="http://127.0.0.1:5984/mydb"
+<span class="anchor" id="line-2"></span>$ curl -d '{"docs":[{"key":"baz","name":"bazzel"},{"key":"bar","name":"barry"}]}' -X POST $DB/_bulk_docs
+<span class="anchor" id="line-3"></span>$ curl -d @your_file.json -X POST $DB/_bulk_docs</pre><span class="anchor" id="line-58"></span><p class="line874">Doc formats below are as per CouchDB 0.9.x. <span class="anchor" id="line-59"></span><span class="anchor" id="line-60"></span></p><p class="line867"><span class="anchor" id="line-61"></span><span class="anchor" id="line-62"></span><span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span><span class="anchor" id="line-65"></span><span class="anchor" id="line-66"></span><span class="anchor" id="line-67"></span><span class="anchor" id="line-68"></span><span class="anchor" id="line-1-5"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-61433eb1078b11de70815909b0feea9f38c9252c\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-61433eb1078b11de70815909b0feea9f38c9252c&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-61433eb1078b11de70815909b0feea9f38c9252c" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_1">   1</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_1"></span><span class="anchor" id="line-1-6"></span>{</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_2">   2</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_2"></span><span class="anchor" id="line-2-3"></span>  <span class="String">"docs"</span>: [</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_3">   3</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_3"></span><span class="anchor" id="line-3-3"></span>    {<span class="String">"_id"</span>: <span class="String">"0"</span>, <span class="String">"integer"</span>: <span class="Number">0</span>, <span class="String">"string"</span>: <span class="String">"0"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_4">   4</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_4"></span><span class="anchor" id="line-4-3"></span>    {<span class="String">"_id"</span>: <span class="String">"1"</span>, <span class="String">"integer"</span>: <span class="Number">1</span>, <span class="String">"string"</span>: <span class="String">"1"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_5">   5</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_5"></span><span class="anchor" id="line-5-1"></span>    {<span class="String">"_id"</span>: <span class="String">"2"</span>, <span class="String">"integer"</span>: <span class="Number">2</span>, <span class="String">"string"</span>: <span class="String">"2"</span>}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_6">   6</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_6"></span><span class="anchor" id="line-6-1"></span>  ]</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-61433eb1078b11de70815909b0feea9f38c9252c_7">   7</a> </span><span class="LineAnchor" id="CA-61433eb1078b11de70815909b0feea9f38c9252c_7"></span><span class="anchor" id="line-7-1"></span>}</span>
+</pre></div></div><span class="anchor" id="line-69"></span><p class="line862">If you omit the per-document <em>_id</em> specification, CouchDB will generate unique IDs for you, as it does for regular <em>POST</em> requests to the database URI. <span class="anchor" id="line-70"></span><span class="anchor" id="line-71"></span></p><p class="line874">The response to such a bulk request would look as follows (reformatted for clarity): <span class="anchor" id="line-72"></span><span class="anchor" id="line-73"></span></p><p class="line867"><span class="anchor" id="line-74"></span><span class="anchor" id="line-75"></span><span class="anchor" id="line-76"></span><span class="anchor" id="line-77"></span><span class="anchor" id="line-78"></span><span class="anchor" id="line-79"></span><span class="anchor" id="line-1-7"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_1">   1</a> </span><span class="LineAnchor" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_1"></span><span class="anchor" id="line-1-8"></span>[</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_2">   2</a> </span><span class="LineAnchor" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_2"></span><span class="anchor" id="line-2-4"></span>    {<span class="String">"id"</span>:<span class="String">"0"</span>,<span class="String">"rev"</span>:<span class="String">"1-62657917"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_3">   3</a> </span><span class="LineAnchor" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_3"></span><span class="anchor" id="line-3-4"></span>    {<span class="String">"id"</span>:<span class="String">"1"</span>,<span class="String">"rev"</span>:<span class="String">"1-2089673485"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_4">   4</a> </span><span class="LineAnchor" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_4"></span><span class="anchor" id="line-4-4"></span>    {<span class="String">"id"</span>:<span class="String">"2"</span>,<span class="String">"rev"</span>:<span class="String">"1-2063452834"</span>}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_5">   5</a> </span><span class="LineAnchor" id="CA-0503fabe0d5abdc5dee3f32275d47df67aca1a5b_5"></span><span class="anchor" id="line-5-2"></span>]</span>
+</pre></div></div><span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><p class="line874">The results are returned in the same order as the supplied "docs" array. <span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span></p><p class="line862">Updating existing documents requires setting the <em>_rev</em> member to the revision being updated. To delete a document set the <em>_deleted</em> member to true. <span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span></p><p class="line867"><span class="anchor" id="line-86"></span><span class="anchor" id="line-87"></span><span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span><span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span><span class="anchor" id="line-92"></span><span class="anchor" id="line-93"></span><span class="anchor" id="line-1-9"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_1">   1</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_1"></span><span class="anchor" id="line-1-10"></span>{</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_2">   2</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_2"></span><span class="anchor" id="line-2-5"></span>  <span class="String">"docs"</span>: [</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_3">   3</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_3"></span><span class="anchor" id="line-3-5"></span>    {<span class="String">"_id"</span>: <span class="String">"0"</span>, <span class="String">"_rev"</span>: <span class="String">"1-62657917"</span>, <span class="String">"_deleted"</span>: <span class="ConsWord">true</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_4">   4</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_4"></span><span class="anchor" id="line-4-5"></span>    {<span class="String">"_id"</span>: <span class="String">"1"</span>, <span class="String">"_rev"</span>: <span class="String">"1-2089673485"</span>, <span class="String">"integer"</span>: <span class="Number">2</span>, <span class="String">"string"</span>: <span class="String">"2"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_5">   5</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_5"></span><span class="anchor" id="line-5-3"></span>    {<span class="String">"_id"</span>: <span class="String">"2"</span>, <span class="String">"_rev"</span>: <span class="String">"1-2063452834"</span>, <span class="String">"integer"</span>: <span class="Number">3</span>, <span class="String">"string"</span>: <span class="String">"3"</span>}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_6">   6</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_6"></span><span class="anchor" id="line-6-2"></span>  ]</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_7">   7</a> </span><span class="LineAnchor" id="CA-34932f011be775558e3ffd948d9e1c1fbf3d8ac0_7"></span><span class="anchor" id="line-7-2"></span>}</span>
+</pre></div></div><span class="anchor" id="line-94"></span><p class="line874">Note that CouchDB will return in the response an id and revision for every document passed as content to a bulk insert, even for those that were just deleted. <span class="anchor" id="line-95"></span><span class="anchor" id="line-96"></span></p><p class="line862">If the _rev does not match the current version of the document, then that particular document will <em>not</em> be saved and will be reported as a conflict, but this does not prevent other documents in the batch from being saved. <span class="anchor" id="line-97"></span><span class="anchor" id="line-98"></span></p><p class="line867"><span class="anchor" id="line-99"></span><span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><span class="anchor" id="line-1-11"></span></p><div class="highlight javascript"><div class="codearea" dir="ltr" lang="en">
+<script type="text/javascript">
+document.write('<a href="#" onclick="return togglenumber(\'CA-5656caabfa2a0c1790d17e2922229f2de2625f18\', 1, 1);" \
+                class="codenumbers">Toggle line numbers<\/a>');
+</script><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" onclick="return togglenumber(&#39;CA-5656caabfa2a0c1790d17e2922229f2de2625f18&#39;, 1, 1);" class="codenumbers">Toggle line numbers</a>
+<pre dir="ltr" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18" lang="en"><span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-5656caabfa2a0c1790d17e2922229f2de2625f18_1">   1</a> </span><span class="LineAnchor" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18_1"></span><span class="anchor" id="line-1-12"></span>[</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-5656caabfa2a0c1790d17e2922229f2de2625f18_2">   2</a> </span><span class="LineAnchor" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18_2"></span><span class="anchor" id="line-2-6"></span>    {<span class="String">"id"</span>:<span class="String">"0"</span>,<span class="String">"error"</span>:<span class="String">"conflict"</span>,<span class="String">"reason"</span>:<span class="String">"Document update conflict."</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-5656caabfa2a0c1790d17e2922229f2de2625f18_3">   3</a> </span><span class="LineAnchor" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18_3"></span><span class="anchor" id="line-3-6"></span>    {<span class="String">"id"</span>:<span class="String">"1"</span>,<span class="String">"rev"</span>:<span class="String">"2-1579510027"</span>},</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-5656caabfa2a0c1790d17e2922229f2de2625f18_4">   4</a> </span><span class="LineAnchor" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18_4"></span><span class="anchor" id="line-4-6"></span>    {<span class="String">"id"</span>:<span class="String">"2"</span>,<span class="String">"rev"</span>:<span class="String">"2-3978456339"</span>}</span>
+<span class="line"><span class="LineNumber"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#CA-5656caabfa2a0c1790d17e2922229f2de2625f18_5">   5</a> </span><span class="LineAnchor" id="CA-5656caabfa2a0c1790d17e2922229f2de2625f18_5"></span><span class="anchor" id="line-5-4"></span>]</span>
+</pre></div></div><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><p class="line862">Other possible values for <em>error</em> include <em>forbidden</em> (403) and <em>unauthorized</em> (401), both likely caused by a validation failure. <span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span></p><p class="line862">If the <em>new_edits=false</em> query parameter is used in the request (to push existing revisions instead of creating new ones) the response will not include entries for any of the successful revisions (since their rev IDs are already known to the sender), only for the ones that had errors. Also, the <em>conflict</em> error will never appear, since in this mode conflicts are allowed. <span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><span class="anchor" id="line-111"></span></p><p class="line867">
+</p><h3 id="Transactional_Semantics_with_Bulk_Updates">Transactional Semantics with Bulk Updates</h3>
+<span class="anchor" id="line-112"></span><span class="anchor" id="line-113"></span><p class="line862">In short, there are none (by design). However, you can ask CouchDB to check that all the documents in your <tt>_bulk_docs</tt> request pass all your validation functions. If even one fails, none of the documents are written. You can select this mode by including <tt>"all_or_nothing":true</tt> in your request. With this mode, if all documents pass validation, then all documents will be updated, even if that introduces a conflict for some or all of the documents. <span class="anchor" id="line-114"></span><span class="anchor" id="line-115"></span></p><p class="line862">Bulk updates work independently of replication, the documents updated in a <tt>_bulk_docs</tt> request will not be replicated as a group, and will not even necessarily be replicated in the same order as they were in the request. <span class="anchor" id="line-116"></span><span class="anchor" id="line-117"></span></p><p class="line867">
+</p><h3 id="Posting_Existing_Revisions">Posting Existing Revisions</h3>
+<span class="anchor" id="line-118"></span><span class="anchor" id="line-119"></span><p class="line862">The replicator uses a special mode of <tt>_bulk_docs</tt>. The documents it writes to the destination database already have revision IDs that need to be preserved for the two databases to be in sync (otherwise it would not be possible to tell that the two represent the same revision.) To prevent the database from assigning them new revision IDs, a <tt>"new_edits":false</tt> property is added to the JSON request body. <span class="anchor" id="line-120"></span><span class="anchor" id="line-121"></span></p><p class="line862">Note that this changes the interpretation of the <tt>_rev</tt> parameter in each document: rather than being the <em>parent</em> revision ID to be matched against, it's the <em>existing</em> revision ID that will be saved as-is into the database. And since it's important to retain revision history when adding to the database, each document body in this mode should have a <tt>_revisions</tt> property that lists its revision history; the format of this property is described on the <a href="http://wiki.apache.org/couchdb/HTTP_Document_API">HTTP_Document_API</a> page under "Accessing Previous Revisions". For example: <span class="anchor" id="line-122"></span><span class="anchor" id="line-123"></span></p><p class="line867"><span class="anchor" id="line-124"></span><span class="anchor" id="line-125"></span></p><pre><span class="anchor" id="line-1-3"></span>$ curl -X POST -d '{"new_edits":false,"docs":[{"_id":"person","_rev":"2-3595405","_revisions":{"start":2,"ids":["3595405","877727288"]},"name":"jim"}]}' "$OTHER_DB/_bulk_docs"</pre><span class="anchor" id="line-126"></span><span class="anchor" id="line-127"></span><p class="line862">This command will replicate one of the revisions created above, into a separate database <tt>$OTHER_DB</tt>. It will have the same revision ID as in <tt>$DB</tt>, <tt>"2-3595405"</tt>, and it will be known to have a parent revision with ID <tt>1-877727288</tt>. (Even though <tt>$OTHER_DB</tt> will not have the body of that revision, the history will help it detect conflicts in future replications.) <span class="anchor" id="line-128"></span><span class="anchor" id="line-129"></span></p><p class="line862">As with <tt>_all_or_nothing</tt>, this mode can create conflicts; in fact, this is where the conflicts created by replication come from. <span class="anchor" id="line-130"></span><span class="anchor" id="bottom"></span></p></div><p id="pageinfo" class="info" lang="en" dir="ltr">HTTP_Bulk_Document_API  (last edited 2013-09-19 19:30:39 by <span title="NathanVanderWilt @ 97.90.85.155[97.90.85.155]"><a class="nonexistent" href="http://wiki.apache.org/couchdb/NathanVanderWilt" title="NathanVanderWilt @ 97.90.85.155[97.90.85.155]">NathanVanderWilt</a></span>)</p>
+
+<div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="./HTTP_Bulk_Document_API - Couchdb Wiki_files/HTTP_Bulk_Document_API - Couchdb Wiki.html">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<ul id="credits">
+<li><a href="http://moinmo.in/" title="This site uses the MoinMoin Wiki software.">MoinMoin Powered</a></li><li><a href="http://moinmo.in/Python" title="MoinMoin is written in Python.">Python Powered</a></li><li><a href="http://moinmo.in/GPL" title="MoinMoin is GPL licensed.">GPL licensed</a></li><li><a href="http://validator.w3.org/check?uri=referer" title="Click here to validate this page.">Valid HTML 4.01</a></li>
+</ul>
+
+
+</div>
+
+
+
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; if (typeof(lastpass_f.lpsubmitorig2)=='object'){ continue;}lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i.toString(); } else { d.textContent=i.toString(); } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }}catch(e){}</script></body></html>

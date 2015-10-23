@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- saved from url=(0063)http://wiki.apache.org/couchdb/HTTP_Document_API#Special_Fields -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="robots" content="index,nofollow">
+
+<title>HTTP_Document_API - Couchdb Wiki</title>
+<script type="text/javascript" src="./HTTP_Document_API - Couchdb Wiki_files/common.js"></script><style type="text/css"></style>
+
+<script type="text/javascript">
+<!--
+var search_hint = "Search";
+//-->
+</script>
+
+
+<link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="./HTTP_Document_API - Couchdb Wiki_files/common.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="screen" href="./HTTP_Document_API - Couchdb Wiki_files/screen.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="print" href="./HTTP_Document_API - Couchdb Wiki_files/print.css">
+<link rel="stylesheet" type="text/css" charset="utf-8" media="projection" href="./HTTP_Document_API - Couchdb Wiki_files/projection.css">
+
+<!-- css only for MS IE6/IE7 browsers -->
+<!--[if lt IE 8]>
+   <link rel="stylesheet" type="text/css" charset="utf-8" media="all" href="/wiki/modernized/css/msie.css">
+<![endif]-->
+
+
+<link rel="alternate" title="Couchdb Wiki: HTTP_Document_API" href="http://wiki.apache.org/couchdb/HTTP_Document_API?diffs=1&show_att=1&action=rss_rc&unique=0&page=HTTP_Document_API&ddiffs=1" type="application/rss+xml">
+
+
+<link rel="Start" href="http://wiki.apache.org/couchdb/FrontPage">
+<link rel="Alternate" title="Wiki Markup" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=raw">
+<link rel="Alternate" media="print" title="Print View" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=print">
+<link rel="Search" href="http://wiki.apache.org/couchdb/FindPage">
+<link rel="Index" href="http://wiki.apache.org/couchdb/TitleIndex">
+<link rel="Glossary" href="http://wiki.apache.org/couchdb/WordIndex">
+<link rel="Help" href="http://wiki.apache.org/couchdb/HelpOnFormatting">
+</head>
+
+<body lang="en" dir="ltr">
+
+<div id="header">
+
+<form id="searchform" method="get" action="http://wiki.apache.org/couchdb/HTTP_Document_API">
+<div>
+<input type="hidden" name="action" value="fullsearch">
+<input type="hidden" name="context" value="180">
+<label for="searchinput" style="display: none;">Search:</label>
+<input id="searchinput" type="text" name="value" value="" size="20" onfocus="searchFocus(this)" onblur="searchBlur(this)" onkeyup="searchChange(this)" onchange="searchChange(this)" alt="Search" class="disabled">
+<input id="titlesearch" name="titlesearch" type="submit" value="Titles" alt="Search Titles" disabled="">
+<input id="fullsearch" name="fullsearch" type="submit" value="Text" alt="Search Full Text" disabled="">
+</div>
+</form>
+<script type="text/javascript">
+<!--// Initialize search form
+var f = document.getElementById('searchform');
+f.getElementsByTagName('label')[0].style.display = 'none';
+var e = document.getElementById('searchinput');
+searchChange(e);
+searchBlur(e);
+//-->
+</script>
+
+<div id="logo"><a href="http://wiki.apache.org/couchdb/FrontPage">Couchdb Wiki</a></div>
+<div id="username"><a href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=login" id="login" rel="nofollow">Login</a></div>
+<h1 id="locationline">
+
+<span id="pagelocation"><a class="backlink" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=fullsearch&value=linkto%3A%22HTTP_Document_API%22&context=180" rel="nofollow" title="Click to do a full-text search for this title">HTTP_Document_API</a></span>
+</h1>
+
+
+<ul id="navibar">
+<li class="wikilink"><a href="http://wiki.apache.org/couchdb/FrontPage">FrontPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/RecentChanges">RecentChanges</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/FindPage">FindPage</a></li><li class="wikilink"><a href="http://wiki.apache.org/couchdb/HelpContents">HelpContents</a></li><li class="current"><a href="http://wiki.apache.org/couchdb/HTTP_Document_API">HTTP_Document_API</a></li>
+</ul>
+
+<div id="pageline"><hr style="display:none;"></div>
+
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HTTP_Document_API#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="http://wiki.apache.org/couchdb/HTTP_Document_API">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+</div>
+
+<div id="page" lang="en" dir="ltr">
+<div dir="ltr" id="content" lang="en"><span class="anchor" id="top"></span>
+<span class="anchor" id="line-1"></span><p class="line867"></p><div dir="ltr" id="EditTheWiki.content" lang="en"><span class="anchor" id="EditTheWiki.top"></span>
+<span class="anchor" id="EditTheWiki.line-1"></span><span class="anchor" id="EditTheWiki.line-2"></span><span class="anchor" id="EditTheWiki.line-3"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">We have a <a class="https" href="https://cwiki.apache.org/confluence/display/COUCHDB/Apache+CouchDB+Wiki">new wiki</a>. The migration is not 100% complete. You can help out by moving pages across. This wiki will exist for as long as there are pages left.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-4"></span><span class="anchor" id="EditTheWiki.line-5"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line862">The official documentation has moved to <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> — The transition is not 100% complete, but <a class="http" href="http://docs.couchdb.org/">http://docs.couchdb.org</a> should be seen as having the latest info. In some cases, the wiki still has some more or older info on certain topics inside CouchDB.</p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-6"></span><span class="anchor" id="EditTheWiki.line-7"></span><div><table><tbody><tr>  <td style="background-color: #efefef"><p class="line891"><small>You need to be added to the <a href="http://wiki.apache.org/couchdb/ContributorsGroup">ContributorsGroup</a> to edit the wiki. But don't worry! Just email any <a class="http" href="http://wiki.apache.org/couchdb/Mailing%20lists">Mailing List</a> or grab us on <a class="irc" href="irc://irc.freenode.net/couchdb">IRC</a> and let us know your user name.</small></p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="EditTheWiki.line-8"></span><span class="anchor" id="EditTheWiki.bottom"></span></div> <span class="anchor" id="line-2"></span><span class="anchor" id="line-3"></span><p class="line867">
+</p><h1 id="HTTP_Document_API-1">HTTP Document API</h1>
+<span class="anchor" id="line-4"></span><span class="anchor" id="line-5"></span><p class="line862">See also the <a class="http" href="http://docs.couchdb.org/en/latest/api/documents.html">official documentation</a> for this topic. <span class="anchor" id="line-6"></span><span class="anchor" id="line-7"></span></p><p class="line867"></p><div class="table-of-contents"><p class="table-of-contents-heading">Contents</p><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#HTTP_Document_API-1">HTTP Document API</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Naming.2FAddressing">Naming/Addressing</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Documents">Documents</a><ol><li>
+<a href="./HTTP_Document_API - Couchdb Wiki_files/HTTP_Document_API - Couchdb Wiki.html">Special Fields</a></li></ol></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Working_With_Documents_Over_HTTP">Working With Documents Over HTTP</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#GET">GET</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#HEAD">HEAD</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#PUT">PUT</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#POST">POST</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#DELETE">DELETE</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#COPY">COPY</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#MOVE">MOVE</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Bulk_Docs">Bulk Docs</a></li></ol></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#All_Documents">All Documents</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#all_docs">all_docs</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#A_changes">_changes</a></li></ol></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Attachments">Attachments</a><ol><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Standalone_Attachments">Standalone Attachments</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Inline_Attachments">Inline Attachments</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Multiple_Attachments">Multiple Attachments</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Getting_Attachments_With_a_Document">Getting Attachments With a Document</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Getting_Only_Changed_Attachments">Getting Only Changed Attachments</a></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Compression_of_Attachments">Compression of Attachments</a></li></ol></li><li>
+<a href="http://wiki.apache.org/couchdb/HTTP_Document_API#ETags.2FCaching">ETags/Caching</a></li></ol></li></ol></div> <span class="anchor" id="line-8"></span><span class="anchor" id="line-9"></span><p class="line874">This is an introduction to the CouchDB HTTP document API. <span class="anchor" id="line-10"></span><span class="anchor" id="line-11"></span></p><p class="line867">
+</p><h2 id="Naming.2FAddressing">Naming/Addressing</h2>
+<span class="anchor" id="line-12"></span><p class="line874">Documents stored in a CouchDB have a DocID. DocIDs are case-sensitive string identifiers that uniquely identify a document. Two documents cannot have the same identifier in the same database, they are considered the same document. <span class="anchor" id="line-13"></span><span class="anchor" id="line-14"></span></p><p class="line867"><span class="anchor" id="line-15"></span><span class="anchor" id="line-16"></span><span class="anchor" id="line-17"></span><span class="anchor" id="line-18"></span></p><pre><span class="anchor" id="line-1"></span>http://localhost:5984/test/some_doc_id
+<span class="anchor" id="line-2"></span>http://localhost:5984/test/another_doc_id
+<span class="anchor" id="line-3"></span>http://localhost:5984/test/BA1F48C5418E4E68E5183D5BD1F06476</pre><span class="anchor" id="line-19"></span><p class="line862">The above URLs point to <em>some_doc_id</em>, <em>another_doc_id</em> and <em>BA1F48C5418E4E68E5183D5BD1F06476</em> in the database <em>test</em>. <span class="anchor" id="line-20"></span><span class="anchor" id="line-21"></span></p><p class="line867">
+</p><h2 id="Documents">Documents</h2>
+<span class="anchor" id="line-22"></span><p class="line862">A CouchDB document is simply a JSON object. You can use any JSON structure with nesting. You can fetch the document's revision information by adding <em>?revs_info=true</em> to the get request. <span class="anchor" id="line-23"></span><span class="anchor" id="line-24"></span></p><p class="line874">Here are two simple examples of documents: <span class="anchor" id="line-25"></span><span class="anchor" id="line-26"></span></p><p class="line867"><span class="anchor" id="line-27"></span><span class="anchor" id="line-28"></span><span class="anchor" id="line-29"></span><span class="anchor" id="line-30"></span><span class="anchor" id="line-31"></span><span class="anchor" id="line-32"></span><span class="anchor" id="line-33"></span><span class="anchor" id="line-34"></span><span class="anchor" id="line-35"></span><span class="anchor" id="line-36"></span><span class="anchor" id="line-37"></span><span class="anchor" id="line-38"></span></p><pre><span class="anchor" id="line-1-1"></span>{
+<span class="anchor" id="line-2-1"></span> "_id":"discussion_tables",
+<span class="anchor" id="line-3-1"></span> "_rev":"D1C946B7",
+<span class="anchor" id="line-4"></span> "Sunrise":true,
+<span class="anchor" id="line-5"></span> "Sunset":false,
+<span class="anchor" id="line-6"></span> "FullHours":[1,2,3,4,5,6,7,8,9,10],
+<span class="anchor" id="line-7"></span> "Activities": [
+<span class="anchor" id="line-8"></span>   {"Name":"Football", "Duration":2, "DurationUnit":"Hours"},
+<span class="anchor" id="line-9"></span>   {"Name":"Breakfast", "Duration":40, "DurationUnit":"Minutes", "Attendees":["Jan", "Damien", "Laura", "Gwendolyn", "Roseanna"]}
+<span class="anchor" id="line-10"></span> ]
+<span class="anchor" id="line-11"></span>}</pre><span class="anchor" id="line-39"></span><p class="line867"><span class="anchor" id="line-40"></span><span class="anchor" id="line-41"></span><span class="anchor" id="line-42"></span><span class="anchor" id="line-43"></span><span class="anchor" id="line-44"></span><span class="anchor" id="line-45"></span><span class="anchor" id="line-46"></span><span class="anchor" id="line-47"></span><span class="anchor" id="line-48"></span><span class="anchor" id="line-49"></span></p><pre><span class="anchor" id="line-1-2"></span>{
+<span class="anchor" id="line-2-2"></span> "_id":"some_doc_id",
+<span class="anchor" id="line-3-2"></span> "_rev":"D1C946B7",
+<span class="anchor" id="line-4-1"></span> "Subject":"I like Plankton",
+<span class="anchor" id="line-5-1"></span> "Author":"Rusty",
+<span class="anchor" id="line-6-1"></span> "PostedDate":"2006-08-15T17:30:12-04:00",
+<span class="anchor" id="line-7-1"></span> "Tags":["plankton", "baseball", "decisions"],
+<span class="anchor" id="line-8-1"></span> "Body":"I decided today that I don't like baseball. I like plankton."
+<span class="anchor" id="line-9-1"></span>}</pre><span class="anchor" id="line-50"></span><p class="line867">
+</p><h3 id="Special_Fields">Special Fields</h3>
+<span class="anchor" id="line-51"></span><p class="line862">Note that any top-level fields within a JSON document containing a name that starts with a <em>_</em> prefix are reserved for use by CouchDB itself. Also see <a class="nonexistent" href="http://wiki.apache.org/couchdb/Reserved_words">Reserved_words</a>. Currently (0.10+) reserved fields are: <span class="anchor" id="line-52"></span></p><div><table><tbody><tr>  <td><p class="line891"><strong>Field Name</strong> </p></td>
+  <td><p class="line891"><strong>Description</strong> </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-53"></span><p class="line891"><em>_id</em> </p></td>
+  <td><p class="line862">The unique identifier of the document (<strong>mandatory</strong> and <strong>immutable</strong>) </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-54"></span><p class="line891"><em>_rev</em> </p></td>
+  <td><p class="line862">The current MVCC-token/revision of this document (<strong>mandatory</strong> and <strong>immutable</strong>) </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-55"></span><p class="line891"><em>_attachments</em> </p></td>
+  <td><p class="line862">If the document has attachments, _attachments holds a (meta-)data structure (see section on <a href="http://wiki.apache.org/couchdb/HTTP_Document_API#Attachments">HTTP_Document_API#Attachments</a>) </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-56"></span><p class="line891"><em>_deleted</em> </p></td>
+  <td><p class="line862">Indicates that this document has been deleted and previous revisions will be removed on next compaction run </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-57"></span><p class="line891"><em>_revisions</em> </p></td>
+  <td><p class="line862">Revision history of the document </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-58"></span><p class="line891"><em>_revs_info</em> </p></td>
+  <td><p class="line862">A list of revisions of the document, and their availability </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-59"></span><p class="line891"><em>_conflicts</em> </p></td>
+  <td><p class="line862">Information about conflicts </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-60"></span><p class="line891"><em>_deleted_conflicts</em> </p></td>
+  <td><p class="line862">Information about conflicts </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-61"></span><p class="line891"><em>_local_seq</em> </p></td>
+  <td><p class="line862">Sequence number of the revision in the database (as found in the _changes feed) </p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-62"></span><span class="anchor" id="line-63"></span><span class="anchor" id="line-64"></span><span class="anchor" id="line-65"></span><p class="line874">To request a special field be returned along with the normal fields you get when you request a document, add the desired field as a query parameter without the leading underscore in a GET request: <span class="anchor" id="line-66"></span><span class="anchor" id="line-67"></span></p><p class="line867"><span class="anchor" id="line-68"></span><span class="anchor" id="line-69"></span></p><pre><span class="anchor" id="line-1-3"></span>curl -X GET 'http://localhost:5984/my_database/my_document?conflicts=true'</pre><span class="anchor" id="line-70"></span><p class="line874">This request will return a document that includes the special field '_conflicts' which contains all the conflicting revisions of "my_document". <span class="anchor" id="line-71"></span><span class="anchor" id="line-72"></span></p><p class="line862">[<strong>Exception:</strong> The query parameter for the <em>_revisions</em> special field is 'revs', not 'revisions'.] <span class="anchor" id="line-73"></span><span class="anchor" id="line-74"></span></p><p class="line867">
+</p><h4 id="Document_IDs">Document IDs</h4>
+<span class="anchor" id="line-75"></span><p class="line862">Document IDs don't have restrictions on what characters can be used. Although it should work, it is recommended to use non-special characters for document IDs. Using special characters you have to be aware of proper URL en-/decoding. Documents prefixed with <em>_</em> are special documents: <span class="anchor" id="line-76"></span></p><div><table><tbody><tr>  <td><p class="line891"><strong>Document ID prefix</strong> </p></td>
+  <td><p class="line891"><strong>Description</strong> </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-77"></span><p class="line891"><em>_design/</em> </p></td>
+  <td><p class="line862">are <a class="nonexistent" href="http://wiki.apache.org/couchdb/DesignDocuments">DesignDocuments</a> </p></td>
+</tr>
+<tr>  <td><span class="anchor" id="line-78"></span><p class="line891"><em>_local/</em> </p></td>
+  <td><p class="line862">are not being replicated (local documents) and used for <a href="http://wiki.apache.org/couchdb/Replication">Replication</a> checkpointing. </p></td>
+</tr>
+</tbody></table></div><span class="anchor" id="line-79"></span><span class="anchor" id="line-80"></span><span class="anchor" id="line-81"></span><span class="anchor" id="line-82"></span><span class="anchor" id="line-83"></span><p class="line862">You can have <strong>/</strong> as part of the document ID but if you refer to a document in a URL you must always encode it as <strong>%2F</strong>. One special case is <strong>_design/</strong> documents, those accept either <strong>/</strong> or <strong>%2F</strong> for the <strong>/</strong> after <em>_design</em>, although <strong>/</strong> is preferred and <strong>%2F</strong> is still needed for the rest of the DocID. <span class="anchor" id="line-84"></span><span class="anchor" id="line-85"></span></p><p class="line867">
+</p><h2 id="Working_With_Documents_Over_HTTP">Working With Documents Over HTTP</h2>
+<span class="anchor" id="line-86"></span><p class="line867">
+</p><h3 id="GET">GET</h3>
+<span class="anchor" id="line-87"></span><p class="line862">To retrieve a document, simply perform a <em>GET</em> operation at the document's URL: <span class="anchor" id="line-88"></span><span class="anchor" id="line-89"></span></p><p class="line867"><span class="anchor" id="line-90"></span><span class="anchor" id="line-91"></span></p><pre><span class="anchor" id="line-1-4"></span>GET /somedatabase/some_doc_id HTTP/1.0</pre><span class="anchor" id="line-92"></span><p class="line874">Here is the server's response: <span class="anchor" id="line-93"></span><span class="anchor" id="line-94"></span></p><p class="line867"><span class="anchor" id="line-95"></span><span class="anchor" id="line-96"></span><span class="anchor" id="line-97"></span><span class="anchor" id="line-98"></span><span class="anchor" id="line-99"></span><span class="anchor" id="line-100"></span><span class="anchor" id="line-101"></span><span class="anchor" id="line-102"></span><span class="anchor" id="line-103"></span><span class="anchor" id="line-104"></span><span class="anchor" id="line-105"></span><span class="anchor" id="line-106"></span><span class="anchor" id="line-107"></span><span class="anchor" id="line-108"></span><span class="anchor" id="line-109"></span><span class="anchor" id="line-110"></span><span class="anchor" id="line-111"></span></p><pre><span class="anchor" id="line-1-5"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-3"></span>Etag: "946B7D1C"
+<span class="anchor" id="line-3-3"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-4-2"></span>Content-Type: application/json
+<span class="anchor" id="line-5-2"></span>Content-Length: 256
+<span class="anchor" id="line-6-2"></span>Connection: close
+<span class="anchor" id="line-7-2"></span>
+<span class="anchor" id="line-8-2"></span>{
+<span class="anchor" id="line-9-2"></span> "_id":"some_doc_id",
+<span class="anchor" id="line-10-1"></span> "_rev":"946B7D1C",
+<span class="anchor" id="line-11-1"></span> "Subject":"I like Plankton",
+<span class="anchor" id="line-12"></span> "Author":"Rusty",
+<span class="anchor" id="line-13"></span> "PostedDate":"2006-08-15T17:30:12Z-04:00",
+<span class="anchor" id="line-14"></span> "Tags":["plankton", "baseball", "decisions"],
+<span class="anchor" id="line-15"></span> "Body":"I decided today that I don't like baseball. I like plankton."
+<span class="anchor" id="line-16"></span>}</pre><span class="anchor" id="line-112"></span><p class="line867">
+</p><h4 id="Accessing_Previous_Revisions">Accessing Previous Revisions</h4>
+<span class="anchor" id="line-113"></span><p class="line862">See <a href="http://wiki.apache.org/couchdb/DocumentRevisions">DocumentRevisions</a> for additional notes on revisions. <span class="anchor" id="line-114"></span><span class="anchor" id="line-115"></span></p><p class="line874">The above example gets the current revision. You may be able to get a specific revision by using the following syntax: <span class="anchor" id="line-116"></span><span class="anchor" id="line-117"></span></p><p class="line867"><span class="anchor" id="line-118"></span><span class="anchor" id="line-119"></span></p><pre><span class="anchor" id="line-1-6"></span>GET /somedatabase/some_doc_id?rev=946B7D1C HTTP/1.0</pre><span class="anchor" id="line-120"></span><p class="line874">To find out what revisions are available for a document, you can do: <span class="anchor" id="line-121"></span><span class="anchor" id="line-122"></span></p><p class="line867"><span class="anchor" id="line-123"></span><span class="anchor" id="line-124"></span></p><pre><span class="anchor" id="line-1-7"></span>GET /somedatabase/some_doc_id?revs_info=true HTTP/1.0</pre><span class="anchor" id="line-125"></span><p class="line862">This returns the current revision of the document, but with an additional <em>_revs_info</em> field, whose value is an array of objects, one per revision. For example: <span class="anchor" id="line-126"></span><span class="anchor" id="line-127"></span></p><p class="line867"><span class="anchor" id="line-128"></span><span class="anchor" id="line-129"></span><span class="anchor" id="line-130"></span><span class="anchor" id="line-131"></span><span class="anchor" id="line-132"></span><span class="anchor" id="line-133"></span><span class="anchor" id="line-134"></span><span class="anchor" id="line-135"></span></p><pre><span class="anchor" id="line-1-8"></span>{
+<span class="anchor" id="line-2-4"></span>  "_revs_info": [
+<span class="anchor" id="line-3-4"></span>    {"rev": "3-ffffff", "status": "available"},
+<span class="anchor" id="line-4-3"></span>    {"rev": "2-eeeeee", "status": "missing"},
+<span class="anchor" id="line-5-3"></span>    {"rev": "1-dddddd", "status": "deleted"},
+<span class="anchor" id="line-6-3"></span>  ]
+<span class="anchor" id="line-7-3"></span>}</pre><span class="anchor" id="line-136"></span><p class="line862">Here, <em>available</em> means the revision content is stored in the database and can still be retrieved. The other values indicate that the content of that revision is not available. <span class="anchor" id="line-137"></span><span class="anchor" id="line-138"></span></p><p class="line862">Alternatively, the <tt>_revisions</tt> field, used by the replicator, can return an array of revision IDs more efficiently. The numeric prefixes are removed, with a "start" value indicating the prefix for the first (most recent) ID: <span class="anchor" id="line-139"></span><span class="anchor" id="line-140"></span></p><p class="line867"><span class="anchor" id="line-141"></span><span class="anchor" id="line-142"></span><span class="anchor" id="line-143"></span><span class="anchor" id="line-144"></span><span class="anchor" id="line-145"></span><span class="anchor" id="line-146"></span><span class="anchor" id="line-147"></span></p><pre><span class="anchor" id="line-1-9"></span>{
+<span class="anchor" id="line-2-5"></span>  "_revisions": {
+<span class="anchor" id="line-3-5"></span>    "start": 3,
+<span class="anchor" id="line-4-4"></span>    "ids": ["fffff", "eeeee", "ddddd"]
+<span class="anchor" id="line-5-4"></span>  }
+<span class="anchor" id="line-6-4"></span>}</pre><span class="anchor" id="line-148"></span><span class="anchor" id="line-149"></span><p class="line862">You can fetch the bodies of multiple revisions at once using the parameter <tt class="backtick">open_revs=["rev1","rev2",...]</tt>, or you can fetch all leaf revisions using <tt class="backtick">open_revs=all</tt> (see <a href="http://wiki.apache.org/couchdb/Replication_and_conflicts">Replication_and_conflicts</a>). The JSON returns an array of objects with an "ok" key pointing to the document, or a "missing" key pointing to the rev string. <span class="anchor" id="line-150"></span><span class="anchor" id="line-151"></span></p><p class="line867"><span class="anchor" id="line-152"></span><span class="anchor" id="line-153"></span><span class="anchor" id="line-154"></span><span class="anchor" id="line-155"></span><span class="anchor" id="line-156"></span></p><pre><span class="anchor" id="line-1-10"></span>[
+<span class="anchor" id="line-2-6"></span>{"missing":"1-fbd8a6da4d669ae4b909fcdb42bb2bfd"},
+<span class="anchor" id="line-3-6"></span>{"ok":{"_id":"test","_rev":"2-5bc3c6319edf62d4c624277fdd0ae191","hello":"foo"}}
+<span class="anchor" id="line-4-5"></span>]</pre><span class="anchor" id="line-157"></span><p class="line867">
+</p><h3 id="HEAD">HEAD</h3>
+<span class="anchor" id="line-158"></span><p class="line874">A HEAD request returns basic information about the document, including its current revision. <span class="anchor" id="line-159"></span><span class="anchor" id="line-160"></span></p><p class="line867"><span class="anchor" id="line-161"></span><span class="anchor" id="line-162"></span></p><pre><span class="anchor" id="line-1-11"></span>HEAD /somedatabase/some_doc_id HTTP/1.0</pre><span class="anchor" id="line-163"></span><p class="line867"><span class="anchor" id="line-164"></span><span class="anchor" id="line-165"></span><span class="anchor" id="line-166"></span><span class="anchor" id="line-167"></span><span class="anchor" id="line-168"></span><span class="anchor" id="line-169"></span></p><pre><span class="anchor" id="line-1-12"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-7"></span>Etag: "946B7D1C"
+<span class="anchor" id="line-3-7"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-4-6"></span>Content-Type: application/json
+<span class="anchor" id="line-5-5"></span>Content-Length: 256</pre><span class="anchor" id="line-170"></span><p class="line867"><span class="anchor" id="create_or_update_document"></span> <span class="anchor" id="line-171"></span><span class="anchor" id="line-172"></span></p><p class="line867">
+</p><h3 id="PUT">PUT</h3>
+<span class="anchor" id="line-173"></span><p class="line862">To create new document you can either use a <em>POST</em> operation or a <em>PUT</em> operation. To create/update a named document using the PUT operation, the URL must point to the document's location. <span class="anchor" id="line-174"></span><span class="anchor" id="line-175"></span></p><p class="line862">The following is an example HTTP <em>PUT</em>. It will cause the CouchDB server to generate a new revision ID and save the document with it. <span class="anchor" id="line-176"></span><span class="anchor" id="line-177"></span></p><p class="line867"><span class="anchor" id="line-178"></span><span class="anchor" id="line-179"></span><span class="anchor" id="line-180"></span><span class="anchor" id="line-181"></span><span class="anchor" id="line-182"></span><span class="anchor" id="line-183"></span><span class="anchor" id="line-184"></span><span class="anchor" id="line-185"></span><span class="anchor" id="line-186"></span><span class="anchor" id="line-187"></span><span class="anchor" id="line-188"></span><span class="anchor" id="line-189"></span></p><pre><span class="anchor" id="line-1-13"></span>PUT /somedatabase/some_doc_id HTTP/1.0
+<span class="anchor" id="line-2-8"></span>Content-Length: 245
+<span class="anchor" id="line-3-8"></span>Content-Type: application/json
+<span class="anchor" id="line-4-7"></span>
+<span class="anchor" id="line-5-6"></span>{
+<span class="anchor" id="line-6-5"></span>  "Subject":"I like Plankton",
+<span class="anchor" id="line-7-4"></span>  "Author":"Rusty",
+<span class="anchor" id="line-8-3"></span>  "PostedDate":"2006-08-15T17:30:12-04:00",
+<span class="anchor" id="line-9-3"></span>  "Tags":["plankton", "baseball", "decisions"],
+<span class="anchor" id="line-10-2"></span>  "Body":"I decided today that I don't like baseball. I like plankton."
+<span class="anchor" id="line-11-2"></span>}</pre><span class="anchor" id="line-190"></span><p class="line874">Here is the server's response. <span class="anchor" id="line-191"></span><span class="anchor" id="line-192"></span></p><p class="line867"><span class="anchor" id="line-193"></span><span class="anchor" id="line-194"></span><span class="anchor" id="line-195"></span><span class="anchor" id="line-196"></span><span class="anchor" id="line-197"></span><span class="anchor" id="line-198"></span><span class="anchor" id="line-199"></span><span class="anchor" id="line-200"></span></p><pre><span class="anchor" id="line-1-14"></span>HTTP/1.1 201 Created
+<span class="anchor" id="line-2-9"></span>Etag: "946B7D1C"
+<span class="anchor" id="line-3-9"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-4-8"></span>Content-Type: application/json
+<span class="anchor" id="line-5-7"></span>Connection: close
+<span class="anchor" id="line-6-6"></span>
+<span class="anchor" id="line-7-5"></span>{"ok": true, "id": "some_doc_id", "rev": "946B7D1C"}</pre><span class="anchor" id="line-201"></span><p class="line862">To update an existing document, you also issue a <em>PUT</em> request. In this case, the JSON body must contain a <em>_rev</em> property, which lets CouchDB know which revision the edits are based on. If the revision of the document currently stored in the database doesn't match, then a <em>409</em> conflict error is returned. <span class="anchor" id="line-202"></span><span class="anchor" id="line-203"></span></p><p class="line874">If the revision number does match what's in the database, a new revision number is generated and returned to the client. <span class="anchor" id="line-204"></span><span class="anchor" id="line-205"></span></p><p class="line874">For example: <span class="anchor" id="line-206"></span><span class="anchor" id="line-207"></span></p><p class="line867"><span class="anchor" id="line-208"></span><span class="anchor" id="line-209"></span><span class="anchor" id="line-210"></span><span class="anchor" id="line-211"></span><span class="anchor" id="line-212"></span><span class="anchor" id="line-213"></span><span class="anchor" id="line-214"></span><span class="anchor" id="line-215"></span><span class="anchor" id="line-216"></span><span class="anchor" id="line-217"></span><span class="anchor" id="line-218"></span><span class="anchor" id="line-219"></span><span class="anchor" id="line-220"></span><span class="anchor" id="line-221"></span></p><pre><span class="anchor" id="line-1-15"></span>PUT /somedatabase/some_doc_id HTTP/1.0
+<span class="anchor" id="line-2-10"></span>Content-Length: 245
+<span class="anchor" id="line-3-10"></span>Content-Type: application/json
+<span class="anchor" id="line-4-9"></span>
+<span class="anchor" id="line-5-8"></span>{
+<span class="anchor" id="line-6-7"></span>  "_id":"some_doc_id",
+<span class="anchor" id="line-7-6"></span>  "_rev":"946B7D1C",
+<span class="anchor" id="line-8-4"></span>  "Subject":"I like Plankton",
+<span class="anchor" id="line-9-4"></span>  "Author":"Rusty",
+<span class="anchor" id="line-10-3"></span>  "PostedDate":"2006-08-15T17:30:12-04:00",
+<span class="anchor" id="line-11-3"></span>  "Tags":["plankton", "baseball", "decisions"],
+<span class="anchor" id="line-12-1"></span>  "Body":"I decided today that I don't like baseball. I like plankton."
+<span class="anchor" id="line-13-1"></span>}</pre><span class="anchor" id="line-222"></span><p class="line862">Here is the server's response if what is stored in the database is revision <em>946B7D1C</em> of document <em>some_doc_id</em>. <span class="anchor" id="line-223"></span><span class="anchor" id="line-224"></span></p><p class="line867"><span class="anchor" id="line-225"></span><span class="anchor" id="line-226"></span><span class="anchor" id="line-227"></span><span class="anchor" id="line-228"></span><span class="anchor" id="line-229"></span><span class="anchor" id="line-230"></span><span class="anchor" id="line-231"></span><span class="anchor" id="line-232"></span></p><pre><span class="anchor" id="line-1-16"></span>HTTP/1.1 201 Created
+<span class="anchor" id="line-2-11"></span>Etag: "2774761002"
+<span class="anchor" id="line-3-11"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-4-10"></span>Content-Type: application/json
+<span class="anchor" id="line-5-9"></span>Connection: close
+<span class="anchor" id="line-6-8"></span>
+<span class="anchor" id="line-7-7"></span>{"ok":true, "id":"some_doc_id", "rev":"2774761002"}</pre><span class="anchor" id="line-233"></span><p class="line862">And here is the server's response if there is an update conflict (what is currently stored in the database is not revision <em>946B7D1C</em> of document <em>some_doc_id</em>). <span class="anchor" id="line-234"></span><span class="anchor" id="line-235"></span></p><p class="line867"><span class="anchor" id="line-236"></span><span class="anchor" id="line-237"></span><span class="anchor" id="line-238"></span><span class="anchor" id="line-239"></span><span class="anchor" id="line-240"></span><span class="anchor" id="line-241"></span><span class="anchor" id="line-242"></span></p><pre><span class="anchor" id="line-1-17"></span>HTTP/1.1 409 Conflict
+<span class="anchor" id="line-2-12"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-12"></span>Content-Length: 33
+<span class="anchor" id="line-4-11"></span>Connection: close
+<span class="anchor" id="line-5-10"></span>
+<span class="anchor" id="line-6-9"></span>{"error":"conflict","reason":"Document update conflict."}</pre><span class="anchor" id="line-243"></span><span class="anchor" id="line-244"></span><p class="line862">In case for some reason you need to insert a conflicting revision, PUT supports the <em>new_edits=false</em> query option, which is described in detail under <a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API#Posting_Existing_Revisions">HTTP_Bulk_Document_API#Posting_Existing_Revisions</a>. <span class="anchor" id="line-245"></span><span class="anchor" id="line-246"></span></p><p class="line862">There is a query option <em>batch=ok</em> which can be used to achieve higher throughput at the cost of lower guarantees. When a <em>PUT</em> (or a document <em>POST</em> as described below) is sent using this option, it is not immediately written to disk. Instead it is stored in memory on a per-user basis for a second or so (or the number of docs in memory reaches a certain point). After the threshold has passed, the docs are committed to disk. Instead of waiting for the doc to be written to disk before responding, CouchDB sends an HTTP <em>202 Accepted</em> response immediately. <span class="anchor" id="line-247"></span><span class="anchor" id="line-248"></span></p><p class="line867"><em>batch=ok</em> is not suitable for crucial data, but it ideal for applications like logging which can accept the risk that a small proportion of updates could be lost due to a crash. Docs in the batch can also be flushed manually using the <em>_ensure_full_commit</em> API. <span class="anchor" id="line-249"></span><span class="anchor" id="line-250"></span></p><p class="line867">
+</p><h3 id="POST">POST</h3>
+<span class="anchor" id="line-251"></span><p class="line862">The <em>POST</em> operation can be used to create a new document with a server generated DocID. To do so, the URL must point to the database's location. To create a named document, use the <em>PUT</em> method instead. <span class="anchor" id="line-252"></span><span class="anchor" id="line-253"></span></p><p class="line862">It is recommended that you avoid <em>POST</em> when possible, because proxies and other network intermediaries will occasionally resend <em>POST</em> requests, which can result in duplicate document creation. If your client software is not capable of guaranteeing uniqueness of generated UUIDs, use a <em>GET</em> to <em>/_uuids?count=100</em> to retrieve a list of document IDs for future <em>PUT</em> requests. Please note that the <em>/_uuids</em>-call does not check for existing document ids; collision-detection happens when you are trying to save a document. <span class="anchor" id="line-254"></span><span class="anchor" id="line-255"></span></p><p class="line862">The following is an example HTTP <em>POST</em>. It will cause the CouchDB server to generate a new DocID and revision ID and save the document with it. <span class="anchor" id="line-256"></span><span class="anchor" id="line-257"></span></p><p class="line867"><span class="anchor" id="line-258"></span><span class="anchor" id="line-259"></span><span class="anchor" id="line-260"></span><span class="anchor" id="line-261"></span><span class="anchor" id="line-262"></span><span class="anchor" id="line-263"></span><span class="anchor" id="line-264"></span><span class="anchor" id="line-265"></span><span class="anchor" id="line-266"></span><span class="anchor" id="line-267"></span><span class="anchor" id="line-268"></span><span class="anchor" id="line-269"></span></p><pre><span class="anchor" id="line-1-18"></span>POST /somedatabase/ HTTP/1.0
+<span class="anchor" id="line-2-13"></span>Content-Length: 245
+<span class="anchor" id="line-3-13"></span>Content-Type: application/json
+<span class="anchor" id="line-4-12"></span>
+<span class="anchor" id="line-5-11"></span>{
+<span class="anchor" id="line-6-10"></span>  "Subject":"I like Plankton",
+<span class="anchor" id="line-7-8"></span>  "Author":"Rusty",
+<span class="anchor" id="line-8-5"></span>  "PostedDate":"2006-08-15T17:30:12-04:00",
+<span class="anchor" id="line-9-5"></span>  "Tags":["plankton", "baseball", "decisions"],
+<span class="anchor" id="line-10-4"></span>  "Body":"I decided today that I don't like baseball. I like plankton."
+<span class="anchor" id="line-11-4"></span>}</pre><span class="anchor" id="line-270"></span><p class="line874">Here is the server's response: <span class="anchor" id="line-271"></span><span class="anchor" id="line-272"></span></p><p class="line867"><span class="anchor" id="line-273"></span><span class="anchor" id="line-274"></span><span class="anchor" id="line-275"></span><span class="anchor" id="line-276"></span><span class="anchor" id="line-277"></span><span class="anchor" id="line-278"></span><span class="anchor" id="line-279"></span></p><pre><span class="anchor" id="line-1-19"></span>HTTP/1.1 201 Created
+<span class="anchor" id="line-2-14"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-14"></span>Content-Type: application/json
+<span class="anchor" id="line-4-13"></span>Connection: close
+<span class="anchor" id="line-5-12"></span>
+<span class="anchor" id="line-6-11"></span>{"ok":true, "id":"123BAC", "rev":"946B7D1C"}</pre><span class="anchor" id="line-280"></span><p class="line874">As of 0.11 CouchDB supports handling of multipart/form-data encoded  updates. This is used by Futon and not considered a public API. All such requests must contain a valid Referer header. <span class="anchor" id="line-281"></span><span class="anchor" id="line-282"></span></p><p class="line867">
+</p><h3 id="DELETE">DELETE</h3>
+<span class="anchor" id="line-283"></span><p class="line862">To delete a document, perform a <em>DELETE</em> operation at the document's location, passing the <em>rev</em> parameter with the document's current revision. If successful, it will return the revision id for the deletion stub. <span class="anchor" id="line-284"></span><span class="anchor" id="line-285"></span></p><p class="line867"><span class="anchor" id="line-286"></span><span class="anchor" id="line-287"></span></p><pre><span class="anchor" id="line-1-20"></span>DELETE /somedatabase/some_doc?rev=1582603387 HTTP/1.0</pre><span class="anchor" id="line-288"></span><p class="line862">As an alternative you can submit the <em>rev</em> parameter with the etag header field <em>If-Match</em>. <span class="anchor" id="line-289"></span><span class="anchor" id="line-290"></span></p><p class="line867"><span class="anchor" id="line-291"></span><span class="anchor" id="line-292"></span><span class="anchor" id="line-293"></span></p><pre><span class="anchor" id="line-1-21"></span>DELETE /somedatabase/some_doc HTTP/1.0
+<span class="anchor" id="line-2-15"></span>If-Match: "1582603387"</pre><span class="anchor" id="line-294"></span><p class="line874">And the response: <span class="anchor" id="line-295"></span><span class="anchor" id="line-296"></span></p><p class="line867"><span class="anchor" id="line-297"></span><span class="anchor" id="line-298"></span><span class="anchor" id="line-299"></span><span class="anchor" id="line-300"></span><span class="anchor" id="line-301"></span><span class="anchor" id="line-302"></span><span class="anchor" id="line-303"></span><span class="anchor" id="line-304"></span></p><pre><span class="anchor" id="line-1-22"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-16"></span>Etag: "2839830636"
+<span class="anchor" id="line-3-15"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-4-14"></span>Content-Type: application/json
+<span class="anchor" id="line-5-13"></span>Connection: close
+<span class="anchor" id="line-6-12"></span>
+<span class="anchor" id="line-7-9"></span>{"ok":true,"rev":"2839830636"}</pre><span class="anchor" id="line-305"></span><span class="anchor" id="line-306"></span><p class="line874">Note: Deleted documents remain in the database forever, even after compaction, to allow eventual consistency when replicating. If you delete using the DELETE method above, only the _id, _rev and a deleted flag are preserved. If you deleted a document by adding "_deleted":true then all the fields of the document are preserved. This is to allow, for example, recording the time you deleted a document, or the reason you deleted it. <span class="anchor" id="line-307"></span><span class="anchor" id="line-308"></span></p><p class="line867">
+</p><h3 id="COPY">COPY</h3>
+<span class="anchor" id="line-309"></span><p class="line874">Note that this is a non-standard extension to HTTP. <span class="anchor" id="line-310"></span><span class="anchor" id="line-311"></span></p><p class="line862">You can copy documents by sending an HTTP COPY request. This allows you to duplicate the contents (and attachments) of a document to a new document under a different document id without first retrieving it from CouchDB. Use the <em>Destination</em> header to specify the document that you want to copy to (the target document). <span class="anchor" id="line-312"></span><span class="anchor" id="line-313"></span></p><p class="line874">It is not possible to copy documents between databases and it is not (yet) possible to perform bulk copy operations. <span class="anchor" id="line-314"></span><span class="anchor" id="line-315"></span></p><p class="line867"><span class="anchor" id="line-316"></span><span class="anchor" id="line-317"></span><span class="anchor" id="line-318"></span></p><pre><span class="anchor" id="line-1-23"></span>COPY /somedatabase/some_doc HTTP/1.1
+<span class="anchor" id="line-2-17"></span>Destination: some_other_doc</pre><span class="anchor" id="line-319"></span><p class="line862">If you want to overwrite an existing document, you need to specify the target document's revision with a <em>rev</em> parameter in the <em>Destination</em> header: <span class="anchor" id="line-320"></span><span class="anchor" id="line-321"></span></p><p class="line867"><span class="anchor" id="line-322"></span><span class="anchor" id="line-323"></span><span class="anchor" id="line-324"></span></p><pre><span class="anchor" id="line-1-24"></span>COPY /somedatabase/some_doc HTTP/1.1
+<span class="anchor" id="line-2-18"></span>Destination: some_other_doc?rev=rev_id</pre><span class="anchor" id="line-325"></span><p class="line874">The response in both cases includes the target document's revision: <span class="anchor" id="line-326"></span><span class="anchor" id="line-327"></span></p><p class="line867"><span class="anchor" id="line-328"></span><span class="anchor" id="line-329"></span><span class="anchor" id="line-330"></span><span class="anchor" id="line-331"></span><span class="anchor" id="line-332"></span><span class="anchor" id="line-333"></span><span class="anchor" id="line-334"></span><span class="anchor" id="line-335"></span><span class="anchor" id="line-336"></span><span class="anchor" id="line-337"></span></p><pre><span class="anchor" id="line-1-25"></span>HTTP/1.1 201 Created
+<span class="anchor" id="line-2-19"></span>Server: CouchDB/0.9.0a730122-incubating (Erlang OTP/R12B)
+<span class="anchor" id="line-3-16"></span>Etag: "355068078"
+<span class="anchor" id="line-4-15"></span>Date: Mon, 05 Jan 2009 11:12:49 GMT
+<span class="anchor" id="line-5-14"></span>Content-Type: text/plain;charset=utf-8
+<span class="anchor" id="line-6-13"></span>Content-Length: 41
+<span class="anchor" id="line-7-10"></span>Cache-Control: must-revalidate
+<span class="anchor" id="line-8-6"></span>
+<span class="anchor" id="line-9-6"></span>{"ok":true,"id":"some_other_doc","rev":"355068078"}</pre><span class="anchor" id="line-338"></span><p class="line867">
+</p><h3 id="MOVE">MOVE</h3>
+<span class="anchor" id="line-339"></span><p class="line862">For a ~6 month period CouchDB trunk between versions 0.8 and 0.9 included the nonstandard MOVE method. Since MOVE is really just COPY &amp; DELETE and CouchDB can not reasonably guarantee atomicity between the COPY &amp; MOVE operations on a single or on multiple nodes, this was removed before the release of CouchDB 0.9. <span class="anchor" id="line-340"></span><span class="anchor" id="line-341"></span></p><p class="line867">
+</p><h3 id="Bulk_Docs">Bulk Docs</h3>
+<span class="anchor" id="line-342"></span><p class="line862">For information about editing multiple documents at the same time, see <a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API">HTTP_Bulk_Document_API</a> <span class="anchor" id="line-343"></span><span class="anchor" id="line-344"></span></p><p class="line867">
+</p><h2 id="All_Documents">All Documents</h2>
+<span class="anchor" id="line-345"></span><p class="line867">
+</p><h3 id="all_docs">all_docs</h3>
+<span class="anchor" id="line-346"></span><p class="line862">To get a listing of all documents in a database, use the special <em>_all_docs</em> URI. This is a specialized View so the Querying Options of the <a href="http://wiki.apache.org/couchdb/HTTP_view_API">HTTP_view_API</a> apply here. <span class="anchor" id="line-347"></span><span class="anchor" id="line-348"></span></p><p class="line867"><span class="anchor" id="line-349"></span><span class="anchor" id="line-350"></span></p><pre><span class="anchor" id="line-1-26"></span>GET /somedatabase/_all_docs HTTP/1.0</pre><span class="anchor" id="line-351"></span><p class="line874">Will return a listing of all documents and their revision IDs, ordered by DocID (case sensitive): <span class="anchor" id="line-352"></span><span class="anchor" id="line-353"></span></p><p class="line867"><span class="anchor" id="line-354"></span><span class="anchor" id="line-355"></span><span class="anchor" id="line-356"></span><span class="anchor" id="line-357"></span><span class="anchor" id="line-358"></span><span class="anchor" id="line-359"></span><span class="anchor" id="line-360"></span><span class="anchor" id="line-361"></span><span class="anchor" id="line-362"></span><span class="anchor" id="line-363"></span><span class="anchor" id="line-364"></span><span class="anchor" id="line-365"></span><span class="anchor" id="line-366"></span></p><pre><span class="anchor" id="line-1-27"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-20"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-17"></span>Content-Type: application/json
+<span class="anchor" id="line-4-16"></span>Connection: close
+<span class="anchor" id="line-5-15"></span>
+<span class="anchor" id="line-6-14"></span>{
+<span class="anchor" id="line-7-11"></span>  "total_rows": 3, "offset": 0, "rows": [
+<span class="anchor" id="line-8-7"></span>    {"id": "doc1", "key": "doc1", "value": {"rev": "4324BB"}},
+<span class="anchor" id="line-9-7"></span>    {"id": "doc2", "key": "doc2", "value": {"rev":"2441HF"}},
+<span class="anchor" id="line-10-5"></span>    {"id": "doc3", "key": "doc3", "value": {"rev":"74EC24"}}
+<span class="anchor" id="line-11-5"></span>  ]
+<span class="anchor" id="line-12-2"></span>}</pre><span class="anchor" id="line-367"></span><p class="line862">Use the query argument <em>descending=true</em> to reverse the order of the output table: <span class="anchor" id="line-368"></span><span class="anchor" id="line-369"></span></p><p class="line874">Will return the same as before but in reverse order: <span class="anchor" id="line-370"></span><span class="anchor" id="line-371"></span></p><p class="line867"><span class="anchor" id="line-372"></span><span class="anchor" id="line-373"></span><span class="anchor" id="line-374"></span><span class="anchor" id="line-375"></span><span class="anchor" id="line-376"></span><span class="anchor" id="line-377"></span><span class="anchor" id="line-378"></span><span class="anchor" id="line-379"></span><span class="anchor" id="line-380"></span><span class="anchor" id="line-381"></span><span class="anchor" id="line-382"></span><span class="anchor" id="line-383"></span><span class="anchor" id="line-384"></span></p><pre><span class="anchor" id="line-1-28"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-21"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-18"></span>Content-Type: application/json
+<span class="anchor" id="line-4-17"></span>Connection: close
+<span class="anchor" id="line-5-16"></span>
+<span class="anchor" id="line-6-15"></span>{
+<span class="anchor" id="line-7-12"></span>  "total_rows": 3, "offset": 0, "rows": [
+<span class="anchor" id="line-8-8"></span>    {"id": "doc3", "key": "doc3", "value": {"rev":"74EC24"}},
+<span class="anchor" id="line-9-8"></span>    {"id": "doc2", "key": "doc2", "value": {"rev":"2441HF"}},
+<span class="anchor" id="line-10-6"></span>    {"id": "doc1", "key": "doc1", "value": {"rev": "4324BB"}}
+<span class="anchor" id="line-11-6"></span>  ]
+<span class="anchor" id="line-12-3"></span>}</pre><span class="anchor" id="line-385"></span><p class="line862">The query string parameters <em>startkey</em>, <em>endkey</em> and <em>limit</em> may also be used to limit the result set. For example: <span class="anchor" id="line-386"></span><span class="anchor" id="line-387"></span></p><p class="line867"><span class="anchor" id="line-388"></span><span class="anchor" id="line-389"></span></p><pre><span class="anchor" id="line-1-29"></span>GET /somedatabase/_all_docs?startkey="doc2"&amp;limit=2 HTTP/1.0</pre><span class="anchor" id="line-390"></span><p class="line874">Will return: <span class="anchor" id="line-391"></span><span class="anchor" id="line-392"></span></p><p class="line867"><span class="anchor" id="line-393"></span><span class="anchor" id="line-394"></span><span class="anchor" id="line-395"></span><span class="anchor" id="line-396"></span><span class="anchor" id="line-397"></span><span class="anchor" id="line-398"></span><span class="anchor" id="line-399"></span><span class="anchor" id="line-400"></span><span class="anchor" id="line-401"></span><span class="anchor" id="line-402"></span><span class="anchor" id="line-403"></span><span class="anchor" id="line-404"></span></p><pre><span class="anchor" id="line-1-30"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-22"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-19"></span>Content-Type: application/json
+<span class="anchor" id="line-4-18"></span>Connection: close
+<span class="anchor" id="line-5-17"></span>
+<span class="anchor" id="line-6-16"></span>{
+<span class="anchor" id="line-7-13"></span>  "total_rows": 3, "offset": 1, "rows": [
+<span class="anchor" id="line-8-9"></span>    {"id": "doc2", "key": "doc2", "value": {"rev":"2441HF"}},
+<span class="anchor" id="line-9-9"></span>    {"id": "doc3", "key": "doc3", "value": {"rev":"74EC24"}}
+<span class="anchor" id="line-10-7"></span>  ]
+<span class="anchor" id="line-11-7"></span>}</pre><span class="anchor" id="line-405"></span><p class="line862">Use <em>endkey</em> if you are interested  in a specific range of documents: <span class="anchor" id="line-406"></span><span class="anchor" id="line-407"></span></p><p class="line867"><span class="anchor" id="line-408"></span><span class="anchor" id="line-409"></span></p><pre><span class="anchor" id="line-1-31"></span>GET /somedatabase/_all_docs?startkey="doc2"&amp;endkey="doc3" HTTP/1.0</pre><span class="anchor" id="line-410"></span><p class="line862">This will get keys inbetween and including doc2 and doc3; e.g. <em>doc2-b</em> and <em>doc234</em>. <span class="anchor" id="line-411"></span><span class="anchor" id="line-412"></span></p><p class="line862">Both approaches can be combined with <em>descending</em>: <span class="anchor" id="line-413"></span><span class="anchor" id="line-414"></span></p><p class="line867"><span class="anchor" id="line-415"></span><span class="anchor" id="line-416"></span></p><pre><span class="anchor" id="line-1-32"></span>GET /somedatabase/_all_docs?startkey="doc2"&amp;limit=2&amp;descending=true HTTP/1.0</pre><span class="anchor" id="line-417"></span><p class="line874">Will return: <span class="anchor" id="line-418"></span><span class="anchor" id="line-419"></span></p><p class="line867"><span class="anchor" id="line-420"></span><span class="anchor" id="line-421"></span><span class="anchor" id="line-422"></span><span class="anchor" id="line-423"></span><span class="anchor" id="line-424"></span><span class="anchor" id="line-425"></span><span class="anchor" id="line-426"></span><span class="anchor" id="line-427"></span><span class="anchor" id="line-428"></span><span class="anchor" id="line-429"></span><span class="anchor" id="line-430"></span><span class="anchor" id="line-431"></span></p><pre><span class="anchor" id="line-1-33"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-23"></span>Date: Thu, 17 Aug 2006 05:39:28 +0000GMT
+<span class="anchor" id="line-3-20"></span>Content-Type: application/json
+<span class="anchor" id="line-4-19"></span>Connection: close
+<span class="anchor" id="line-5-18"></span>
+<span class="anchor" id="line-6-17"></span>{
+<span class="anchor" id="line-7-14"></span>  "total_rows": 3, "offset": 1, "rows": [
+<span class="anchor" id="line-8-10"></span>    {"id": "doc3", "key": "doc3", "value": {"rev":"74EC24"}},
+<span class="anchor" id="line-9-10"></span>    {"id": "doc2", "key": "doc2", "value": {"rev":"2441HF"}}
+<span class="anchor" id="line-10-8"></span>  ]
+<span class="anchor" id="line-11-8"></span>}</pre><span class="anchor" id="line-432"></span><p class="line862">If you add <em>include_docs=true</em> to a request to <em>_all_docs</em> not only metadata but also the documents themselves are returned. <span class="anchor" id="line-433"></span><span class="anchor" id="line-434"></span></p><p class="line867">
+</p><h3 id="A_changes">_changes</h3>
+<span class="anchor" id="line-435"></span><span class="anchor" id="line-436"></span><p class="line874">This allows you to see all the documents that were updated and deleted, in the order these actions are done: <span class="anchor" id="line-437"></span><span class="anchor" id="line-438"></span></p><p class="line867"><span class="anchor" id="line-439"></span><span class="anchor" id="line-440"></span></p><pre><span class="anchor" id="line-1-34"></span>GET /somedatabase/_changes HTTP/1.0</pre><span class="anchor" id="line-441"></span><p class="line874">Will return something of the form: <span class="anchor" id="line-442"></span><span class="anchor" id="line-443"></span></p><p class="line867"><span class="anchor" id="line-444"></span><span class="anchor" id="line-445"></span><span class="anchor" id="line-446"></span><span class="anchor" id="line-447"></span><span class="anchor" id="line-448"></span><span class="anchor" id="line-449"></span><span class="anchor" id="line-450"></span><span class="anchor" id="line-451"></span><span class="anchor" id="line-452"></span><span class="anchor" id="line-453"></span><span class="anchor" id="line-454"></span><span class="anchor" id="line-455"></span></p><pre><span class="anchor" id="line-1-35"></span>HTTP/1.1 200 OK
+<span class="anchor" id="line-2-24"></span>Date: Fri, 8 May 2009 11:07:02 +0000GMT
+<span class="anchor" id="line-3-21"></span>Content-Type: application/json
+<span class="anchor" id="line-4-20"></span>Connection: close
+<span class="anchor" id="line-5-19"></span>
+<span class="anchor" id="line-6-18"></span>{"results":[
+<span class="anchor" id="line-7-15"></span>{"seq":1,"id":"fresh","changes":[{"rev":"1-967a00dff5e02add41819138abb3284d"}]},
+<span class="anchor" id="line-8-11"></span>{"seq":3,"id":"updated","changes":[{"rev":"2-7051cbe5c8faecd085a3fa619e6e6337"}]},
+<span class="anchor" id="line-9-11"></span>{"seq":5,"id":"deleted","changes":[{"rev":"2-eec205a9d413992850a6e32678485900"}],"deleted":true}
+<span class="anchor" id="line-10-9"></span>],
+<span class="anchor" id="line-11-9"></span>"last_seq":5}</pre><span class="anchor" id="line-456"></span><p class="line874">All the view parameters work on _changes, such as startkey, include_docs etc. However, note that the startkey is exclusive when applied to this view. This allows for a usage pattern where the startkey is set to the sequence id of the last doc returned by the previous query. As the startkey is exclusive, the same document won't be processed twice. <span class="anchor" id="line-457"></span><span class="anchor" id="line-458"></span></p><p class="line862">See <a href="http://wiki.apache.org/couchdb/HTTP_database_API#Changes">/database/_changes</a> for more details. <span class="anchor" id="line-459"></span><span class="anchor" id="line-460"></span></p><p class="line867">
+</p><h2 id="Attachments">Attachments</h2>
+<span class="anchor" id="line-461"></span><p class="line874">Documents can have attachments just like email. There are two ways to use attachments: the first one is a REST API that addresses individual attachments by URLs; the second is inline with your document. <span class="anchor" id="line-462"></span><span class="anchor" id="line-463"></span></p><p class="line862">A note on attachment names: Attachments may have embedded <strong>/</strong> characters that are sent unescaped to CouchDB. You can use this to provide a subtree of attachments under a document. A DocID must have any <strong>/</strong> escaped as <strong>%2F</strong>. So if you have document <em>a/b/c</em> with an attachment <em>d/e/f.txt</em>, you would be able to access it at <a class="http" href="http://couchdb/db/a/b/c/d/e/f.txt">http://couchdb/db/a%2fb%2fc/d/e/f.txt</a> . <span class="anchor" id="line-464"></span><span class="anchor" id="line-465"></span></p><p class="line867">
+</p><h3 id="Standalone_Attachments">Standalone Attachments</h3>
+<span class="anchor" id="line-466"></span><span class="anchor" id="line-467"></span><p class="line874">CouchDB allows to create, change and delete attachments without touching the actual document.  <span class="anchor" id="line-468"></span><span class="anchor" id="line-469"></span></p><p class="line874">You need to specify a MIME type using the Content-Type header. CouchDB will serve the attachment with the specified Content-Type when asked. <span class="anchor" id="line-470"></span><span class="anchor" id="line-471"></span></p><p class="line874">To create an attachment on an existing document: <span class="anchor" id="line-472"></span><span class="anchor" id="line-473"></span></p><p class="line867"><span class="anchor" id="line-474"></span><span class="anchor" id="line-475"></span><span class="anchor" id="line-476"></span><span class="anchor" id="line-477"></span><span class="anchor" id="line-478"></span><span class="anchor" id="line-479"></span></p><pre><span class="anchor" id="line-1-36"></span>PUT /somedatabase/document/attachment?rev=123 HTTP/1.0
+<span class="anchor" id="line-2-25"></span>Content-Length: 245
+<span class="anchor" id="line-3-22"></span>Content-Type: image/jpeg
+<span class="anchor" id="line-4-21"></span>
+<span class="anchor" id="line-5-20"></span>&lt;JPEG data&gt;</pre><span class="anchor" id="line-480"></span><p class="line862">Note: You'll need to include the "rev" query parameter if you're adding (or updating) an attachment on an existing document. This is true anytime you update a document. If you don't know the value of _rev on the document, you can retreive it with a lightweight <a href="http://wiki.apache.org/couchdb/HTTP_Document_API#HEAD">HEAD request</a> or by GETing the whole document. <span class="anchor" id="line-481"></span><span class="anchor" id="line-482"></span></p><p class="line874">CouchDB replies: <span class="anchor" id="line-483"></span><span class="anchor" id="line-484"></span></p><p class="line867"><span class="anchor" id="line-485"></span><span class="anchor" id="line-486"></span></p><pre><span class="anchor" id="line-1-37"></span>{"ok": true, "id": "document", "rev": "765B7D1C"}</pre><span class="anchor" id="line-487"></span><p class="line874">Note that you can do this on a non-existing document. The document and attachment will be created implicitly for you. A revision id must not be specified in this case. <span class="anchor" id="line-488"></span><span class="anchor" id="line-489"></span></p><p class="line874">To change an attachment: <span class="anchor" id="line-490"></span><span class="anchor" id="line-491"></span></p><p class="line867"><span class="anchor" id="line-492"></span><span class="anchor" id="line-493"></span><span class="anchor" id="line-494"></span><span class="anchor" id="line-495"></span><span class="anchor" id="line-496"></span><span class="anchor" id="line-497"></span></p><pre><span class="anchor" id="line-1-38"></span>PUT /somedatabase/document/attachment?rev=765B7D1C HTTP/1.0
+<span class="anchor" id="line-2-26"></span>Content-Length: 245
+<span class="anchor" id="line-3-23"></span>Content-Type: image/jpeg
+<span class="anchor" id="line-4-22"></span>
+<span class="anchor" id="line-5-21"></span>&lt;JPEG data&gt;</pre><span class="anchor" id="line-498"></span><p class="line874">CouchDB replies: <span class="anchor" id="line-499"></span><span class="anchor" id="line-500"></span></p><p class="line867"><span class="anchor" id="line-501"></span><span class="anchor" id="line-502"></span></p><pre><span class="anchor" id="line-1-39"></span>{"ok": true, "id": "document", "rev": "766FC88G"}</pre><span class="anchor" id="line-503"></span><p class="line874">To delete an attachment: <span class="anchor" id="line-504"></span><span class="anchor" id="line-505"></span></p><p class="line867"><span class="anchor" id="line-506"></span><span class="anchor" id="line-507"></span></p><pre><span class="anchor" id="line-1-40"></span>DELETE /somedatabase/document/attachment?rev=765B7D1C HTTP/1.0</pre><span class="anchor" id="line-508"></span><p class="line874">CouchDB replies: <span class="anchor" id="line-509"></span><span class="anchor" id="line-510"></span></p><p class="line867"><span class="anchor" id="line-511"></span><span class="anchor" id="line-512"></span></p><pre><span class="anchor" id="line-1-41"></span>{"ok":true,"id":"document","rev":"519558700"}</pre><span class="anchor" id="line-513"></span><p class="line874">To retrieve an attachment: <span class="anchor" id="line-514"></span><span class="anchor" id="line-515"></span></p><p class="line867"><span class="anchor" id="line-516"></span><span class="anchor" id="line-517"></span></p><pre><span class="anchor" id="line-1-42"></span>GET /somedatabase/document/attachment HTTP/1.0</pre><span class="anchor" id="line-518"></span><p class="line874">CouchDB replies <span class="anchor" id="line-519"></span><span class="anchor" id="line-520"></span></p><p class="line867"><span class="anchor" id="line-521"></span><span class="anchor" id="line-522"></span><span class="anchor" id="line-523"></span><span class="anchor" id="line-524"></span></p><pre><span class="anchor" id="line-1-43"></span>Content-Type:image/jpeg
+<span class="anchor" id="line-2-27"></span>
+<span class="anchor" id="line-3-24"></span>&lt;JPEG data&gt;</pre><span class="anchor" id="line-525"></span><span class="anchor" id="line-526"></span><p class="line867">
+</p><h3 id="Inline_Attachments">Inline Attachments</h3>
+<span class="anchor" id="line-527"></span><p class="line862">On creation, attachments go into a special <em>_attachments</em> attribute of the document. They are encoded in a JSON structure that holds the name, the content_type and the base64 encoded data of an attachment. A document can have any number of attachments. <span class="anchor" id="line-528"></span><span class="anchor" id="line-529"></span></p><p class="line874">When retrieving documents, the attachment's actual data is not included by default, only the metadata. The actual data can be fetched by a GET to the attachment's URL as described in the previous section. <span class="anchor" id="line-530"></span><span class="anchor" id="line-531"></span></p><p class="line874">Creating a document with an attachment: <span class="anchor" id="line-532"></span><span class="anchor" id="line-533"></span></p><p class="line867"><span class="anchor" id="line-534"></span><span class="anchor" id="line-535"></span><span class="anchor" id="line-536"></span><span class="anchor" id="line-537"></span><span class="anchor" id="line-538"></span><span class="anchor" id="line-539"></span><span class="anchor" id="line-540"></span><span class="anchor" id="line-541"></span><span class="anchor" id="line-542"></span><span class="anchor" id="line-543"></span><span class="anchor" id="line-544"></span><span class="anchor" id="line-545"></span></p><pre><span class="anchor" id="line-1-44"></span>{
+<span class="anchor" id="line-2-28"></span>  "_id":"attachment_doc",
+<span class="anchor" id="line-3-25"></span>  "_attachments":
+<span class="anchor" id="line-4-23"></span>  {
+<span class="anchor" id="line-5-22"></span>    "foo.txt":
+<span class="anchor" id="line-6-19"></span>    {
+<span class="anchor" id="line-7-16"></span>      "content_type":"text\/plain",
+<span class="anchor" id="line-8-12"></span>      "data": "VGhpcyBpcyBhIGJhc2U2NCBlbmNvZGVkIHRleHQ="
+<span class="anchor" id="line-9-12"></span>    }
+<span class="anchor" id="line-10-10"></span>  }
+<span class="anchor" id="line-11-10"></span>}</pre><span class="anchor" id="line-546"></span><p class="line862">Please note that any base64 data you send has to be on <strong>a single line of characters</strong>, so pre-process your data to remove any carriage returns and newlines. <span class="anchor" id="line-547"></span><span class="anchor" id="line-548"></span></p><p class="line874">Requesting said document: <span class="anchor" id="line-549"></span><span class="anchor" id="line-550"></span></p><p class="line867"><span class="anchor" id="line-551"></span><span class="anchor" id="line-552"></span></p><pre><span class="anchor" id="line-1-45"></span>GET /database/attachment_doc</pre><span class="anchor" id="line-553"></span><p class="line874">CouchDB replies: <span class="anchor" id="line-554"></span><span class="anchor" id="line-555"></span></p><p class="line867"><span class="anchor" id="line-556"></span><span class="anchor" id="line-557"></span><span class="anchor" id="line-558"></span><span class="anchor" id="line-559"></span><span class="anchor" id="line-560"></span><span class="anchor" id="line-561"></span><span class="anchor" id="line-562"></span><span class="anchor" id="line-563"></span><span class="anchor" id="line-564"></span><span class="anchor" id="line-565"></span><span class="anchor" id="line-566"></span><span class="anchor" id="line-567"></span><span class="anchor" id="line-568"></span><span class="anchor" id="line-569"></span></p><pre><span class="anchor" id="line-1-46"></span>{
+<span class="anchor" id="line-2-29"></span>  "_id":"attachment_doc",
+<span class="anchor" id="line-3-26"></span>  "_rev":1589456116,
+<span class="anchor" id="line-4-24"></span>  "_attachments":
+<span class="anchor" id="line-5-23"></span>  {
+<span class="anchor" id="line-6-20"></span>    "foo.txt":
+<span class="anchor" id="line-7-17"></span>    {
+<span class="anchor" id="line-8-13"></span>      "stub":true,
+<span class="anchor" id="line-9-13"></span>      "content_type":"text\/plain",
+<span class="anchor" id="line-10-11"></span>      "length":29
+<span class="anchor" id="line-11-11"></span>    }
+<span class="anchor" id="line-12-4"></span>  }
+<span class="anchor" id="line-13-2"></span>}</pre><span class="anchor" id="line-570"></span><p class="line862">Note that the <em>"stub":true</em> attribute denotes that this is not the complete attachment. Also, note the length attribute added automatically. When you update the document you must include the attachment stubs or CouchDB will delete the attachment. <span class="anchor" id="line-571"></span><span class="anchor" id="line-572"></span></p><p class="line874">Requesting the attachment: <span class="anchor" id="line-573"></span><span class="anchor" id="line-574"></span></p><p class="line867"><span class="anchor" id="line-575"></span><span class="anchor" id="line-576"></span></p><pre><span class="anchor" id="line-1-47"></span>GET /database/attachment_doc/foo.txt</pre><span class="anchor" id="line-577"></span><p class="line874">CouchDB returns: <span class="anchor" id="line-578"></span><span class="anchor" id="line-579"></span></p><p class="line867"><span class="anchor" id="line-580"></span><span class="anchor" id="line-581"></span></p><pre><span class="anchor" id="line-1-48"></span>This is a base64 encoded text</pre><span class="anchor" id="line-582"></span><p class="line874">Automatically decoded! <span class="anchor" id="line-583"></span><span class="anchor" id="line-584"></span></p><p class="line867">
+</p><h3 id="Multiple_Attachments">Multiple Attachments</h3>
+<span class="anchor" id="line-585"></span><p class="line874">Creating a document with two attachments: <span class="anchor" id="line-586"></span><span class="anchor" id="line-587"></span></p><p class="line867"><span class="anchor" id="line-588"></span><span class="anchor" id="line-589"></span><span class="anchor" id="line-590"></span><span class="anchor" id="line-591"></span><span class="anchor" id="line-592"></span><span class="anchor" id="line-593"></span><span class="anchor" id="line-594"></span><span class="anchor" id="line-595"></span><span class="anchor" id="line-596"></span><span class="anchor" id="line-597"></span><span class="anchor" id="line-598"></span><span class="anchor" id="line-599"></span><span class="anchor" id="line-600"></span><span class="anchor" id="line-601"></span><span class="anchor" id="line-602"></span><span class="anchor" id="line-603"></span><span class="anchor" id="line-604"></span><span class="anchor" id="line-605"></span></p><pre><span class="anchor" id="line-1-49"></span>{
+<span class="anchor" id="line-2-30"></span>  "_id":"attachment_doc",
+<span class="anchor" id="line-3-27"></span>  "_attachments":
+<span class="anchor" id="line-4-25"></span>  {
+<span class="anchor" id="line-5-24"></span>    "foo.txt":
+<span class="anchor" id="line-6-21"></span>    {
+<span class="anchor" id="line-7-18"></span>      "content_type":"text\/plain",
+<span class="anchor" id="line-8-14"></span>      "data": "VGhpcyBpcyBhIGJhc2U2NCBlbmNvZGVkIHRleHQ="
+<span class="anchor" id="line-9-14"></span>    },
+<span class="anchor" id="line-10-12"></span>
+<span class="anchor" id="line-11-12"></span>   "bar.txt":
+<span class="anchor" id="line-12-5"></span>    {
+<span class="anchor" id="line-13-3"></span>      "content_type":"text\/plain",
+<span class="anchor" id="line-14-1"></span>      "data": "VGhpcyBpcyBhIGJhc2U2NCBlbmNvZGVkIHRleHQ="
+<span class="anchor" id="line-15-1"></span>    }
+<span class="anchor" id="line-16-1"></span>  }
+<span class="anchor" id="line-17"></span>}</pre><span class="anchor" id="line-606"></span><span class="anchor" id="line-607"></span><p class="line862">Alternatively, you can upload a document with attachments more efficiently in <a class="http" href="http://tools.ietf.org/html/rfc2387">MIME multipart/related</a> format. This avoids having to Base64-encode the attachments, saving CPU and bandwidth. To do this, set the "Content-Type" header of the PUT request to "multipart/related".  <span class="anchor" id="line-608"></span><span class="anchor" id="line-609"></span></p><ul><li><p class="line862">The first MIME body is the document itself, which should have its own Content-Type of "application/json". It should include an <tt class="backtick">_attachments</tt> metadata object in which each attachment object has a key <tt class="backtick">follows</tt> with value <tt class="backtick">true</tt>. <span class="anchor" id="line-610"></span><span class="anchor" id="line-611"></span></p></li><li class="gap"><p class="line862">The subsequent MIME bodies are the attachments. As of this writing (Dec. 2011) CouchDB ignores headers and identifies the attachments only by their order (corresponding to the order in which the metadata objects appear in the <tt class="backtick">_attachments</tt> object.) This can be problematic as few non-Erlang JSON encoders allow you to specify the order in which keys are written out. <span class="anchor" id="line-612"></span><span class="anchor" id="line-613"></span></p></li></ul><p class="line874">Here's an HTTP request that uploads a document with two attachments: <span class="anchor" id="line-614"></span><span class="anchor" id="line-615"></span></p><p class="line867"><span class="anchor" id="line-616"></span><span class="anchor" id="line-617"></span><span class="anchor" id="line-618"></span><span class="anchor" id="line-619"></span><span class="anchor" id="line-620"></span><span class="anchor" id="line-621"></span><span class="anchor" id="line-622"></span><span class="anchor" id="line-623"></span><span class="anchor" id="line-624"></span><span class="anchor" id="line-625"></span><span class="anchor" id="line-626"></span><span class="anchor" id="line-627"></span><span class="anchor" id="line-628"></span><span class="anchor" id="line-629"></span><span class="anchor" id="line-630"></span><span class="anchor" id="line-631"></span><span class="anchor" id="line-632"></span><span class="anchor" id="line-633"></span><span class="anchor" id="line-634"></span><span class="anchor" id="line-635"></span><span class="anchor" id="line-636"></span><span class="anchor" id="line-637"></span><span class="anchor" id="line-638"></span><span class="anchor" id="line-639"></span><span class="anchor" id="line-640"></span><span class="anchor" id="line-641"></span><span class="anchor" id="line-642"></span><span class="anchor" id="line-643"></span><span class="anchor" id="line-644"></span></p><pre><span class="anchor" id="line-1-50"></span>PUT /test_suite_db/multipart HTTP/1.1
+<span class="anchor" id="line-2-31"></span>Content-Type: multipart/related;boundary="abc123"
+<span class="anchor" id="line-3-28"></span>
+<span class="anchor" id="line-4-26"></span>--abc123
+<span class="anchor" id="line-5-25"></span>content-type: application/json
+<span class="anchor" id="line-6-22"></span>
+<span class="anchor" id="line-7-19"></span>{"body":"This is a body.",
+<span class="anchor" id="line-8-15"></span>"_attachments":{
+<span class="anchor" id="line-9-15"></span>  "foo.txt": {
+<span class="anchor" id="line-10-13"></span>    "follows":true,
+<span class="anchor" id="line-11-13"></span>    "content_type":"text/plain",
+<span class="anchor" id="line-12-6"></span>    "length":21
+<span class="anchor" id="line-13-4"></span>    },
+<span class="anchor" id="line-14-2"></span>  "bar.txt": {
+<span class="anchor" id="line-15-2"></span>    "follows":true,
+<span class="anchor" id="line-16-2"></span>    "content_type":"text/plain",
+<span class="anchor" id="line-17-1"></span>    "length":20
+<span class="anchor" id="line-18"></span>    },
+<span class="anchor" id="line-19"></span>  }
+<span class="anchor" id="line-20"></span>}
+<span class="anchor" id="line-21"></span>  
+<span class="anchor" id="line-22"></span>--abc123
+<span class="anchor" id="line-23"></span>
+<span class="anchor" id="line-24"></span>this is 21 chars long
+<span class="anchor" id="line-25"></span>--abc123
+<span class="anchor" id="line-26"></span>
+<span class="anchor" id="line-27"></span>this is 20 chars lon
+<span class="anchor" id="line-28"></span>--abc123--</pre><span class="anchor" id="line-645"></span><span class="anchor" id="line-646"></span><p class="line867">
+</p><h3 id="Getting_Attachments_With_a_Document">Getting Attachments With a Document</h3>
+<span class="anchor" id="line-647"></span><span class="anchor" id="line-648"></span><p class="line862">If you need to fetch a document and all its attachments in one request, add an <tt class="backtick">?attachments=true</tt> URL parameter to the GET request. The resulting JSON will include the base64-encoded contents in the "data" property of each attachment, just as in an inline upload. <span class="anchor" id="line-649"></span><span class="anchor" id="line-650"></span></p><p class="line862">A more efficient way is to ask for a <a class="http" href="http://tools.ietf.org/html/rfc2387">MIME multipart/related</a> response. The benefit is that the attachments are not base64-encoded, and they aren't in the middle of the JSON so they're easier to stream directly to disk (especially if your platform has a MIME parsing library). To get this response format, just add an "Accept:" header to the request with value "multipart/related". (You still need the <tt class="backtick">?attachments=true</tt> parameter too.) <span class="anchor" id="line-651"></span><span class="anchor" id="line-652"></span></p><p class="line874">Unfortunately, at present (Dec. 2011) the multipart response has no headers on any of the attachment bodies, so the only way to tell which one is which is to match them with the order of the keys in the JSON "_attachments" object. This may not be easy in languages other than Erlang, as most JSON parsers don't preserve the order of keys. <span class="anchor" id="line-653"></span><span class="anchor" id="line-654"></span></p><p class="line874">Needless to say, this type of request can lead to arbitrarily large responses and can be expensive for the server. Don't use it unless you need to; if you only want one or two attachments, use individual GETs to fetch them. <span class="anchor" id="line-655"></span><span class="anchor" id="line-656"></span><span class="anchor" id="line-657"></span></p><p class="line867">
+</p><h3 id="Getting_Only_Changed_Attachments">Getting Only Changed Attachments</h3>
+<span class="anchor" id="line-658"></span><span class="anchor" id="line-659"></span><p class="line862">If you already have a local copy of an earlier revision of a document and its attachments, you may want to fetch only the attachments that have changed since a particular revision. To do this, add a <tt class="backtick">?atts_since</tt> parameter to the URL, whose value is a (URL-encoded) JSON array of one or more revision IDs. The response will include the content of only those attachments that changed since the given revision(s). (You can ask for this either in the default JSON or as multipart/related, as previously described.) <span class="anchor" id="line-660"></span><span class="anchor" id="line-661"></span></p><p class="line862">Incidentally, you can always find out in which revision an attachment last changed by looking at its metadata's <tt class="backtick">revpos</tt> property, whose value is the numeric generation number (<em>not</em> the full revision ID) of the revision that introduced that version of the attachment. <span class="anchor" id="line-662"></span><span class="anchor" id="line-663"></span></p><p class="line867">
+</p><h3 id="Compression_of_Attachments">Compression of Attachments</h3>
+<span class="anchor" id="line-664"></span><p class="line874">As of version 0.11, CouchDB, by default, will automatically compress certain attachment types.  That is, based on the Content-Type header of the request CouchDB may perform compression of the data.  This is done to reduce the amount of data being shuffled around during replication, and in most cases it's probably what you want.  However, if uploading large files (e.g. a 200M CSV) you may want to tweak this configuration in order to avoid compression and therefore reduce the network latency of the request. <span class="anchor" id="line-665"></span><span class="anchor" id="line-666"></span></p><p class="line874">This setting can be found in the attachments section of the configuration. <span class="anchor" id="line-667"></span><span class="anchor" id="line-668"></span></p><p class="line867">
+</p><h2 id="ETags.2FCaching">ETags/Caching</h2>
+<span class="anchor" id="line-669"></span><p class="line862">CouchDB sends an <em>ETag</em> Header for document requests. The ETag Header is simply the document's revision in quotes. <span class="anchor" id="line-670"></span><span class="anchor" id="line-671"></span></p><p class="line862">For example, a <em>GET</em> request: <span class="anchor" id="line-672"></span><span class="anchor" id="line-673"></span></p><p class="line867"><span class="anchor" id="line-674"></span><span class="anchor" id="line-675"></span></p><pre><span class="anchor" id="line-1-51"></span>GET /database/123182719287</pre><span class="anchor" id="line-676"></span><p class="line874">Results in a reply with the following headers: <span class="anchor" id="line-677"></span><span class="anchor" id="line-678"></span></p><p class="line867"><span class="anchor" id="line-679"></span><span class="anchor" id="line-680"></span><span class="anchor" id="line-681"></span><span class="anchor" id="line-682"></span><span class="anchor" id="line-683"></span><span class="anchor" id="line-684"></span><span class="anchor" id="line-685"></span></p><pre><span class="anchor" id="line-1-52"></span>Cache-Control: must-revalidate
+<span class="anchor" id="line-2-32"></span>Date: Wed, 12 Jan 2011 15:46:41 GMT
+<span class="anchor" id="line-3-29"></span>ETag: "1-f5db357d8a173066a562eee57eee0532"
+<span class="anchor" id="line-4-27"></span>Server: CouchDB/1.0.1 (Erlang OTP/R13B)
+<span class="anchor" id="line-5-26"></span>Content-Length: 126
+<span class="anchor" id="line-6-23"></span>Content-Type: text/plain;charset=utf-8</pre><span class="anchor" id="line-686"></span><p class="line867"><em>PUT</em> and <em>POST</em> requests also return an <em>ETag</em> header for either newly created or updated documents. The If-None-Match request header is supported for <em>GET</em> and <em>HEAD</em>. <span class="anchor" id="line-687"></span><span class="anchor" id="bottom"></span></p></div><p id="pageinfo" class="info" lang="en" dir="ltr">HTTP_Document_API  (last edited 2013-06-05 21:58:30 by <span title="NathanVanderWilt @ 71.84.176.101[71.84.176.101]"><a class="nonexistent" href="http://wiki.apache.org/couchdb/NathanVanderWilt" title="NathanVanderWilt @ 71.84.176.101[71.84.176.101]">NathanVanderWilt</a></span>)</p>
+
+<div id="pagebottom"></div>
+</div>
+
+
+<div id="footer">
+<ul class="editbar"><li><span class="disabled">Immutable Page</span></li><li class="toggleCommentsButton" style="display:none;"><a href="http://wiki.apache.org/couchdb/HTTP_Document_API#" class="nbcomment" onclick="toggleComments();return false;">Comments</a></li><li><a class="nbinfo" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=info" rel="nofollow">Info</a></li><li><a class="nbattachments" href="http://wiki.apache.org/couchdb/HTTP_Document_API?action=AttachFile" rel="nofollow">Attachments</a></li><li>
+<form class="actionsmenu" method="GET" action="http://wiki.apache.org/couchdb/HTTP_Document_API">
+<div>
+    
+    <select name="action" onchange="if ((this.selectedIndex != 0) &amp;&amp;
+                      (this.options[this.selectedIndex].disabled == false)) {
+                this.form.submit();
+            }
+            this.selectedIndex = 0;">
+        <option value="show">More Actions:</option><option value="raw">Raw Text</option>
+<option value="print">Print View</option>
+<option value="RenderAsDocbook">Render as Docbook</option>
+<option value="refresh">Delete Cache</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="SpellCheck">Check Spelling</option>
+<option value="LikePages">Like Pages</option>
+<option value="LocalSiteMap">Local Site Map</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="RenamePage" disabled="" class="disabled">Rename Page</option>
+<option value="CopyPage">Copy Page</option>
+<option value="DeletePage" disabled="" class="disabled">Delete Page</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="MyPages">My Pages</option>
+<option value="show" disabled="" class="disabled">Subscribe User</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="show" disabled="" class="disabled">Remove Spam</option>
+<option value="show" disabled="" class="disabled">Revert to this revision</option>
+<option value="PackagePages">Package Pages</option>
+<option value="SyncPages">Sync Pages</option>
+<option value="show" disabled="" class="disabled">------------------------</option>
+<option value="Load">Load</option>
+<option value="Save">Save</option>
+<option value="SlideShow">SlideShow</option>
+    </select>
+    
+    
+</div>
+<script type="text/javascript">
+<!--// Init menu
+actionsMenuInit('More Actions:');
+//-->
+</script>
+</form>
+</li></ul>
+
+<ul id="credits">
+<li><a href="http://moinmo.in/" title="This site uses the MoinMoin Wiki software.">MoinMoin Powered</a></li><li><a href="http://moinmo.in/Python" title="MoinMoin is written in Python.">Python Powered</a></li><li><a href="http://moinmo.in/GPL" title="MoinMoin is GPL licensed.">GPL licensed</a></li><li><a href="http://validator.w3.org/check?uri=referer" title="Click here to validate this page.">Valid HTML 4.01</a></li>
+</ul>
+
+
+</div>
+
+
+
+<script id="hiddenlpsubmitdiv" style="display: none;"></script><script>try{for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){ var lastpass_f = document.forms[lastpass_iter]; if(typeof(lastpass_f.lpsubmitorig2)=="undefined"){ lastpass_f.lpsubmitorig2 = lastpass_f.submit; if (typeof(lastpass_f.lpsubmitorig2)=='object'){ continue;}lastpass_f.submit = function(){ var form=this; var customEvent = document.createEvent("Event"); customEvent.initEvent("lpCustomEvent", true, true); var d = document.getElementById("hiddenlpsubmitdiv"); if (d) {for(var i = 0; i < document.forms.length; i++){ if(document.forms[i]==form){ if (typeof(d.innerText) != 'undefined') { d.innerText=i.toString(); } else { d.textContent=i.toString(); } } } d.dispatchEvent(customEvent); }form.lpsubmitorig2(); } } }}catch(e){}</script></body></html>
