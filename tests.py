@@ -72,15 +72,18 @@ class DbTest(unittest.TestCase):
         value2 = str(uuid4())
         item = db.post(value)
 
+        # from pprint import pprint
+        # pprint(db.data)
+
         try:
-            db._conflict(item.rev)
+            db._conflict(item.uid, item.rev)
         except:
             self.fail('shouldnt raise here')
 
         db.put(item.uid, value2)
 
         with self.assertRaises(ValueError):
-            db._conflict(item.rev)
+            db._conflict(item.uid, item.rev)
 
     def test_get(self):
         db = Db()
@@ -102,11 +105,11 @@ class DbTest(unittest.TestCase):
         item = db.put(item.uid, value2)
         rev2 = item.rev
 
-        item = db.get_by_rev(rev1)
+        item = db.get(item.uid, rev1)
         self.assertEqual(item.rev, rev1)
         self.assertEqual(item.value, value)
 
-        item = db.get_by_rev(rev2)
+        item = db.get(item.uid, rev2)
         self.assertEqual(item.rev, rev2)
         self.assertEqual(item.value, value2)
 
