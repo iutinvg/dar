@@ -1,6 +1,7 @@
 from uuid import uuid4
 import re
 import hashlib
+from collections import OrderedDict
 
 
 CHANGE_FRESH = 'fresh'
@@ -29,18 +30,32 @@ class Change(object):
         self.rev = rev
         self.deleted = deleted
 
+    def __unicode__(self):
+        return self.uid
+
+    def __str__(self):
+        return 'uid: %s; rev: %s; change: %s; deleted: %d' % (self.uid[:6], self.rev[:6], self.change, self.deleted)
+
 
 class Db(object):
     def __init__(self, name=None):
-        self.data = []
+        self.data = {}
         self.changes = []
         self.local = {}
         self.name = name
 
     def get(self, uid, rev=None):
-        item = self._get_item(uid, rev)
-        if not item or item.deleted:
-            raise LookupError
+        items = self.data[uid]
+        if rev:
+            return items[rev]
+
+        for x in reversed(items):
+            item = items[x]
+            break
+
+        if item.deleted:
+            raise LookupError('not found')
+
         return item
 
     def post(self, value):
@@ -49,30 +64,33 @@ class Db(object):
             rev=self._get_rev(),
             value=value
         )
-        self.data.append(new_item)
+        if new_item.uid not in self.data:
+            self.data[new_item.uid] = OrderedDict()
+
+        self.data[new_item.uid][new_item.rev] = new_item
         self._add_change(CHANGE_FRESH, new_item)
         return new_item
 
     def put(self, uid, value):
-        item = self._get_item(uid)
+        item = self.get(uid)
         new_item = Item(
             uid=item.uid,
             rev=self._get_rev(item.rev),
             value=value
         )
-        self.data.append(new_item)
+        self.data[uid][new_item.rev] = new_item
         self._add_change(CHANGE_UPDATED, new_item)
         return new_item
 
     def delete(self, uid):
-        item = self._get_item(uid)
+        item = self.get(uid)
         new_item = Item(
             uid=item.uid,
             rev=self._get_rev(item.rev),
             value=item.value,
             deleted=True
         )
-        self.data.append(new_item)
+        self.data[uid][new_item.rev] = new_item
         self._add_change(CHANGE_DELETED, new_item, new_item.deleted)
         return new_item
 
@@ -83,30 +101,19 @@ class Db(object):
         result = {}
         for uid in revs:
             for rev in revs[uid]:
-                item = self._get_item(uid, rev)
-                if item:
-                    continue
-                if uid not in result:
-                    result[uid] = {'missing': []}
+                # print '%s / %s' % (uid[:10], rev[:10])
+                try:
+                    self.get(uid, rev)
+                except:
+                    if uid not in result:
+                        result[uid] = {'missing': []}
+
                 result[uid]['missing'].append(rev)
         return result
 
     def _add_change(self, change, item, deleted=False):
         c = Change(change, item.uid, item.rev, deleted)
         self.changes.append(c)
-
-    def _get_item(self, uid, rev=None):
-        if rev:
-            for i in reversed(self.data):
-                if i.uid == uid and i.rev == rev:
-                    return i
-            return None
-
-        for i in reversed(self.data):
-            if i.uid == uid:
-                return i
-
-        return None
 
     # generate rev number
     def _get_rev(self, rev=None):
@@ -119,8 +126,8 @@ class Db(object):
         return str(num) + '-' + str(uuid4())
 
     def _conflict(self, uid, parent_rev):
-        parent_item = self._get_item(uid, parent_rev)
-        latest_item = self._get_item(uid)
+        parent_item = self.get(uid, parent_rev)
+        latest_item = self.get(uid)
         if parent_item.rev != latest_item.rev:
             raise ValueError('conflict')
 

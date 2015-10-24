@@ -121,9 +121,13 @@ class DbTest(unittest.TestCase):
 
         r = Replacation(db, db2)
         changes = db.get_changes()
+        # for c in changes:
+        #     print c
         prepared = r.prepare_changes(changes)
-
+        # print prepared
         diff = db2.get_rev_diff(prepared)
+
+        # print diff
 
         d = {
             item.uid: {
@@ -148,6 +152,9 @@ class DbTest(unittest.TestCase):
         prepared = r.prepare_changes(changes)
 
         diff = db2.get_rev_diff(prepared)
+
+        # print diff
+        # return
 
         d = {
             item.uid: {
