@@ -8,9 +8,9 @@ class DbTest(unittest.TestCase):
 
     def test_rev(self):
         db = Db()
-        self.assertEqual(db._get_rev()[:2], '1-')
-        self.assertEqual(db._get_rev('1-')[:2], '2-')
-        self.assertEqual(db._get_rev('boo')[:2], '1-')
+        self.assertEqual(db._generate_rev_num()[:2], '1-')
+        self.assertEqual(db._generate_rev_num('1-')[:2], '2-')
+        self.assertEqual(db._generate_rev_num('boo')[:2], '1-')
 
     def test_post(self):
         db = Db()

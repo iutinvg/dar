@@ -61,7 +61,7 @@ class Db(object):
     def post(self, value):
         new_item = Item(
             uid=str(uuid4()),
-            rev=self._get_rev(),
+            rev=self._generate_rev_num(),
             value=value
         )
         if new_item.uid not in self.data:
@@ -75,7 +75,7 @@ class Db(object):
         item = self.get(uid)
         new_item = Item(
             uid=item.uid,
-            rev=self._get_rev(item.rev),
+            rev=self._generate_rev_num(item.rev),
             value=value
         )
         self.data[uid][new_item.rev] = new_item
@@ -86,7 +86,7 @@ class Db(object):
         item = self.get(uid)
         new_item = Item(
             uid=item.uid,
-            rev=self._get_rev(item.rev),
+            rev=self._generate_rev_num(item.rev),
             value=item.value,
             deleted=True
         )
@@ -116,7 +116,7 @@ class Db(object):
         self.changes.append(c)
 
     # generate rev number
-    def _get_rev(self, rev=None):
+    def _generate_rev_num(self, rev=None):
         try:
             m = re.match('^(\d+)-', rev)
             num = int(m.group(1)) + 1
