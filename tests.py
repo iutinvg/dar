@@ -85,6 +85,20 @@ class DbTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             db._conflict(item.uid, item.rev)
 
+    def test_get_history(self):
+        db = Db()
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+        rev1 = item.rev
+        item = db.put(item.uid, value2)
+
+        db._get_history(item)
+
+        self.assertEquals(item.revs_info[0], item.rev)
+        self.assertEquals(item.revs_info[1], rev1)
+        self.assertEquals(len(item.revs_info), 2)
+
     def test_get(self):
         db = Db()
         value = str(uuid4())

@@ -15,6 +15,7 @@ class Item(object):
         self.rev = rev
         self.value = value
         self.deleted = deleted
+        self.revs_info = []
 
     def __str__(self):
         return dict(uid=self.uid, rev=self.rev, value=self.value, deleted=self.deleted)
@@ -44,7 +45,7 @@ class Db(object):
         self.local = {}
         self.name = name
 
-    def get(self, uid, rev=None):
+    def get(self, uid, rev=None, revs=False):
         items = self.data[uid]
         if rev:
             return items[rev]
@@ -55,6 +56,9 @@ class Db(object):
 
         if item.deleted:
             raise LookupError('not found')
+
+        if revs:
+            self._get_history(item)
 
         return item
 
@@ -130,6 +134,11 @@ class Db(object):
         latest_item = self.get(uid)
         if parent_item.rev != latest_item.rev:
             raise ValueError('conflict')
+
+    def _get_history(self, item):
+        items = self.data[item.uid]
+        for rev in reversed(items):
+            item.revs_info.append(rev)
 
 
 class Replacation(object):
