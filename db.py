@@ -9,6 +9,10 @@ CHANGE_UPDATED = 'updated'
 CHANGE_DELETED = 'deleted'
 
 
+class ConflictException(Exception):
+    pass
+
+
 class Item(object):
     def __init__(self, uid, rev, value, deleted=False):
         self.uid = uid
@@ -86,6 +90,16 @@ class Db(object):
         self._add_change(CHANGE_UPDATED, new_item)
         return new_item
 
+    def merge(self, d):
+        self._conflict(d['uid'], d['revs_info'])
+
+        new_item = Item(
+            uid=d['uid'],
+            rev=d['rev'],
+            value=d['value']
+        )
+        self.data[new_item.uid][new_item.rev] = new_item
+
     def delete(self, uid):
         item = self.get(uid)
         new_item = Item(
@@ -129,11 +143,20 @@ class Db(object):
 
         return str(num) + '-' + str(uuid4())
 
-    def _conflict(self, uid, parent_rev):
-        parent_item = self.get(uid, parent_rev)
+    def _conflict(self, uid, rev_info):
+        if len(rev_info) == 1:
+            return
+
         latest_item = self.get(uid)
-        if parent_item.rev != latest_item.rev:
-            raise ValueError('conflict')
+        self._get_history(latest_item)
+
+        # print 'remote'
+        # print rev_info[1:]
+        # print 'local'
+        # print list(reversed(latest_item.revs_info))
+
+        if rev_info[1:] != list(reversed(latest_item.revs_info)):
+            raise ConflictException
 
     def _get_history(self, item):
         items = self.data[item.uid]

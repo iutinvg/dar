@@ -1,7 +1,7 @@
 from uuid import uuid4
 import unittest
 from db import Db, CHANGE_FRESH, CHANGE_DELETED, CHANGE_UPDATED
-from db import Replacation
+from db import Replacation, ConflictException
 
 
 class DbTest(unittest.TestCase):
@@ -66,24 +66,32 @@ class DbTest(unittest.TestCase):
         with self.assertRaises(LookupError):
             item = db.get(item.uid)
 
-    def test_conflict(self):
+    def test_merge(self):
         db = Db('s')
         value = str(uuid4())
         value2 = str(uuid4())
         item = db.post(value)
 
-        # from pprint import pprint
-        # pprint(db.data)
+        d = dict(uid=item.uid, rev=db._generate_rev_num(item.rev), value=value2)
+        d['revs_info'] = [d['rev'], item.rev]
 
-        try:
-            db._conflict(item.uid, item.rev)
-        except:
-            self.fail('shouldnt raise here')
+        db.merge(d)
 
-        db.put(item.uid, value2)
+        merged = db.get(item.uid)
+        self.assertEqual(merged.value, value2)
+        self.assertEqual(merged.rev, d['rev'])
 
-        with self.assertRaises(ValueError):
-            db._conflict(item.uid, item.rev)
+    def test_merge_with_conflict(self):
+        db = Db('s')
+        value = str(uuid4())
+        value2 = str(uuid4())
+        item = db.post(value)
+
+        d = dict(uid=item.uid, rev=db._generate_rev_num(item.rev), value=value2)
+        d['revs_info'] = [d['rev'], 'boo!']   # <--- wrong parent
+
+        with self.assertRaises(ConflictException):
+            db.merge(d)
 
     def test_get_history(self):
         db = Db()
