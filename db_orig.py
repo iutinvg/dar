@@ -22,7 +22,16 @@ class Item(object):
         self.revs_info = []
 
     def __str__(self):
-        return dict(uid=self.uid, rev=self.rev, value=self.value, deleted=self.deleted)
+        return str(self.to_dict())
+
+    def to_dict(self):
+        return dict(
+            uid=self.uid,
+            rev=self.rev,
+            value=self.value,
+            deleted=self.deleted,
+            revs_info=self.revs_info,
+        )
 
 
 class Change(object):
@@ -185,7 +194,20 @@ class Replacation(object):
         source_changes_prepared = self.prepare_changes(source_changes)
 
         # step 5: diff
-        self.target.get_rev_diff(source_changes_prepared)
+        diff = self.target.get_rev_diff(source_changes_prepared)
+
+        # step 6: GET all missing revs
+        missing = []
+        for uid in diff:
+            for rev in diff[uid]['missing']:
+                i = self.source.get(uid, rev, revs=True)
+                missing.append(i.to_dict())
+
+        # step 7: merge
+        for d in missing:
+            self.target.merge(d)
+
+
 
     def prepare_changes(self, changes):
         result = {}
