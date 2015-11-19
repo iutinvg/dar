@@ -1,12 +1,18 @@
-class BaseDb(object):
+class BaseDriver(object):
     def __init__(self, name):
         self.name = name
 
-    def post(self, document):
+    def post(self, value, uid=None):
         """
         Create a new document in a database.
 
-        document -- a document to store
+        value -- value to store
         returns ``Document`` instance
         """
+        raise NotImplementedError
+
+    def put(self, uid, value):
+        raise NotImplementedError
+
+    def get(self, uid, rev=None):
         raise NotImplementedError

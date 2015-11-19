@@ -2,7 +2,8 @@ from uuid import uuid4
 import unittest
 # from db import Db, CHANGE_FRESH, CHANGE_DELETED, CHANGE_UPDATED
 # from db import Replacation, ConflictException
-from document import Document
+
+from db.document import Document
 
 
 class DocumentTest(unittest.TestCase):
