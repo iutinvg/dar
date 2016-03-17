@@ -40,16 +40,15 @@ class DB(object):
         return Result(uid, value, item.rev)
 
     def put_bulk(self, uid, items):
-        pass
-        # history = self.storage[uid]
-        # if history[-1].rev != items[0]:
-        #     raise DataError('rev not match')
+        last_item = self.get(uid)
 
-        # res = []
-        # for i in items:
-        #     last_item = self.get(uid)
-        #     self.put(i.value, uid, last_item.rev)
-        # return [self.put(r.value, r.uid, r.rev) for r in results]
+        rev = last_item.rev
+        for i in items:
+            if i.rev != self.rev(i.value, rev):
+                raise DataError('bulk put broken integrity')
+            rev = i.rev
+
+        self.storage[uid].extend(items)
 
     def get(self, uid):
         if uid not in self.storage:

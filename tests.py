@@ -2,7 +2,7 @@ import hashlib
 import unittest
 from uuid import uuid4
 
-from dar.db import DB, DataError, NotFoundError, Result
+from dar.db import DB, DataError, NotFoundError, Item
 
 
 # from uuid import uuid4
@@ -69,22 +69,43 @@ class DBTest(unittest.TestCase):
 
     def test_put_bulk(self):
         value = str(uuid4())
-        res = self.db.put(value)
+        first = self.db.put(value)
+        rev = first.rev
 
-        results = []
+        items = []
 
         for i in range(0, 100):
             value = str(uuid4())
-            res = Result(
-                res.uid,
-                value,
-                self.db.rev(value, res.rev)
+            res = Item(
+                value=value,
+                rev=self.db.rev(value, rev)
             )
-            results.append(res)
+            rev = res.rev
+            items.append(res)
 
-        self.db.put_bulk(results)
+        self.db.put_bulk(first.uid, items)
 
-        self.assertEqual(res, self.db.get(res.uid))
+        self.assertEqual(res.value, self.db.get(first.uid).value)
+
+    def test_put_bulk_broken(self):
+        value = str(uuid4())
+        first = self.db.put(value)
+        rev = first.rev
+
+        items = []
+
+        for i in range(0, 10):
+            value = str(uuid4())
+            res = Item(
+                value=value,
+                rev=self.db.rev(value, rev)
+            )
+            rev = res.rev
+            items.append(res)
+
+        items[4] = Item('val', 'rev')
+        with self.assertRaises(DataError):
+            self.db.put_bulk(first.uid, items)
 
     def test_get_not_found(self):
         with self.assertRaises(NotFoundError):
