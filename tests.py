@@ -2,7 +2,7 @@ import hashlib
 import unittest
 from uuid import uuid4
 
-from dar.db import DB, DataError
+from dar.db import DB, DataError, NotFoundError, Result
 
 
 # from uuid import uuid4
@@ -30,6 +30,9 @@ class DBTest(unittest.TestCase):
     def test_put_first_broken_rev(self):
         with self.assertRaises(DataError):
             self.db.put('val', 'uid', 'rev')
+
+        with self.assertRaises(DataError):
+            self.db.put('val', None, 'rev')
 
     def test_put_broken_rev(self):
         res = self.db.put(str(uuid4()))
@@ -63,6 +66,34 @@ class DBTest(unittest.TestCase):
             self.assertEqual(res.value, value)
             self.assertEqual(res.rev, hashlib.sha1('None' + str(value)).hexdigest())
             self.assertIsNotNone(res.uid)
+
+    def test_put_bulk(self):
+        value = str(uuid4())
+        res = self.db.put(value)
+
+        results = []
+
+        for i in range(0, 100):
+            value = str(uuid4())
+            res = Result(
+                res.uid,
+                value,
+                self.db.rev(value, res.rev)
+            )
+            results.append(res)
+
+        self.db.put_bulk(results)
+
+        self.assertEqual(res, self.db.get(res.uid))
+
+    def test_get_not_found(self):
+        with self.assertRaises(NotFoundError):
+            self.db.get('uid')
+
+    def test_get(self):
+        value = str(uuid4())
+        res = self.db.put(value)
+        self.assertEqual(res, self.db.get(res.uid))
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,12 +29,35 @@ class DB(object):
 
         history = self.storage[uid]
 
-        if len(history) and history[-1].rev != rev:
-            raise DataError('rev not match')
+        if len(history):
+            if history[-1].rev != rev:
+                raise DataError('rev not match')
+        elif rev:
+            raise DataError('rev does not make sense')
 
         item = Item(value, self.rev(value, rev))
         history.append(item)
         return Result(uid, value, item.rev)
+
+    def put_bulk(self, uid, items):
+        pass
+        # history = self.storage[uid]
+        # if history[-1].rev != items[0]:
+        #     raise DataError('rev not match')
+
+        # res = []
+        # for i in items:
+        #     last_item = self.get(uid)
+        #     self.put(i.value, uid, last_item.rev)
+        # return [self.put(r.value, r.uid, r.rev) for r in results]
+
+    def get(self, uid):
+        if uid not in self.storage:
+            raise NotFoundError
+
+        item = self.storage[uid][-1]
+
+        return Result(uid, item.value, item.rev)
 
     def rev(self, value, rev):
         return hashlib.sha1(str(rev) + str(value)).hexdigest()
