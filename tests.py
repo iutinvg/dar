@@ -2,7 +2,7 @@ import hashlib
 import unittest
 from uuid import uuid4
 
-from dar.db import DB, DataError, NotFoundError, Item
+from dar.db import DB, DataError, NotFoundError, Item, ChangeType
 
 
 # from uuid import uuid4
@@ -141,6 +141,42 @@ class DBTest(unittest.TestCase):
     def test_remove_not_found(self):
         with self.assertRaises(NotFoundError):
             self.db.remove('some-uid', 'bad_rev')
+
+    def test_local_new(self):
+        res1 = self.db.put('val')
+
+        changes = self.db.local_get()
+
+        self.assertEqual(changes[0].value, ChangeType.FRESH)
+        self.assertEqual(changes[0].rev, res1.rev)
+        self.assertEqual(changes[0].uid, res1.uid)
+
+    def test_local_update(self):
+        res1 = self.db.put('val')
+        res2 = self.db.put('value', res1.uid, res1.rev)
+
+        changes = self.db.local_get()
+
+        self.assertEqual(changes[0].value, ChangeType.FRESH)
+        self.assertEqual(changes[0].rev, res1.rev)
+        self.assertEqual(changes[0].uid, res1.uid)
+        self.assertEqual(changes[1].value, ChangeType.UPDATED)
+        self.assertEqual(changes[1].rev, res2.rev)
+        self.assertEqual(changes[1].uid, res2.uid)
+
+    def test_local_remove(self):
+        res1 = self.db.put('val')
+        res2 = self.db.remove(res1.uid, res1.rev)
+
+        changes = self.db.local_get()
+
+        self.assertEqual(changes[0].value, ChangeType.FRESH)
+        self.assertEqual(changes[0].rev, res1.rev)
+        self.assertEqual(changes[0].uid, res1.uid)
+        self.assertEqual(changes[1].value, ChangeType.DELETED)
+        self.assertEqual(changes[1].rev, res2.rev)
+        self.assertEqual(changes[1].uid, res2.uid)
+
 
 if __name__ == '__main__':
     unittest.main()

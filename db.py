@@ -18,19 +18,23 @@ Item = namedtuple('Item', 'value, rev, deleted')
 Result = namedtuple('Result', 'uid, value, rev')
 
 
-# class ChangeType:
-#     FRESH = 0
-#     UPDATED = 1
-#     DELETED = 2
+class ChangeType:
+    FRESH = 0
+    UPDATED = 1
+    DELETED = 2
 
 
 class DB(object):
     def __init__(self, name):
         self.name = name
         self.storage = defaultdict(list)
+        self.local = []  # local storage
 
     def put(self, value, uid=None, rev=None):
-        if not uid:
+        if uid:
+            change = ChangeType.UPDATED
+        else:
+            change = ChangeType.FRESH
             uid = self.uid()
 
         history = self.storage[uid]
@@ -43,6 +47,9 @@ class DB(object):
 
         item = Item(value, self.rev(value, rev), False)
         history.append(item)
+
+        self.local_put(Result(uid, change, item.rev))
+
         return Result(uid, value, item.rev)
 
     def put_bulk(self, uid, items):
@@ -80,7 +87,16 @@ class DB(object):
 
         item = Item(None, self.rev(None, rev), True)
         history.append(item)
+
+        self.local_put(Result(uid, ChangeType.DELETED, item.rev))
+
         return Result(uid, item.value, item.rev)
+
+    def local_put(self, value):
+        self.local.append(value)
+
+    def local_get(self, since=0):
+        return self.local[since:]
 
     def rev(self, value, rev):
         return hashlib.sha1(str(rev) + str(value)).hexdigest()
