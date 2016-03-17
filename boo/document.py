@@ -3,7 +3,7 @@ import unittest
 # from db import Db, CHANGE_FRESH, CHANGE_DELETED, CHANGE_UPDATED
 # from db import Replacation, ConflictException
 
-from db.document import Document
+from dar.document import Document
 
 
 class DocumentTest(unittest.TestCase):
