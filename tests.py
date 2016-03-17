@@ -27,6 +27,10 @@ class DBTest(unittest.TestCase):
         self.assertEqual(res.rev, hashlib.sha1('None' + str(value)).hexdigest())
         self.assertIsNotNone(res.uid)
 
+    def test_put_first_broken_rev(self):
+        with self.assertRaises(DataError):
+            self.db.put('val', 'uid', 'rev')
+
     def test_put_broken_rev(self):
         res = self.db.put(str(uuid4()))
         with self.assertRaises(DataError):
