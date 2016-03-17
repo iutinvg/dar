@@ -78,7 +78,8 @@ class DBTest(unittest.TestCase):
             value = str(uuid4())
             res = Item(
                 value=value,
-                rev=self.db.rev(value, rev)
+                rev=self.db.rev(value, rev),
+                deleted=False
             )
             rev = res.rev
             items.append(res)
@@ -98,12 +99,13 @@ class DBTest(unittest.TestCase):
             value = str(uuid4())
             res = Item(
                 value=value,
-                rev=self.db.rev(value, rev)
+                rev=self.db.rev(value, rev),
+                deleted=False
             )
             rev = res.rev
             items.append(res)
 
-        items[4] = Item('val', 'rev')
+        items[4] = Item('val', 'rev', False)
         with self.assertRaises(DataError):
             self.db.put_bulk(first.uid, items)
 
@@ -115,6 +117,30 @@ class DBTest(unittest.TestCase):
         value = str(uuid4())
         res = self.db.put(value)
         self.assertEqual(res, self.db.get(res.uid))
+
+    def test_remove(self):
+        value = str(uuid4())
+        res = self.db.put(value)
+        self.db.remove(res.uid, res.rev)
+        with self.assertRaises(NotFoundError):
+            res = self.db.get(res.uid)
+
+    def test_remove_and_put(self):
+        value = str(uuid4())
+        res = self.db.put(value)
+        self.db.remove(res.uid, res.rev)
+        with self.assertRaises(DataError):
+            res = self.db.put('new vale', res.uid)
+
+    def test_remove_bad_rev(self):
+        value = str(uuid4())
+        res = self.db.put(value)
+        with self.assertRaises(DataError):
+            self.db.remove(res.uid, 'bad_rev')
+
+    def test_remove_not_found(self):
+        with self.assertRaises(NotFoundError):
+            self.db.remove('some-uid', 'bad_rev')
 
 if __name__ == '__main__':
     unittest.main()

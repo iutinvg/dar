@@ -12,10 +12,16 @@ class NotFoundError(Exception):
 
 
 # InternalItems are stored in db
-Item = namedtuple('Item', 'value, rev')
+Item = namedtuple('Item', 'value, rev, deleted')
 
 # Result are return is operations result
 Result = namedtuple('Result', 'uid, value, rev')
+
+
+# class ChangeType:
+#     FRESH = 0
+#     UPDATED = 1
+#     DELETED = 2
 
 
 class DB(object):
@@ -35,7 +41,7 @@ class DB(object):
         elif rev:
             raise DataError('rev does not make sense')
 
-        item = Item(value, self.rev(value, rev))
+        item = Item(value, self.rev(value, rev), False)
         history.append(item)
         return Result(uid, value, item.rev)
 
@@ -55,7 +61,25 @@ class DB(object):
             raise NotFoundError
 
         item = self.storage[uid][-1]
+        if item.deleted:
+            raise NotFoundError('item deleted')
 
+        return Result(uid, item.value, item.rev)
+
+    def remove(self, uid, rev):
+        if uid not in self.storage:
+            raise NotFoundError
+
+        history = self.storage[uid]
+
+        if len(history):
+            if history[-1].rev != rev:
+                raise DataError('rev not match')
+        else:
+            raise DataError('rev does not make sense')
+
+        item = Item(None, self.rev(None, rev), True)
+        history.append(item)
         return Result(uid, item.value, item.rev)
 
     def rev(self, value, rev):
