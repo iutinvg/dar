@@ -1,4 +1,5 @@
-from collections import defaultdict, namedtuple
+from collections import defaultdict, namedtuple, OrderedDict
+from itertools import islice
 import hashlib
 import uuid
 
@@ -12,10 +13,12 @@ class NotFoundError(Exception):
 
 
 # InternalItems are stored in db
-Item = namedtuple('Item', 'value, rev, deleted')
+Item = namedtuple('Item', 'value, deleted')
+HistoryItem = namedtuple('HistoryItem', 'uid, change_type')
 
 # Result are return is operations result
 Result = namedtuple('Result', 'uid, value, rev')
+HistoryResult = namedtuple('HistoryResult', 'seq, change_type, rev')
 
 
 class ChangeType:
@@ -27,8 +30,8 @@ class ChangeType:
 class DB(object):
     def __init__(self, name):
         self.name = name
-        self.storage = defaultdict(list)
-        self.changes = []
+        self.storage = defaultdict(OrderedDict)
+        self.changes = OrderedDict()
         self.local = {}  # local storage
 
     def put(self, value, uid=None, rev=None):
@@ -41,17 +44,18 @@ class DB(object):
         history = self.storage[uid]
 
         if len(history):
-            if history[-1].rev != rev:
+            if next(reversed(history)) != rev:
                 raise DataError('rev not match')
         elif rev:
             raise DataError('rev does not make sense')
 
-        item = Item(value, self.rev(value, rev), False)
-        history.append(item)
+        rev = self.rev(value, rev)
+        item = Item(value, False)
+        history[rev] = item
 
-        self.changes_put(Result(uid, change, item.rev))
+        self.changes_put(uid, rev, change)
 
-        return Result(uid, value, item.rev)
+        return Result(uid, value, rev)
 
     def put_bulk(self, uid, items):
         if uid in self.storage:
@@ -71,11 +75,13 @@ class DB(object):
         if uid not in self.storage:
             raise NotFoundError
 
-        item = self.storage[uid][-1]
+        history = self.storage[uid]
+        rev = next(reversed(history))
+        item = history[rev]
         if item.deleted:
             raise NotFoundError('item deleted')
 
-        return Result(uid, item.value, item.rev)
+        return Result(uid, item.value, rev)
 
     def remove(self, uid, rev):
         if uid not in self.storage:
@@ -84,23 +90,30 @@ class DB(object):
         history = self.storage[uid]
 
         if len(history):
-            if history[-1].rev != rev:
+            if next(reversed(history)) != rev:
                 raise DataError('rev not match')
         else:
             raise DataError('rev does not make sense')
 
-        item = Item(None, self.rev(None, rev), True)
-        history.append(item)
+        rev = self.rev(None, rev)
 
-        self.changes_put(Result(uid, ChangeType.DELETED, item.rev))
+        item = Item(None, True)
+        history[rev] = item
 
-        return Result(uid, item.value, item.rev)
+        self.changes_put(uid, rev, ChangeType.DELETED)
 
-    def changes_put(self, value):
-        self.changes.append(value)
+        return Result(uid, item.value, rev)
+
+    def changes_put(self, uid, rev, change_type):
+        self.changes[rev] = HistoryItem(uid, change_type)
 
     def changes_get(self, since=0):
-        return self.changes[since:]
+        for i, rev in enumerate(islice(self.changes.iterkeys(), since, None), since):
+            yield HistoryResult(
+                seq=i,
+                change_type=self.changes[rev].change_type,
+                rev=rev
+            )
 
     def rev(self, value, rev):
         return hashlib.sha1(str(rev) + str(value)).hexdigest()
