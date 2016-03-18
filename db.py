@@ -54,9 +54,12 @@ class DB(object):
         return Result(uid, value, item.rev)
 
     def put_bulk(self, uid, items):
-        last_item = self.get(uid)
+        if uid in self.storage:
+            last_item = self.get(uid)
+            rev = last_item.rev
+        else:
+            rev = None
 
-        rev = last_item.rev
         for i in items:
             if i.rev != self.rev(i.value, rev):
                 raise DataError('bulk put broken integrity')
