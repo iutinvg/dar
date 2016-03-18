@@ -88,6 +88,25 @@ class DBTest(unittest.TestCase):
 
         self.assertEqual(res.value, self.db.get(first.uid).value)
 
+    def test_put_bulk_new(self):
+        rev = None
+        uid = str(uuid4())
+        items = []
+
+        for i in range(0, 100):
+            value = str(uuid4())
+            res = Item(
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
+
+        self.db.put_bulk(uid, items)
+
+        self.assertEqual(res.value, self.db.get(uid).value)
+
     def test_put_bulk_broken(self):
         value = str(uuid4())
         first = self.db.put(value)
