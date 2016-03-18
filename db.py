@@ -115,6 +115,21 @@ class DB(object):
                 rev=rev
             )
 
+    def changes_get_grouped(self, since=0):
+        res = defaultdict(list)
+        for rev in islice(self.changes.iterkeys(), since, None):
+            hi = self.changes[rev]
+            res[hi.uid].append(rev)
+        return res
+
+    def changes_get_diff(self, grouped):
+        res = defaultdict(list)
+        for uid, revs in grouped.iteritems():
+            for rev in revs:
+                if rev not in self.changes:
+                    res[uid].append(rev)
+        return res
+
     def rev(self, value, rev):
         return hashlib.sha1(str(rev) + str(value)).hexdigest()
 

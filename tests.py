@@ -1,6 +1,8 @@
+from collections import defaultdict
 import hashlib
 import unittest
 from uuid import uuid4
+
 from dar.db import DB, DataError, NotFoundError, ChangeType
 # from dar.db import HistoryResult
 
@@ -211,6 +213,44 @@ class DBTest(unittest.TestCase):
         self.assertEqual(changes[0].change_type, ChangeType.DELETED)
         self.assertEqual(changes[0].rev, res2.rev)
         self.assertEqual(changes[0].seq, 1)
+
+    def test_changes_grouped(self):
+        res1 = self.db.put('val1')
+        res2 = self.db.put('val2')
+        res3 = self.db.put('val3', res1.uid, res1.rev)
+
+        grouped = self.db.changes_get_grouped()
+
+        self.assertEqual(len(grouped), 2)
+        self.assertIn(res1.uid, grouped)
+        self.assertIn(res2.uid, grouped)
+
+        self.assertIn(res1.rev, grouped[res1.uid])
+        self.assertIn(res3.rev, grouped[res1.uid])
+
+        self.assertIn(res2.rev, grouped[res2.uid])
+
+    def test_changed_get_diff_same(self):
+        res1 = self.db.put('val1')
+        self.db.put('val2')
+        self.db.put('val3', res1.uid, res1.rev)
+
+        grouped = self.db.changes_get_grouped()
+
+        self.assertEqual(defaultdict(list), self.db.changes_get_diff(grouped))
+
+    def test_changed_get_diff_not_empty(self):
+        res1 = self.db.put('val1')
+        self.db.put('val2')
+        self.db.put('val3', res1.uid, res1.rev)
+
+        grouped = self.db.changes_get_grouped()
+        grouped[res1.uid].append('new-rev')
+
+        expected = defaultdict(list)
+        expected[res1.uid].append('new-rev')
+
+        self.assertEqual(expected, self.db.changes_get_diff(grouped))
 
     # def test_update_bulk(self):
     #     value = str(uuid4())
