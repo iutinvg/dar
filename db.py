@@ -17,7 +17,7 @@ Item = namedtuple('Item', 'value, deleted')
 HistoryItem = namedtuple('HistoryItem', 'uid, change_type')
 
 # Result are return is operations result
-Result = namedtuple('Result', 'uid, value, rev')
+Result = namedtuple('Result', 'uid, value, rev, deleted')
 HistoryResult = namedtuple('HistoryResult', 'seq, change_type, rev')
 
 
@@ -55,7 +55,7 @@ class DB(object):
 
         self.changes_put(uid, rev, change)
 
-        return Result(uid, value, rev)
+        return Result(uid, value, rev, False)
 
     def put_bulk(self, uid, items):
         if uid in self.storage:
@@ -87,7 +87,7 @@ class DB(object):
         if item.deleted:
             raise NotFoundError('item deleted')
 
-        return Result(uid, item.value, rev)
+        return Result(uid, item.value, rev, False)
 
     def remove(self, uid, rev):
         if uid not in self.storage:
@@ -108,7 +108,7 @@ class DB(object):
 
         self.changes_put(uid, rev, ChangeType.DELETED)
 
-        return Result(uid, item.value, rev)
+        return Result(uid, item.value, rev, True)
 
     def changes_put(self, uid, rev, change_type):
         self.changes[rev] = HistoryItem(uid, change_type)

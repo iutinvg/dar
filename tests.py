@@ -152,7 +152,8 @@ class DBTest(unittest.TestCase):
     def test_remove(self):
         value = str(uuid4())
         res = self.db.put(value)
-        self.db.remove(res.uid, res.rev)
+        res = self.db.remove(res.uid, res.rev)
+        self.assertEqual(res.deleted, True)
         with self.assertRaises(NotFoundError):
             res = self.db.get(res.uid)
 
