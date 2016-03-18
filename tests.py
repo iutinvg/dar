@@ -142,20 +142,20 @@ class DBTest(unittest.TestCase):
         with self.assertRaises(NotFoundError):
             self.db.remove('some-uid', 'bad_rev')
 
-    def test_local_new(self):
+    def test_changes_new(self):
         res1 = self.db.put('val')
 
-        changes = self.db.local_get()
+        changes = self.db.changes_get()
 
         self.assertEqual(changes[0].value, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
         self.assertEqual(changes[0].uid, res1.uid)
 
-    def test_local_update(self):
+    def test_changes_update(self):
         res1 = self.db.put('val')
         res2 = self.db.put('value', res1.uid, res1.rev)
 
-        changes = self.db.local_get()
+        changes = self.db.changes_get()
 
         self.assertEqual(changes[0].value, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
@@ -164,11 +164,11 @@ class DBTest(unittest.TestCase):
         self.assertEqual(changes[1].rev, res2.rev)
         self.assertEqual(changes[1].uid, res2.uid)
 
-    def test_local_remove(self):
+    def test_changes_remove(self):
         res1 = self.db.put('val')
         res2 = self.db.remove(res1.uid, res1.rev)
 
-        changes = self.db.local_get()
+        changes = self.db.changes_get()
 
         self.assertEqual(changes[0].value, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
@@ -176,6 +176,36 @@ class DBTest(unittest.TestCase):
         self.assertEqual(changes[1].value, ChangeType.DELETED)
         self.assertEqual(changes[1].rev, res2.rev)
         self.assertEqual(changes[1].uid, res2.uid)
+
+    def test_update_bulk(self):
+        value = str(uuid4())
+        first = self.db.put(value)
+        rev = first.rev
+
+        items = []
+
+        for i in range(0, 10):
+            value = str(uuid4())
+            res = Item(
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
+
+        self.db.put_bulk(first.uid, items)
+
+        changes = self.db.changes_get()
+
+        self.assertEquals(len(changes), 11)
+
+        self.assertEqual(changes[0].value, ChangeType.FRESH)
+        self.assertEqual(changes[0].rev, first.rev)
+        self.assertEqual(changes[0].uid, first.uid)
+        self.assertEqual(changes[-1].value, ChangeType.UPDATED)
+        self.assertEqual(changes[-1].rev, res.rev)
+        self.assertEqual(changes[-1].uid, res.uid)
 
 
 if __name__ == '__main__':
