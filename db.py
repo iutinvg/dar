@@ -71,12 +71,18 @@ class DB(object):
 
         self.storage[uid].extend(items)
 
-    def get(self, uid):
+    def get(self, uid, rev=None):
         if uid not in self.storage:
             raise NotFoundError
 
         history = self.storage[uid]
-        rev = next(reversed(history))
+
+        if rev:
+            if rev not in history:
+                raise NotFoundError('unknown revision')
+        else:
+            rev = next(reversed(history))
+
         item = history[rev]
         if item.deleted:
             raise NotFoundError('item deleted')

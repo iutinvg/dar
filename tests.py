@@ -132,6 +132,23 @@ class DBTest(unittest.TestCase):
         res = self.db.put(value)
         self.assertEqual(res, self.db.get(res.uid))
 
+    def test_get_with_rev(self):
+        value1 = str(uuid4())
+        res1 = self.db.put(value1)
+        first_rev = res1.rev
+        value2 = str(uuid4())
+        self.db.put(value2, res1.uid, res1.rev)
+
+        self.assertEqual(res1, self.db.get(res1.uid, first_rev))
+        self.assertEqual(res1.value, value1)
+
+    def test_get_with_rev_wrong(self):
+        value1 = str(uuid4())
+        res1 = self.db.put(value1)
+
+        with self.assertRaises(NotFoundError):
+            self.db.get(res1.uid, 'wrong_rev')
+
     def test_remove(self):
         value = str(uuid4())
         res = self.db.put(value)
