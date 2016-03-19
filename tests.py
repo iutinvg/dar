@@ -2,9 +2,11 @@ from collections import defaultdict
 import hashlib
 import unittest
 from uuid import uuid4
+import random
 
 from dar.db import DB, DataError, NotFoundError, ChangeType
 from dar.db import Result
+from dar.repl import Repl
 
 
 class DBTest(unittest.TestCase):
@@ -304,36 +306,81 @@ class DBTest(unittest.TestCase):
 
         self.assertEqual(expected, self.db.changes_get_diff(grouped))
 
-    # def test_update_bulk(self):
-    #     value = str(uuid4())
-    #     first = self.db.put(value)
-    #     rev = first.rev
+    def test_seq(self):
+        self.assertEqual(self.db.changes_get_size(), 0)
 
-    #     items = []
+        res1 = self.db.put('val1')
+        self.db.put('val2')
+        self.db.put('val3', res1.uid, res1.rev)
 
-    #     for i in range(0, 10):
-    #         value = str(uuid4())
-    #         res = Item(
-    #             value=value,
-    #             rev=self.db.rev(value, rev),
-    #             deleted=False
-    #         )
-    #         rev = res.rev
-    #         items.append(res)
+        self.assertEqual(self.db.changes_get_size(), 3)
 
-    #     self.db.put_bulk(first.uid, items)
+    def test_local_put(self):
+        r = random.randint(1, 1000)
+        uid = str(uuid4())
+        self.db.local_put(uid, r)
 
-    #     changes = self.db.changes_get()
+        self.assertEqual(self.db.local[uid], r)
 
-    #     self.assertEquals(len(changes), 11)
+    def test_local_get(self):
+        uid = str(uuid4())
+        self.assertEqual(self.db.local_get(uid), 0)
 
-    #     self.assertEqual(changes[0].value, ChangeType.FRESH)
-    #     self.assertEqual(changes[0].rev, first.rev)
-    #     self.assertEqual(changes[0].uid, first.uid)
-    #     self.assertEqual(changes[-1].value, ChangeType.UPDATED)
-    #     self.assertEqual(changes[-1].rev, res.rev)
-    #     self.assertEqual(changes[-1].uid, res.uid)
+        r = random.randint(1, 1000)
+        self.db.local[uid] = r
+        self.assertEqual(self.db.local_get(uid), r)
 
+
+class ReplTest(unittest.TestCase):
+    def setUp(self):
+        super(ReplTest, self).setUp()
+        self.source = DB(str(uuid4()))
+        self.target = DB(str(uuid4()))
+        self.repl = Repl(self.source, self.target)
+
+    def test_uid(self):
+        source = DB(str(uuid4()))
+        target = DB(str(uuid4()))
+        repl = Repl(source, target)
+        self.assertEqual(
+            hashlib.sha1(source.name + target.name).hexdigest(),
+            repl.uid
+        )
+
+    def test_get_last_seq(self):
+        self.assertEqual(self.repl.get_last_seq(), 0)
+
+        r = random.randint(1, 1000)
+        self.target.local[self.repl.uid] = r
+        self.assertEqual(self.repl.get_last_seq(), r)
+
+    def test_get_diff_docs_single(self):
+        s_res1 = self.source.put('val1')
+
+        d = {s_res1.uid: [s_res1.rev]}
+
+        diff_docs = list(self.repl.get_diff_docs(d))
+
+        self.assertEqual([s_res1], diff_docs)
+
+    def test_get_diff_docs_two(self):
+        s_res1 = self.source.put('val1')
+        s_res2 = self.source.put('val2')
+
+        d = {
+            s_res1.uid: [s_res1.rev],
+            s_res2.uid: [s_res2.rev]
+        }
+
+        diff_docs = list(self.repl.get_diff_docs(d))
+
+        self.assertIn(s_res1, diff_docs)
+        self.assertIn(s_res2, diff_docs)
+        self.assertEqual(2, len(diff_docs))
+
+    def test_get_diff_docs_empty(self):
+        diff_docs = list(self.repl.get_diff_docs({}))
+        self.assertEqual(0, len(diff_docs))
 
 if __name__ == '__main__':
     unittest.main()

@@ -16,7 +16,7 @@ class NotFoundError(Exception):
 Item = namedtuple('Item', 'value, deleted')
 HistoryItem = namedtuple('HistoryItem', 'uid, change_type')
 
-# Result are return is operations result
+# Result is operations result
 Result = namedtuple('Result', 'uid, value, rev, deleted')
 HistoryResult = namedtuple('HistoryResult', 'seq, change_type, rev')
 
@@ -136,6 +136,9 @@ class DB(object):
                 rev=rev
             )
 
+    def changes_get_size(self):
+        return len(self.changes)
+
     def changes_get_grouped(self, since=0):
         res = defaultdict(list)
         for rev in islice(self.changes.iterkeys(), since, None):
@@ -150,6 +153,12 @@ class DB(object):
                 if rev not in self.changes:
                     res[uid].append(rev)
         return res
+
+    def local_put(self, uid, value):
+        self.local[uid] = value
+
+    def local_get(self, uid, default=0):
+        return self.local.get(uid, default)
 
     def rev(self, value, rev):
         return hashlib.sha1(str(rev) + str(value)).hexdigest()
