@@ -57,19 +57,34 @@ class DB(object):
 
         return Result(uid, value, rev, False)
 
-    def put_bulk(self, uid, items):
-        if uid in self.storage:
-            last_item = self.get(uid)
-            rev = last_item.rev
+    def put_bulk(self, results):
+        """Bulk adding of revisions.
+
+        Similar to http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API
+        in `"new_edits":false`
+
+        Params:
+            `results` list of `Result` tuples
+        """
+        return [self._put_existing(i) for i in results]
+
+    def _put_existing(self, i):
+        if i.uid in self.storage:
+            rev = next(reversed(self.storage[i.uid]))
+            last = self.storage[i.uid][rev]
+            change_type = ChangeType.DELETED if last.deleted else ChangeType.UPDATED
         else:
+            change_type = ChangeType.FRESH
             rev = None
 
-        for i in items:
-            if i.rev != self.rev(i.value, rev):
-                raise DataError('bulk put broken integrity')
-            rev = i.rev
+        if i.rev != self.rev(i.value, rev):
+            return DataError('bulk put broken integrity %s' % str(i))
 
-        self.storage[uid].extend(items)
+        self.storage[i.uid][i.rev] = Item(
+            i.value, i.deleted
+        )
+        self.changes_put(i.uid, i.rev, change_type)
+        return i
 
     def get(self, uid, rev=None):
         if uid not in self.storage:

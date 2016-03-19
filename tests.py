@@ -4,7 +4,7 @@ import unittest
 from uuid import uuid4
 
 from dar.db import DB, DataError, NotFoundError, ChangeType
-# from dar.db import HistoryResult
+from dar.db import Result
 
 
 class DBTest(unittest.TestCase):
@@ -62,66 +62,100 @@ class DBTest(unittest.TestCase):
             self.assertEqual(res.rev, hashlib.sha1('None' + str(value)).hexdigest())
             self.assertIsNotNone(res.uid)
 
-    # def test_put_bulk(self):
-    #     value = str(uuid4())
-    #     first = self.db.put(value)
-    #     rev = first.rev
+    def test_put_bulk(self):
+        value = str(uuid4())
+        first = self.db.put(value)
+        rev = first.rev
 
-    #     items = []
+        items = []
 
-    #     for i in range(0, 100):
-    #         value = str(uuid4())
-    #         res = Item(
-    #             value=value,
-    #             rev=self.db.rev(value, rev),
-    #             deleted=False
-    #         )
-    #         rev = res.rev
-    #         items.append(res)
+        for i in range(0, 100):
+            value = str(uuid4())
+            res = Result(
+                uid=first.uid,
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
 
-    #     self.db.put_bulk(first.uid, items)
+        self.db.put_bulk(items)
 
-    #     self.assertEqual(res.value, self.db.get(first.uid).value)
+        self.assertEqual(res.value, self.db.get(first.uid).value)
 
-    # def test_put_bulk_new(self):
-    #     rev = None
-    #     uid = str(uuid4())
-    #     items = []
+    def test_put_bulk_new(self):
+        rev = None
+        uid = str(uuid4())
+        items = []
 
-    #     for i in range(0, 100):
-    #         value = str(uuid4())
-    #         res = Item(
-    #             value=value,
-    #             rev=self.db.rev(value, rev),
-    #             deleted=False
-    #         )
-    #         rev = res.rev
-    #         items.append(res)
+        for i in range(0, 100):
+            value = str(uuid4())
+            res = Result(
+                uid=uid,
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
 
-    #     self.db.put_bulk(uid, items)
+        self.db.put_bulk(items)
 
-    #     self.assertEqual(res.value, self.db.get(uid).value)
+        self.assertEqual(res.value, self.db.get(uid).value)
 
-    # def test_put_bulk_broken(self):
-    #     value = str(uuid4())
-    #     first = self.db.put(value)
-    #     rev = first.rev
+    def test_put_bulk_deleted(self):
+        rev = None
+        uid = str(uuid4())
+        items = []
 
-    #     items = []
+        for i in range(0, 100):
+            value = str(uuid4())
+            res = Result(
+                uid=uid,
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
 
-    #     for i in range(0, 10):
-    #         value = str(uuid4())
-    #         res = Item(
-    #             value=value,
-    #             rev=self.db.rev(value, rev),
-    #             deleted=False
-    #         )
-    #         rev = res.rev
-    #         items.append(res)
+        res = Result(
+            uid=uid,
+            value=None,
+            rev=self.db.rev(None, rev),
+            deleted=True
+        )
+        items.append(res)
 
-    #     items[4] = Item('val', 'rev', False)
-    #     with self.assertRaises(DataError):
-    #         self.db.put_bulk(first.uid, items)
+        self.db.put_bulk(items)
+
+        with self.assertRaises(NotFoundError):
+            self.db.get(uid)
+
+    def test_put_bulk_broken(self):
+        value = str(uuid4())
+        first = self.db.put(value)
+        rev = first.rev
+
+        items = []
+
+        for i in range(0, 10):
+            value = str(uuid4())
+            res = Result(
+                uid=first.uid,
+                value=value,
+                rev=self.db.rev(value, rev),
+                deleted=False
+            )
+            rev = res.rev
+            items.append(res)
+
+        items[4] = Result(first.uid, 'val', 'wrong-rev', False)
+        statuses = self.db.put_bulk(items)
+
+        self.assertIn('broken', str(statuses[4]))
+        self.assertIn('wrong-rev', str(statuses[4]))
 
     def test_get_not_found(self):
         with self.assertRaises(NotFoundError):
