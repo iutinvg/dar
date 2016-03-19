@@ -409,5 +409,51 @@ class ReplTest(unittest.TestCase):
 
         self.assertEqual(self.source.storage, self.target.storage)
 
+    def test_replicate_sequence(self):
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+
+        self.assertEqual(len(self.source.storage), 3000)
+
+    def test_replicate_bidirect(self):
+        rrepl = Repl(self.target, self.source)
+        n = 100
+        c = 50
+        for i in range(10):
+            self._change_db(self.source, n, c)
+            self._change_db(self.target, n, 0)
+
+            self.repl.replicate()
+            rrepl.replicate()
+
+            self._assert_db_equal(self.source, self.target)
+
+    def _assert_db_equal(self, db1, db2):
+        self.assertEqual(len(db1.storage), len(db2.storage))
+        for k in db1.storage.iterkeys():
+            self.assertEqual(db1.get(k), db2.get(k))
+
+    def _change_db(self, db, new_count, change_percents=50):
+        for _ in range(new_count):
+            db.put(str(uuid4()))
+
+        all_keys = db.storage.keys()
+        random.shuffle(all_keys)
+
+        number = int(len(all_keys) / 100.0 * change_percents)
+        for key in all_keys[:number]:
+            res = db.get(key)
+            db.put(str(uuid4()), res.uid, res.rev)
+
+
 if __name__ == '__main__':
     unittest.main()
