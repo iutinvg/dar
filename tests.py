@@ -347,13 +347,6 @@ class ReplTest(unittest.TestCase):
             repl.uid
         )
 
-    def test_get_last_seq(self):
-        self.assertEqual(self.repl.get_last_seq(), 0)
-
-        r = random.randint(1, 1000)
-        self.target.local[self.repl.uid] = r
-        self.assertEqual(self.repl.get_last_seq(), r)
-
     def test_get_diff_docs_single(self):
         s_res1 = self.source.put('val1')
 
@@ -381,6 +374,40 @@ class ReplTest(unittest.TestCase):
     def test_get_diff_docs_empty(self):
         diff_docs = list(self.repl.get_diff_docs({}))
         self.assertEqual(0, len(diff_docs))
+
+    def test_replicate_empty(self):
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+
+    def test_replicate_single(self):
+        s_res1 = self.source.put('val1')
+
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+        self.assertEqual(self.target.get(s_res1.uid), s_res1)
+
+    def test_replicate_single_double(self):
+        s_res1 = self.source.put('val1')
+
+        self.repl.replicate()
+        self.repl.replicate()
+
+        self.assertEqual(self.source.storage, self.target.storage)
+        self.assertEqual(self.target.get(s_res1.uid), s_res1)
+
+    def test_replicate_several(self):
+        res = self.source.put(str(uuid4()))
+        rev = res.rev
+        uid = res.uid
+
+        for i in range(0, 10):
+            value = str(uuid4())
+            res = self.source.put(value, uid, rev)
+            rev = res.rev
+
+        self.repl.replicate()
+
+        self.assertEqual(self.source.storage, self.target.storage)
 
 if __name__ == '__main__':
     unittest.main()

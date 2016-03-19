@@ -10,11 +10,8 @@ class Repl(object):
     def get_uid(self):
         return hashlib.sha1(self.source.name + self.target.name).hexdigest()
 
-    def get_last_seq(self):
-        return self.target.local_get(self.uid)
-
     def replicate(self):
-        seq = self.get_last_seq()
+        seq = self.target.local_get(self.uid)
 
         grouped = self.source.changes_get_grouped(seq)
         diff = self.target.changes_get_diff(grouped)
