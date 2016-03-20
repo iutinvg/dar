@@ -446,11 +446,8 @@ class ReplTest(unittest.TestCase):
         for _ in range(new_count):
             db.put(str(uuid4()))
 
-        all_keys = db.storage.keys()
-        random.shuffle(all_keys)
-
-        number = int(len(all_keys) / 100.0 * change_percents)
-        for key in all_keys[:number]:
+        number = int(len(db.storage) / 100.0 * change_percents)
+        for key in random.sample(db.storage.keys(), number):
             res = db.get(key)
             db.put(str(uuid4()), res.uid, res.rev)
 
