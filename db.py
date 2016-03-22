@@ -12,13 +12,8 @@ class NotFoundError(Exception):
     pass
 
 
-# InternalItems are stored in db
-Item = namedtuple('Item', 'value, deleted')
-HistoryItem = namedtuple('HistoryItem', 'uid, change_type')
-
 # Result is operations result
-Result = namedtuple('Result', 'uid, value, rev, deleted')
-HistoryResult = namedtuple('HistoryResult', 'seq, change_type, rev')
+Result = namedtuple('Result', 'uid, value, rev, deleted, parent, seq, change_type')
 
 
 class ChangeType:
@@ -49,13 +44,21 @@ class DB(object):
         elif rev:
             raise DataError('rev does not make sense')
 
-        rev = self.rev(value, rev)
-        item = Item(value, False)
-        history[rev] = item
+        new_rev = self.rev(value, rev)
+        seq = self.changes_get_size()
+        item = Result(
+            uid=uid,
+            value=value,
+            rev=new_rev,
+            deleted=False,
+            parent=rev,
+            seq=seq,
+            change_type=change,
+        )
+        history[new_rev] = item
+        self.changes_put(item)
 
-        self.changes_put(uid, rev, change)
-
-        return Result(uid, value, rev, False)
+        return item
 
     def put_bulk(self, results):
         """Bulk adding of revisions.
@@ -71,19 +74,14 @@ class DB(object):
     def _put_existing(self, i):
         if i.uid in self.storage:
             rev = next(reversed(self.storage[i.uid]))
-            last = self.storage[i.uid][rev]
-            change_type = ChangeType.DELETED if last.deleted else ChangeType.UPDATED
         else:
-            change_type = ChangeType.FRESH
             rev = None
 
         if i.rev != self.rev(i.value, rev):
             return DataError('bulk put broken integrity %s' % str(i))
 
-        self.storage[i.uid][i.rev] = Item(
-            i.value, i.deleted
-        )
-        self.changes_put(i.uid, i.rev, change_type)
+        self.storage[i.uid][i.rev] = i
+        self.changes_put(i)
         return i
 
     def get(self, uid, rev=None):
@@ -102,7 +100,7 @@ class DB(object):
         if item.deleted:
             raise NotFoundError('item deleted')
 
-        return Result(uid, item.value, rev, False)
+        return item
 
     def remove(self, uid, rev):
         if uid not in self.storage:
@@ -116,25 +114,28 @@ class DB(object):
         else:
             raise DataError('rev does not make sense')
 
-        rev = self.rev(None, rev)
+        new_rev = self.rev(None, rev)
+        seq = self.changes_get_size()
+        item = Result(
+            uid=uid,
+            value=None,
+            rev=new_rev,
+            deleted=True,
+            parent=rev,
+            seq=seq,
+            change_type=ChangeType.DELETED,
+        )
 
-        item = Item(None, True)
         history[rev] = item
+        self.changes_put(item)
 
-        self.changes_put(uid, rev, ChangeType.DELETED)
+        return item
 
-        return Result(uid, item.value, rev, True)
-
-    def changes_put(self, uid, rev, change_type):
-        self.changes[rev] = HistoryItem(uid, change_type)
+    def changes_put(self, item):
+        self.changes[item.rev] = item
 
     def changes_get(self, since=0):
-        for i, rev in enumerate(islice(self.changes.iterkeys(), since, None), since):
-            yield HistoryResult(
-                seq=i,
-                change_type=self.changes[rev].change_type,
-                rev=rev
-            )
+        return islice(self.changes.itervalues(), since, None)
 
     def changes_get_size(self):
         return len(self.changes)
