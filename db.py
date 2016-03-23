@@ -13,7 +13,7 @@ class NotFoundError(Exception):
 
 
 # Result is operations result
-Result = namedtuple('Result', 'uid, value, rev, deleted, parent, seq, change_type')
+Document = namedtuple('Document', 'uid, value, rev, deleted, parent, seq, change_type')
 
 
 class ChangeType:
@@ -46,7 +46,7 @@ class DB(object):
 
         new_rev = self.rev(value, rev)
         seq = self.changes_get_size()
-        item = Result(
+        item = Document(
             uid=uid,
             value=value,
             rev=new_rev,
@@ -116,7 +116,7 @@ class DB(object):
 
         new_rev = self.rev(None, rev)
         seq = self.changes_get_size()
-        item = Result(
+        item = Document(
             uid=uid,
             value=None,
             rev=new_rev,

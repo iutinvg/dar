@@ -4,8 +4,7 @@ import unittest
 from uuid import uuid4
 import random
 
-from dar.db import DB, DataError, NotFoundError, ChangeType
-from dar.db import Result
+from dar.db import DB, DataError, NotFoundError, ChangeType, Document
 from dar.repl import Repl
 
 
@@ -73,7 +72,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Result(
+            res = Document(
                 uid=first.uid,
                 seq=i,
                 value=value,
@@ -96,7 +95,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Result(
+            res = Document(
                 seq=1,
                 uid=uid,
                 value=value,
@@ -119,7 +118,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 100):
             value = str(uuid4())
-            res = Result(
+            res = Document(
                 seq=1,
                 uid=uid,
                 value=value,
@@ -131,7 +130,7 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        res = Result(
+        res = Document(
             seq=0,
             uid=uid,
             value=None,
@@ -156,7 +155,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 10):
             value = str(uuid4())
-            res = Result(
+            res = Document(
                 seq=1,
                 uid=first.uid,
                 value=value,
@@ -168,7 +167,7 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        items[4] = Result(
+        items[4] = Document(
             seq=items[4].seq,
             uid=items[4].uid,
             value='val',
