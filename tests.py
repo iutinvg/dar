@@ -71,14 +71,16 @@ class DBTest(unittest.TestCase):
 
         items = []
 
-        for i in range(0, 100):
+        for i in range(100):
             value = str(uuid4())
             res = Result(
-                seq=1,
                 uid=first.uid,
+                seq=i,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False
+                deleted=False,
+                change_type=ChangeType.UPDATED,
+                parent=rev,
             )
             rev = res.rev
             items.append(res)
@@ -92,14 +94,16 @@ class DBTest(unittest.TestCase):
         uid = str(uuid4())
         items = []
 
-        for i in range(0, 100):
+        for i in range(100):
             value = str(uuid4())
             res = Result(
                 seq=1,
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False
+                deleted=False,
+                parent=rev,
+                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH
             )
             rev = res.rev
             items.append(res)
@@ -120,17 +124,21 @@ class DBTest(unittest.TestCase):
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False
+                deleted=False,
+                parent=rev,
+                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
 
         res = Result(
-            0,
+            seq=0,
             uid=uid,
             value=None,
             rev=self.db.rev(None, rev),
-            deleted=True
+            deleted=True,
+            parent=rev,
+            change_type=ChangeType.DELETED,
         )
         items.append(res)
 
@@ -153,12 +161,22 @@ class DBTest(unittest.TestCase):
                 uid=first.uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False
+                deleted=False,
+                parent=rev,
+                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
 
-        items[4] = Result(0, first.uid, 'val', 'wrong-rev', False)
+        items[4] = Result(
+            seq=items[4].seq,
+            uid=items[4].uid,
+            value='val',
+            rev='wrong-rev',
+            deleted=items[4].deleted,
+            parent=items[4].rev,
+            change_type=items[4].change_type,
+        )
         statuses = self.db.put_bulk(items)
 
         self.assertIn('broken', str(statuses[4]))
@@ -381,67 +399,67 @@ class ReplTest(unittest.TestCase):
         diff_docs = list(self.repl.get_diff_docs({}))
         self.assertEqual(0, len(diff_docs))
 
-    # def test_replicate_empty(self):
-    #     self.repl.replicate()
-    #     self.assertEqual(self.source.storage, self.target.storage)
+    def test_replicate_empty(self):
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
 
-    # def test_replicate_single(self):
-    #     s_res1 = self.source.put('val1')
+    def test_replicate_single(self):
+        s_res1 = self.source.put('val1')
 
-    #     self.repl.replicate()
-    #     self.assertEqual(self.source.storage, self.target.storage)
-    #     self.assertEqual(self.target.get(s_res1.uid), s_res1)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
+        self.assertEqual(self.target.get(s_res1.uid), s_res1)
 
-    # def test_replicate_single_double(self):
-    #     s_res1 = self.source.put('val1')
+    def test_replicate_single_double(self):
+        s_res1 = self.source.put('val1')
 
-    #     self.repl.replicate()
-    #     self.repl.replicate()
+        self.repl.replicate()
+        self.repl.replicate()
 
-    #     self.assertEqual(self.source.storage, self.target.storage)
-    #     self.assertEqual(self.target.get(s_res1.uid), s_res1)
+        self.assertEqual(self.source.storage, self.target.storage)
+        self.assertEqual(self.target.get(s_res1.uid), s_res1)
 
-    # def test_replicate_several(self):
-    #     res = self.source.put(str(uuid4()))
-    #     rev = res.rev
-    #     uid = res.uid
+    def test_replicate_several(self):
+        res = self.source.put(str(uuid4()))
+        rev = res.rev
+        uid = res.uid
 
-    #     for i in range(0, 10):
-    #         value = str(uuid4())
-    #         res = self.source.put(value, uid, rev)
-    #         rev = res.rev
+        for i in range(0, 10):
+            value = str(uuid4())
+            res = self.source.put(value, uid, rev)
+            rev = res.rev
 
-    #     self.repl.replicate()
+        self.repl.replicate()
 
-    #     self.assertEqual(self.source.storage, self.target.storage)
+        self.assertEqual(self.source.storage, self.target.storage)
 
-    # def test_replicate_sequence(self):
-    #     self._change_db(self.source, 1000)
-    #     self.repl.replicate()
-    #     self.assertEqual(self.source.storage, self.target.storage)
+    def test_replicate_sequence(self):
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
 
-    #     self._change_db(self.source, 1000)
-    #     self.repl.replicate()
-    #     self.assertEqual(self.source.storage, self.target.storage)
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
 
-    #     self._change_db(self.source, 1000)
-    #     self.repl.replicate()
-    #     self.assertEqual(self.source.storage, self.target.storage)
+        self._change_db(self.source, 1000)
+        self.repl.replicate()
+        self.assertEqual(self.source.storage, self.target.storage)
 
-    #     self.assertEqual(len(self.source.storage), 3000)
+        self.assertEqual(len(self.source.storage), 3000)
 
-    # def test_replicate_bidirect(self):
-    #     rrepl = Repl(self.target, self.source)
-    #     n = 100
-    #     c = 50
-    #     for i in range(10):
-    #         self._change_db(self.source, n, c)
-    #         self._change_db(self.target, n, 0)
+    def test_replicate_bidirect(self):
+        rrepl = Repl(self.target, self.source)
+        n = 100
+        c = 50
+        for i in range(10):
+            self._change_db(self.source, n, c)
+            self._change_db(self.target, n, 0)
 
-    #         self.repl.replicate()
-    #         rrepl.replicate()
+            self.repl.replicate()
+            rrepl.replicate()
 
-    #         self._assert_db_equal(self.source, self.target)
+            self._assert_db_equal(self.source, self.target)
 
     def _assert_db_equal(self, db1, db2):
         self.assertEqual(len(db1.storage), len(db2.storage))
