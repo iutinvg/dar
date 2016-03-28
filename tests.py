@@ -139,6 +139,20 @@ class DBTest(unittest.TestCase):
         with self.assertRaises(NotFoundError):
             self.db.get(uid)
 
+    def test_put_bulk_intersection_same(self):
+        """Test the case when existing revs are passed to put_bulk.
+
+        Just the same docs are given.
+        """
+        items = []
+        rev = None
+        uid = 'same'
+
+        for i in range(5):
+            doc = self.db.put(i, uid, rev)
+            rev = doc.rev
+            items.append(doc)
+
     def test_put_bulk_broken(self):
         value = str(uuid4())
         first = self.db.put(value)
