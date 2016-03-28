@@ -4,7 +4,7 @@ import unittest
 from uuid import uuid4
 import random
 
-from dar.db import DB, DataError, NotFoundError, ChangeType, Document, Doc
+from dar.db import DB, DataError, NotFoundError, ChangeType, Doc
 from dar.repl import Repl
 
 
@@ -152,6 +152,10 @@ class DBTest(unittest.TestCase):
             doc = self.db.put(i, uid, rev)
             rev = doc.rev
             items.append(doc)
+
+        statuses = self.db.put_bulk(items)
+        for s in statuses:
+            self.assertFalse(isinstance(s, DataError))
 
     def test_put_bulk_broken(self):
         value = str(uuid4())

@@ -74,6 +74,9 @@ class DB(object):
 
     def _put_existing(self, i):
         if i.uid in self.storage:
+            # ignore existing revisions
+            if i.rev in self.storage[i.uid]:
+                return i
             rev = next(reversed(self.storage[i.uid]))
         else:
             rev = None
