@@ -4,7 +4,7 @@ import unittest
 from uuid import uuid4
 import random
 
-from dar.db import DB, DataError, NotFoundError, ChangeType, Document
+from dar.db import DB, DataError, NotFoundError, ChangeType, Document, Doc
 from dar.repl import Repl
 
 
@@ -72,13 +72,11 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Document(
+            res = Doc(
                 uid=first.uid,
                 seq=i,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False,
-                change_type=ChangeType.UPDATED,
                 parent=rev,
             )
             rev = res.rev
@@ -95,12 +93,10 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Document(
-                seq=1,
+            res = Doc(
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False,
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH
             )
@@ -118,20 +114,17 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 100):
             value = str(uuid4())
-            res = Document(
-                seq=1,
+            res = Doc(
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False,
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
 
-        res = Document(
-            seq=0,
+        res = Doc(
             uid=uid,
             value=None,
             rev=self.db.rev(None, rev),
@@ -155,19 +148,17 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 10):
             value = str(uuid4())
-            res = Document(
-                seq=1,
+            res = Doc(
                 uid=first.uid,
                 value=value,
                 rev=self.db.rev(value, rev),
-                deleted=False,
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
 
-        items[4] = Document(
+        items[4] = Doc(
             seq=items[4].seq,
             uid=items[4].uid,
             value='val',

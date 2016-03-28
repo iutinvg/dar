@@ -1,4 +1,5 @@
 from collections import defaultdict, namedtuple, OrderedDict
+from functools import partial
 from itertools import islice
 import hashlib
 import uuid
@@ -12,14 +13,15 @@ class NotFoundError(Exception):
     pass
 
 
-# Result is operations result
-Document = namedtuple('Document', 'uid, value, rev, deleted, parent, seq, change_type')
-
-
 class ChangeType:
     FRESH = 0
     UPDATED = 1
     DELETED = 2
+
+
+# Result is operations result
+Document = namedtuple('Document', 'uid, value, rev, deleted, parent, seq, change_type, meta, conflict')
+Doc = partial(Document, meta=None, deleted=False, seq=0, change_type=ChangeType.UPDATED, conflict=None)
 
 
 class DB(object):
@@ -46,11 +48,10 @@ class DB(object):
 
         new_rev = self.rev(value, rev)
         seq = self.changes_get_size()
-        item = Document(
+        item = Doc(
             uid=uid,
             value=value,
             rev=new_rev,
-            deleted=False,
             parent=rev,
             seq=seq,
             change_type=change,
@@ -116,7 +117,7 @@ class DB(object):
 
         new_rev = self.rev(None, rev)
         seq = self.changes_get_size()
-        item = Document(
+        item = Doc(
             uid=uid,
             value=None,
             rev=new_rev,
