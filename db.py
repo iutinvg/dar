@@ -1,8 +1,9 @@
-from collections import defaultdict, namedtuple, OrderedDict
-from functools import partial
+from collections import defaultdict, OrderedDict
 from itertools import islice
 import hashlib
 import uuid
+
+from dar.doc import Rev, ChangeType
 
 
 class DataError(Exception):
@@ -11,17 +12,6 @@ class DataError(Exception):
 
 class NotFoundError(Exception):
     pass
-
-
-class ChangeType:
-    FRESH = 0
-    UPDATED = 1
-    DELETED = 2
-
-
-# Result is operations result
-Revision = namedtuple('Revision', 'uid value rev deleted parent seq change_type meta conflict')
-Doc = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.UPDATED, conflict=None)
 
 
 class DB(object):
@@ -48,7 +38,7 @@ class DB(object):
 
         new_rev = self.rev(value, rev)
         seq = self.changes_get_size()
-        item = Doc(
+        item = Rev(
             uid=uid,
             value=value,
             rev=new_rev,
@@ -120,7 +110,7 @@ class DB(object):
 
         new_rev = self.rev(None, rev)
         seq = self.changes_get_size()
-        item = Doc(
+        item = Rev(
             uid=uid,
             value=None,
             rev=new_rev,

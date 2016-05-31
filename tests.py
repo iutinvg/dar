@@ -4,7 +4,8 @@ import unittest
 from uuid import uuid4
 import random
 
-from dar.db import DB, DataError, NotFoundError, ChangeType, Doc
+from dar.db import DB, DataError, NotFoundError
+from dar.doc import ChangeType, Rev
 from dar.repl import Repl
 
 
@@ -72,7 +73,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Doc(
+            res = Rev(
                 uid=first.uid,
                 seq=i,
                 value=value,
@@ -93,7 +94,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Doc(
+            res = Rev(
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
@@ -114,7 +115,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 100):
             value = str(uuid4())
-            res = Doc(
+            res = Rev(
                 uid=uid,
                 value=value,
                 rev=self.db.rev(value, rev),
@@ -124,7 +125,7 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        res = Doc(
+        res = Rev(
             uid=uid,
             value=None,
             rev=self.db.rev(None, rev),
@@ -171,7 +172,7 @@ class DBTest(unittest.TestCase):
             rev = doc.rev
             items.append(doc)
 
-        doc = Doc(
+        doc = Rev(
             uid=uid,
             value=10,
             rev=self.db.rev(10, rev),
@@ -192,7 +193,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 10):
             value = str(uuid4())
-            res = Doc(
+            res = Rev(
                 uid=first.uid,
                 value=value,
                 rev=self.db.rev(value, rev),
@@ -202,7 +203,7 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        items[4] = Doc(
+        items[4] = Rev(
             seq=items[4].seq,
             uid=items[4].uid,
             value='val',
