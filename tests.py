@@ -5,7 +5,7 @@ from uuid import uuid4
 import random
 
 from dar.db import DB, DataError, NotFoundError
-from dar.doc import ChangeType, Rev
+from dar.doc import ChangeType, Rev, new_rev
 from dar.repl import Repl
 
 
@@ -77,7 +77,7 @@ class DBTest(unittest.TestCase):
                 uid=first.uid,
                 seq=i,
                 value=value,
-                rev=self.db.rev(value, rev),
+                rev=new_rev(value, rev),
                 parent=rev,
             )
             rev = res.rev
@@ -97,7 +97,7 @@ class DBTest(unittest.TestCase):
             res = Rev(
                 uid=uid,
                 value=value,
-                rev=self.db.rev(value, rev),
+                rev=new_rev(value, rev),
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH
             )
@@ -118,7 +118,7 @@ class DBTest(unittest.TestCase):
             res = Rev(
                 uid=uid,
                 value=value,
-                rev=self.db.rev(value, rev),
+                rev=new_rev(value, rev),
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
@@ -128,7 +128,7 @@ class DBTest(unittest.TestCase):
         res = Rev(
             uid=uid,
             value=None,
-            rev=self.db.rev(None, rev),
+            rev=new_rev(None, rev),
             deleted=True,
             parent=rev,
             change_type=ChangeType.DELETED,
@@ -175,7 +175,7 @@ class DBTest(unittest.TestCase):
         doc = Rev(
             uid=uid,
             value=10,
-            rev=self.db.rev(10, rev),
+            rev=new_rev(10, rev),
             parent=rev
         )
         items.append(doc)
@@ -196,7 +196,7 @@ class DBTest(unittest.TestCase):
             res = Rev(
                 uid=first.uid,
                 value=value,
-                rev=self.db.rev(value, rev),
+                rev=new_rev(value, rev),
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )

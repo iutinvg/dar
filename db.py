@@ -36,7 +36,8 @@ class DB(object):
         elif rev:
             raise DataError('rev does not make sense')
 
-        new_rev = self.rev(value, rev)
+        # new_rev = self.rev(value, rev)
+        new_rev = history.new_rev(value, rev)
         seq = self.changes_get_size()
         item = Rev(
             uid=uid,
@@ -65,13 +66,15 @@ class DB(object):
     def _put_existing(self, i):
         if i.uid in self.storage:
             # ignore existing revisions
-            if i.rev in self.storage[i.uid]:
+            document = self.storage[i.uid]
+            if i.rev in document:
                 return i
-            rev = next(reversed(self.storage[i.uid]))
+            rev = next(reversed(document))
         else:
+            document = Document()
             rev = None
 
-        if i.rev != self.rev(i.value, rev):
+        if i.rev != document.new_rev(i.value, rev):
             return DataError('bulk put broken integrity %s' % str(i))
 
         self.storage[i.uid][i.rev] = i
@@ -108,7 +111,7 @@ class DB(object):
         else:
             raise DataError('rev does not make sense')
 
-        new_rev = self.rev(None, rev)
+        new_rev = history.new_rev(None, rev)
         seq = self.changes_get_size()
         item = Rev(
             uid=uid,
@@ -155,8 +158,8 @@ class DB(object):
     def local_get(self, uid, default=0):
         return self.local.get(uid, default)
 
-    def rev(self, value, rev):
-        return hashlib.sha1(str(rev) + str(value)).hexdigest()
+    # def rev(self, value, rev):
+    #     return hashlib.sha1(str(rev) + str(value)).hexdigest()
 
     def uid(self):
         return str(uuid.uuid4())

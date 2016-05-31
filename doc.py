@@ -1,5 +1,6 @@
 from collections import namedtuple, OrderedDict
 from functools import partial
+import hashlib
 
 
 class ChangeType:
@@ -14,4 +15,10 @@ Rev = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.
 
 
 class Document(OrderedDict):
-    pass
+    def new_rev(self, value, rev):
+        return new_rev(value, rev)
+
+
+def new_rev(value, rev, prefix=None):
+    p = prefix() + '-' if prefix else ''
+    return p + hashlib.sha1(str(rev) + str(value)).hexdigest()
