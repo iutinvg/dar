@@ -16,7 +16,8 @@ Rev = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.
 
 class Document(OrderedDict):
     def new_rev(self, value, rev):
-        return new_rev(value, rev, prefix=lambda x: str(len(self) + 1))
+        return new_rev(value, rev)
+        # , prefix=lambda x: str(len(self) + 1)
 
 
 def new_rev(value, rev, prefix=None):
