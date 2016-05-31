@@ -20,8 +20,8 @@ class ChangeType:
 
 
 # Result is operations result
-Document = namedtuple('Document', 'uid value rev deleted parent seq change_type meta conflict')
-Doc = partial(Document, meta=None, deleted=False, seq=0, change_type=ChangeType.UPDATED, conflict=None)
+Revision = namedtuple('Revision', 'uid value rev deleted parent seq change_type meta conflict')
+Doc = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.UPDATED, conflict=None)
 
 
 class DB(object):
