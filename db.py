@@ -3,7 +3,7 @@ from itertools import islice
 import hashlib
 import uuid
 
-from dar.doc import Rev, ChangeType
+from dar.doc import Rev, ChangeType, Document
 
 
 class DataError(Exception):
@@ -17,7 +17,7 @@ class NotFoundError(Exception):
 class DB(object):
     def __init__(self, name):
         self.name = name
-        self.storage = defaultdict(OrderedDict)
+        self.storage = defaultdict(Document)
         self.changes = OrderedDict()
         self.local = {}  # local storage
 
