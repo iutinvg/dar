@@ -470,15 +470,18 @@ class ReplTest(unittest.TestCase):
     def test_replicate_sequence(self):
         self._change_db(self.source, 1000)
         self.repl.replicate()
-        self.assertEqual(self.source.storage, self.target.storage)
+        # self.assertEqual(self.source.storage, self.target.storage)
+        self._assert_db_equal(self.source, self.target)
 
         self._change_db(self.source, 1000)
         self.repl.replicate()
-        self.assertEqual(self.source.storage, self.target.storage)
+        # self.assertEqual(self.source.storage, self.target.storage)
+        self._assert_db_equal(self.source, self.target)
 
         self._change_db(self.source, 1000)
         self.repl.replicate()
-        self.assertEqual(self.source.storage, self.target.storage)
+        # self.assertEqual(self.source.storage, self.target.storage)
+        self._assert_db_equal(self.source, self.target)
 
         self.assertEqual(len(self.source.storage), 3000)
 
