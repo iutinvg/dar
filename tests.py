@@ -21,7 +21,7 @@ class DBTest(unittest.TestCase):
 
         self.assertEqual(len(self.db.storage), 1)
         self.assertEqual(res.value, value)
-        self.assertEqual(res.rev, hashlib.sha1('None' + str(value)).hexdigest())
+        self.assertEqual(res.rev, '1-' + hashlib.sha1('None' + str(value)).hexdigest())
         self.assertIsNotNone(res.uid)
 
     def test_put_first_broken_rev(self):
@@ -46,7 +46,7 @@ class DBTest(unittest.TestCase):
             self.assertEqual(len(self.db.storage), 1)
             self.assertEqual(len(self.db.storage[res.uid]), i + 1)
             self.assertEqual(res.value, value)
-            self.assertEqual(res.rev, hashlib.sha1(str(rev) + str(value)).hexdigest())
+            self.assertTrue(res.rev.startswith(str(i + 1) + '-'))
             self.assertIsNotNone(res.uid)
 
             rev = res.rev
@@ -61,7 +61,7 @@ class DBTest(unittest.TestCase):
             self.assertEqual(len(self.db.storage), i + 1)
             self.assertEqual(len(self.db.storage[res.uid]), 1)
             self.assertEqual(res.value, value)
-            self.assertEqual(res.rev, hashlib.sha1('None' + str(value)).hexdigest())
+            self.assertEqual(res.rev, '1-' + hashlib.sha1('None' + str(value)).hexdigest())
             self.assertIsNotNone(res.uid)
 
     def test_put_bulk(self):
@@ -77,7 +77,7 @@ class DBTest(unittest.TestCase):
                 uid=first.uid,
                 seq=i,
                 value=value,
-                rev=new_rev(value, rev),
+                rev=new_rev(value, rev, lambda: str(i + 2)),
                 parent=rev,
             )
             rev = res.rev
@@ -97,7 +97,7 @@ class DBTest(unittest.TestCase):
             res = Rev(
                 uid=uid,
                 value=value,
-                rev=new_rev(value, rev),
+                rev=new_rev(value, rev, lambda: str(i + 1)),
                 parent=rev,
                 change_type=ChangeType.UPDATED if rev else ChangeType.FRESH
             )
@@ -175,7 +175,7 @@ class DBTest(unittest.TestCase):
         doc = Rev(
             uid=uid,
             value=10,
-            rev=new_rev(10, rev),
+            rev=new_rev(10, rev, lambda: str(len(items) + 1)),
             parent=rev
         )
         items.append(doc)

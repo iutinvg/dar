@@ -16,10 +16,16 @@ Rev = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.
 
 class Document(OrderedDict):
     def new_rev(self, value, rev):
-        return new_rev(value, rev)
-        # , prefix=lambda x: str(len(self) + 1)
+        return new_rev(value, rev, prefix=lambda: str(len(self) + 1))
+        # return new_rev(value, rev)
+
+    # def __str__(self):
+    #     pairs = []
+    #     for k, v in self.iteritems():
+    #         pairs.append("\t{:.5}... : {:.5}...".format(k, v.value))
+    #     return "{}:\n{}".format(next(self.itervalues())['uid'], "\n".join(pairs))
 
 
 def new_rev(value, rev, prefix=None):
-    p = prefix() + '-' if prefix else ''
+    p = (prefix() + '-') if prefix else ''
     return p + hashlib.sha1(str(rev) + str(value)).hexdigest()
