@@ -4,9 +4,17 @@ import unittest
 from uuid import uuid4
 import random
 
-from dar.db import DB, DataError, NotFoundError
-from dar.doc import Rev, new_rev
-from dar.repl import Repl
+from .db import DB
+from .exceptions import DataError, NotFoundError
+from .doc import Rev, new_rev, Document
+from .repl import Repl
+
+
+class DocTest(unittest.TestCase):
+    def test_init(self):
+        doc = Document()
+        self.assertIsNone(doc.winner)
+        self.assertEqual(doc.conflicts, set())
 
 
 class DBTest(unittest.TestCase):

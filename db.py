@@ -2,15 +2,8 @@ from collections import defaultdict, OrderedDict
 from itertools import islice
 import uuid
 
-from dar.doc import Rev, Document
-
-
-class DataError(Exception):
-    pass
-
-
-class NotFoundError(Exception):
-    pass
+from .doc import Rev, Document
+from .exceptions import DataError, NotFoundError
 
 
 class DB(object):
