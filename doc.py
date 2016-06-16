@@ -10,8 +10,8 @@ class ChangeType:
 
 
 # Result is operations result
-Revision = namedtuple('Revision', 'uid value rev deleted parent seq change_type meta conflict')
-Rev = partial(Revision, meta=None, deleted=False, seq=0, change_type=ChangeType.UPDATED, conflict=None)
+Revision = namedtuple('Revision', 'uid value rev deleted parent seq change_type')
+Rev = partial(Revision, deleted=False, seq=0, change_type=ChangeType.UPDATED)
 
 
 class Document(OrderedDict):
