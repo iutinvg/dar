@@ -1,9 +1,8 @@
 from collections import defaultdict, OrderedDict
 from itertools import islice
-import hashlib
 import uuid
 
-from dar.doc import Rev, ChangeType, Document
+from dar.doc import Rev, Document
 
 
 class DataError(Exception):
@@ -22,10 +21,7 @@ class DB(object):
         self.local = {}  # local storage
 
     def put(self, value, uid=None, rev=None):
-        if uid:
-            change = ChangeType.UPDATED
-        else:
-            change = ChangeType.FRESH
+        if uid is None:
             uid = self.uid()
 
         history = self.storage[uid]
@@ -45,7 +41,6 @@ class DB(object):
             rev=new_rev,
             parent=rev,
             seq=seq,
-            change_type=change,
         )
         history[new_rev] = item
         self.changes_put(item)
@@ -120,7 +115,6 @@ class DB(object):
             deleted=True,
             parent=rev,
             seq=seq,
-            change_type=ChangeType.DELETED,
         )
 
         history[rev] = item

@@ -3,15 +3,9 @@ from functools import partial
 import hashlib
 
 
-class ChangeType:
-    FRESH = 0
-    UPDATED = 1
-    DELETED = 2
-
-
 # Result is operations result
-Revision = namedtuple('Revision', 'uid value rev deleted parent seq change_type')
-Rev = partial(Revision, deleted=False, seq=0, change_type=ChangeType.UPDATED)
+Revision = namedtuple('Revision', 'uid value rev deleted parent seq')
+Rev = partial(Revision, deleted=False, seq=0)
 
 
 class Document(OrderedDict):

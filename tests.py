@@ -5,7 +5,7 @@ from uuid import uuid4
 import random
 
 from dar.db import DB, DataError, NotFoundError
-from dar.doc import ChangeType, Rev, new_rev
+from dar.doc import Rev, new_rev
 from dar.repl import Repl
 
 
@@ -99,7 +99,6 @@ class DBTest(unittest.TestCase):
                 value=value,
                 rev=new_rev(value, rev, lambda: str(i + 1)),
                 parent=rev,
-                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH
             )
             rev = res.rev
             items.append(res)
@@ -120,7 +119,6 @@ class DBTest(unittest.TestCase):
                 value=value,
                 rev=new_rev(value, rev),
                 parent=rev,
-                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
@@ -131,7 +129,6 @@ class DBTest(unittest.TestCase):
             rev=new_rev(None, rev),
             deleted=True,
             parent=rev,
-            change_type=ChangeType.DELETED,
         )
         items.append(res)
 
@@ -198,7 +195,6 @@ class DBTest(unittest.TestCase):
                 value=value,
                 rev=new_rev(value, rev),
                 parent=rev,
-                change_type=ChangeType.UPDATED if rev else ChangeType.FRESH,
             )
             rev = res.rev
             items.append(res)
@@ -210,7 +206,6 @@ class DBTest(unittest.TestCase):
             rev='wrong-rev',
             deleted=items[4].deleted,
             parent=items[4].rev,
-            change_type=items[4].change_type,
         )
         statuses = self.db.put_bulk(items)
 
@@ -275,17 +270,14 @@ class DBTest(unittest.TestCase):
         changes = list(self.db.changes_get())
         print changes
 
-        self.assertEqual(changes[0].change_type, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
         self.assertEqual(changes[0].seq, 0)
 
-        self.assertEqual(changes[1].change_type, ChangeType.FRESH)
         self.assertEqual(changes[1].rev, res2.rev)
         self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].change_type, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res2.rev)
         self.assertEqual(changes[0].seq, 1)
 
@@ -295,16 +287,13 @@ class DBTest(unittest.TestCase):
 
         changes = list(self.db.changes_get())
 
-        self.assertEqual(changes[0].change_type, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
         self.assertEqual(changes[0].seq, 0)
-        self.assertEqual(changes[1].change_type, ChangeType.UPDATED)
         self.assertEqual(changes[1].rev, res2.rev)
         self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].change_type, ChangeType.UPDATED)
         self.assertEqual(changes[0].rev, res2.rev)
         self.assertEqual(changes[0].seq, 1)
 
@@ -314,16 +303,13 @@ class DBTest(unittest.TestCase):
 
         changes = list(self.db.changes_get())
 
-        self.assertEqual(changes[0].change_type, ChangeType.FRESH)
         self.assertEqual(changes[0].rev, res1.rev)
         self.assertEqual(changes[0].seq, 0)
-        self.assertEqual(changes[1].change_type, ChangeType.DELETED)
         self.assertEqual(changes[1].rev, res2.rev)
         self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].change_type, ChangeType.DELETED)
         self.assertEqual(changes[0].rev, res2.rev)
         self.assertEqual(changes[0].seq, 1)
 
