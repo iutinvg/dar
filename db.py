@@ -34,13 +34,11 @@ class DB(object):
 
         # new_rev = self.rev(value, rev)
         new_rev = history.new_rev(value, rev)
-        seq = self.changes_get_size()
         item = Rev(
             uid=uid,
             value=value,
             rev=new_rev,
             parent=rev,
-            seq=seq,
         )
         history[new_rev] = item
         self.changes_put(item)
@@ -107,14 +105,12 @@ class DB(object):
             raise DataError('rev does not make sense')
 
         new_rev = history.new_rev(None, rev)
-        seq = self.changes_get_size()
         item = Rev(
             uid=uid,
             value=None,
             rev=new_rev,
             deleted=True,
             parent=rev,
-            seq=seq,
         )
 
         history[rev] = item
@@ -151,9 +147,6 @@ class DB(object):
 
     def local_get(self, uid, default=0):
         return self.local.get(uid, default)
-
-    # def rev(self, value, rev):
-    #     return hashlib.sha1(str(rev) + str(value)).hexdigest()
 
     def uid(self):
         return str(uuid.uuid4())

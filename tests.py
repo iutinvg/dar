@@ -75,7 +75,6 @@ class DBTest(unittest.TestCase):
             value = str(uuid4())
             res = Rev(
                 uid=first.uid,
-                seq=i,
                 value=value,
                 rev=new_rev(value, rev, lambda: str(i + 2)),
                 parent=rev,
@@ -200,7 +199,6 @@ class DBTest(unittest.TestCase):
             items.append(res)
 
         items[4] = Rev(
-            seq=items[4].seq,
             uid=items[4].uid,
             value='val',
             rev='wrong-rev',
@@ -271,15 +269,12 @@ class DBTest(unittest.TestCase):
         print changes
 
         self.assertEqual(changes[0].rev, res1.rev)
-        self.assertEqual(changes[0].seq, 0)
 
         self.assertEqual(changes[1].rev, res2.rev)
-        self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
         self.assertEqual(changes[0].rev, res2.rev)
-        self.assertEqual(changes[0].seq, 1)
 
     def test_changes_update(self):
         res1 = self.db.put('val')
@@ -288,14 +283,11 @@ class DBTest(unittest.TestCase):
         changes = list(self.db.changes_get())
 
         self.assertEqual(changes[0].rev, res1.rev)
-        self.assertEqual(changes[0].seq, 0)
         self.assertEqual(changes[1].rev, res2.rev)
-        self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
         self.assertEqual(changes[0].rev, res2.rev)
-        self.assertEqual(changes[0].seq, 1)
 
     def test_changes_remove(self):
         res1 = self.db.put('val')
@@ -304,14 +296,11 @@ class DBTest(unittest.TestCase):
         changes = list(self.db.changes_get())
 
         self.assertEqual(changes[0].rev, res1.rev)
-        self.assertEqual(changes[0].seq, 0)
         self.assertEqual(changes[1].rev, res2.rev)
-        self.assertEqual(changes[1].seq, 1)
 
         changes = list(self.db.changes_get(1))
 
         self.assertEqual(changes[0].rev, res2.rev)
-        self.assertEqual(changes[0].seq, 1)
 
     def test_changes_grouped(self):
         res1 = self.db.put('val1')

@@ -4,8 +4,8 @@ import hashlib
 
 
 # Result is operations result
-Revision = namedtuple('Revision', 'uid value rev deleted parent seq')
-Rev = partial(Revision, deleted=False, seq=0)
+Revision = namedtuple('Revision', 'uid value rev deleted parent')
+Rev = partial(Revision, deleted=False)
 
 
 class Document(OrderedDict):
