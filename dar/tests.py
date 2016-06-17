@@ -160,7 +160,7 @@ class DBTest(unittest.TestCase):
 
         self.assertEqual(len(self.db.storage), 1)
         self.assertEqual(res.value, value)
-        self.assertEqual(res.rev, '1-' + hashlib.sha1('None' + str(value)).hexdigest())
+        self.assertEqual(res.rev, '1-' + hashlib.md5('None' + str(value)).hexdigest())
         self.assertIsNotNone(res.uid)
 
     def test_put_first_broken_rev(self):
@@ -200,7 +200,7 @@ class DBTest(unittest.TestCase):
             self.assertEqual(len(self.db.storage), i + 1)
             self.assertEqual(len(self.db.storage[res.uid]), 1)
             self.assertEqual(res.value, value)
-            self.assertEqual(res.rev, '1-' + hashlib.sha1('None' + str(value)).hexdigest())
+            self.assertEqual(res.rev, '1-' + hashlib.md5('None' + str(value)).hexdigest())
             self.assertIsNotNone(res.uid)
 
     def test_put_bulk(self):

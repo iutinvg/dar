@@ -89,4 +89,4 @@ class Document(OrderedDict):
 
 def new_rev(value, rev, prefix=None):
     p = (prefix() + '-') if prefix else ''
-    return p + hashlib.sha1(str(rev) + str(value)).hexdigest()
+    return p + hashlib.md5(str(rev) + str(value)).hexdigest()
