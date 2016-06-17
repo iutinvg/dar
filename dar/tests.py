@@ -6,7 +6,7 @@ import random
 
 from .db import DB
 from .exceptions import DataError, NotFoundError
-from .doc import Rev, new_rev, Document
+from .doc import Rev, new_rev, Document, Revision
 from .repl import Repl
 
 
@@ -15,6 +15,137 @@ class DocTest(unittest.TestCase):
         doc = Document()
         self.assertIsNone(doc.winner)
         self.assertEqual(doc.conflicts, set())
+
+    def test_render(self):
+        doc = Document()
+
+        revision1 = Revision('0', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+        doc.winner = rev1
+
+        revision2 = Revision('1', False, rev1)
+        rev2 = '2-aaa'
+        doc[rev2] = revision2
+        doc.winner = rev2
+
+        revision3 = Revision('-1', False, rev1)
+        rev3 = '2-bbb'
+        doc[rev3] = revision3
+        doc.winner = rev3
+        doc.conflicts = set([rev2])
+
+        revision4 = Revision('2', False, rev1)
+        rev4 = '2-ccc'
+        doc[rev4] = revision4
+
+        revision5 = Revision('4', False, rev4)
+        rev5 = '3-ccc'
+        doc[rev5] = revision5
+
+        self.assertEqual('1-aaa\n +-- 2-aaa\n +-- 2-bbb\n +-- 2-ccc\n     +-- 3-ccc', doc.__str__())
+
+    def test_update_winner_first(self):
+        doc = Document()
+
+        revision1 = Revision('1', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+
+        doc.update_winner(rev1, revision1)
+        self.assertEqual(doc.winner, rev1)
+        self.assertEqual(doc.conflicts, set())
+
+    def test_update_winner_second(self):
+        doc = Document()
+
+        revision1 = Revision('1', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+        doc.winner = rev1
+
+        revision2 = Revision('2', False, rev1)
+        rev2 = '2-aaa'
+        doc[rev2] = revision2
+
+        doc.update_winner(rev2, revision2)
+        self.assertEqual(doc.winner, rev2)
+        self.assertEqual(doc.conflicts, set())
+
+    def test_update_winner_conflict_ascii(self):
+        doc = Document()
+
+        revision1 = Revision('0', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+        doc.winner = rev1
+
+        revision2 = Revision('1', False, rev1)
+        rev2 = '2-aaa'
+        doc[rev2] = revision2
+        doc.winner = rev2
+
+        revision3 = Revision('-1', False, rev1)
+        rev3 = '2-bbb'
+        doc[rev3] = revision3
+
+        doc.update_winner(rev3, revision3)
+        self.assertEqual(doc.winner, rev3)
+        self.assertEqual(doc.conflicts, set([rev2]))
+
+    def test_update_winner_conflict_length(self):
+        doc = Document()
+
+        revision1 = Revision('0', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+        doc.winner = rev1
+
+        revision2 = Revision('1', False, rev1)
+        rev2 = '2-aaa'
+        doc[rev2] = revision2
+        doc.winner = rev2
+
+        revision3 = Revision('-1', False, rev1)
+        rev3 = '2-bbb'
+        doc[rev3] = revision3
+        doc.winner = rev3
+        doc.conflicts = set([rev2])
+
+        revision4 = Revision('100', False, rev2)
+        rev4 = '3-aaa'
+        doc[rev4] = revision4
+
+        doc.update_winner(rev4, revision4)
+        self.assertEqual(doc.winner, rev4)
+        self.assertEqual(doc.conflicts, set([rev3]))
+
+    def test_update_winner_multiple_conflicts(self):
+        doc = Document()
+
+        revision1 = Revision('0', False, None)
+        rev1 = '1-aaa'
+        doc[rev1] = revision1
+        doc.winner = rev1
+
+        revision2 = Revision('1', False, rev1)
+        rev2 = '2-aaa'
+        doc[rev2] = revision2
+        doc.winner = rev2
+
+        revision3 = Revision('-1', False, rev1)
+        rev3 = '2-bbb'
+        doc[rev3] = revision3
+        doc.winner = rev3
+        doc.conflicts = set([rev2])
+
+        revision4 = Revision('2', False, rev1)
+        rev4 = '2-ccc'
+        doc[rev4] = revision4
+
+        doc.update_winner(rev4, revision4)
+        self.assertEqual(doc.winner, rev4)
+        self.assertEqual(doc.conflicts, set([rev2, rev3]))
 
 
 class DBTest(unittest.TestCase):
