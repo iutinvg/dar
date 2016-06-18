@@ -27,7 +27,7 @@ class Document(OrderedDict):
     def put(self, value, rev=None):
         if rev is None:
             if len(self):
-                exceptions.DataError('multiple roots is not allowed')
+                raise exceptions.DataError('multiple roots is not allowed')
         elif rev not in self:
             raise exceptions.NotFoundError('unknown revision')
 
@@ -39,8 +39,8 @@ class Document(OrderedDict):
             parent=rev
         )
         self[new_rev] = revision
-        self.update_winner(self, new_rev, revision)
-        return revision
+        self.update_winner(new_rev, revision)
+        return new_rev
 
     def update_winner(self, new_rev, revision):
         leafs = set(self.conflicts)
@@ -69,8 +69,7 @@ class Document(OrderedDict):
         return l
 
     def new_rev(self, value, rev):
-        return new_rev(value, rev, prefix=lambda: str(len(self) + 1))
-        # return new_rev(value, rev)
+        return new_rev(value, rev, prefix=lambda: str(self._path_length(rev)))
 
     def __str__(self):
         d = self.__render_tree(None)

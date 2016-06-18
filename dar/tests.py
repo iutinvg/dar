@@ -147,6 +147,43 @@ class DocTest(unittest.TestCase):
         self.assertEqual(doc.winner, rev4)
         self.assertEqual(doc.conflicts, set([rev2, rev3]))
 
+    def test_put_first(self):
+        doc = Document()
+        rev = doc.put('val1')
+        self.assertEqual(doc.winner, rev)
+        self.assertEqual(doc[rev].value, 'val1')
+        self.assertIsNone(doc[rev].parent)
+        self.assertFalse(doc[rev].deleted)
+
+    def test_put_first_twice(self):
+        doc = Document()
+        doc.put('val1')
+        with self.assertRaises(DataError):
+            doc.put('val2')
+
+    def test_put_second(self):
+        doc = Document()
+        rev = doc.put('val1')
+
+        rev2 = doc.put('val2', rev)
+        self.assertEqual(doc.winner, rev2)
+        self.assertEqual(doc[rev2].value, 'val2')
+        self.assertEqual(doc[rev2].parent, rev)
+        self.assertFalse(doc[rev2].deleted)
+
+    def test_put_conflict(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        rev31 = doc.put('val31', rev2)
+        rev32 = doc.put('val32', rev2)
+
+        self.assertTrue(rev31 < rev32)
+        self.assertEqual(doc.winner, rev32)
+        self.assertEqual(doc[rev32].value, 'val32')
+        self.assertEqual(doc[rev32].parent, rev2)
+        self.assertFalse(doc[rev32].deleted)
+
 
 class DBTest(unittest.TestCase):
     def setUp(self):
