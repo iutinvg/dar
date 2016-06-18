@@ -52,6 +52,23 @@ class Document(OrderedDict):
 
         raise exceptions.NotFoundError('unknow rev {}'.format(rev))
 
+    def remove(self, rev=None):
+        if rev is None:
+            rev = self.winner
+        elif rev != self.winner and rev not in self.conflicts:
+            raise exceptions.DataError('only a leaf can be removed')
+
+        new_rev = self.new_rev(None, rev)
+
+        revision = Revision(
+            value=None,
+            deleted=True,
+            parent=rev
+        )
+        self[new_rev] = revision
+        self.update_winner(new_rev, revision)
+        return new_rev
+
     def update_winner(self, new_rev, revision):
         leafs = set(self.conflicts)
         if self.winner:
@@ -61,8 +78,8 @@ class Document(OrderedDict):
             leafs.remove(revision.parent)
         leafs.add(new_rev)
 
-        winner = max((self._path_length(l), l) for l in leafs)
-        self.winner = winner[1]
+        winner = max((not self[l].deleted, self._path_length(l), l) for l in leafs)
+        self.winner = winner[2]
 
         leafs.remove(self.winner)
         self.conflicts = leafs

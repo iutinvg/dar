@@ -201,6 +201,51 @@ class DocTest(unittest.TestCase):
         with self.assertRaises(NotFoundError):
             doc.get('boo')
 
+    def test_remove_winner(self):
+        doc = Document()
+        doc.put('val1')
+        rev2 = doc.remove()
+        self.assertTrue(doc[rev2].deleted)
+        self.assertEqual(doc.winner, rev2)
+
+    def test_remove_with_winner_change(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        rev31 = doc.put('val31', rev2)
+        rev32 = doc.put('val32', rev2)
+
+        self.assertEqual(doc.winner, rev32)
+
+        revd = doc.remove(rev32)
+        self.assertTrue(doc[revd].deleted)
+        self.assertEqual(doc[revd].parent, rev32)
+        self.assertEqual(doc.winner, rev31)
+
+    def test_remove_conflicted(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        rev31 = doc.put('val31', rev2)
+        rev32 = doc.put('val32', rev2)
+
+        self.assertEqual(doc.winner, rev32)
+
+        revd = doc.remove(rev31)
+        self.assertTrue(doc[revd].deleted)
+        self.assertEqual(doc[revd].parent, rev31)
+        self.assertEqual(doc.winner, rev32)
+
+    def test_remove_not_leaf(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        doc.put('val31', rev2)
+        doc.put('val32', rev2)
+
+        with self.assertRaises(DataError):
+            doc.remove(rev)
+
 
 class DBTest(unittest.TestCase):
     def setUp(self):
