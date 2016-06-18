@@ -184,6 +184,23 @@ class DocTest(unittest.TestCase):
         self.assertEqual(doc[rev32].parent, rev2)
         self.assertFalse(doc[rev32].deleted)
 
+    def test_get_winner(self):
+        doc = Document()
+        rev = doc.put('val1')
+        self.assertEqual(doc[rev], doc.get())
+
+    def test_get_other(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        self.assertEqual(doc[rev2], doc.get(rev2))
+
+    def test_get_unknown(self):
+        doc = Document()
+        doc.put('val1')
+        with self.assertRaises(NotFoundError):
+            doc.get('boo')
+
 
 class DBTest(unittest.TestCase):
     def setUp(self):
