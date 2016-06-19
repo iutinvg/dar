@@ -34,7 +34,7 @@ class DB(object):
             parent=rev,
         )
         history[new_rev] = item
-        self.changes_put(item)
+        self.changes_put(uid, new_rev)
 
         return item
 
@@ -64,7 +64,7 @@ class DB(object):
             return DataError('bulk put broken integrity %s' % str(i))
 
         self.storage[i.uid][i.rev] = i
-        self.changes_put(i)
+        self.changes_put(i.uid, i.rev)
         return i
 
     def get(self, uid, rev=None):
@@ -107,31 +107,30 @@ class DB(object):
         )
 
         history[rev] = item
-        self.changes_put(item)
+        self.changes_put(uid, new_rev)
 
         return item
 
-    def changes_put(self, item):
-        self.changes[item.rev] = item
+    def changes_put(self, uid, rev):
+        self.changes[(uid, rev)] = None
 
     def changes_get(self, since=0):
-        return islice(self.changes.itervalues(), since, None)
+        return islice(self.changes.iterkeys(), since, None)
 
     def changes_get_size(self):
         return len(self.changes)
 
     def changes_get_grouped(self, since=0):
         res = defaultdict(list)
-        for rev in islice(self.changes.iterkeys(), since, None):
-            hi = self.changes[rev]
-            res[hi.uid].append(rev)
+        for uid, rev in self.changes_get(since):
+            res[uid].append(rev)
         return res
 
     def changes_get_diff(self, grouped):
         res = defaultdict(list)
         for uid, revs in grouped.iteritems():
             for rev in revs:
-                if rev not in self.changes:
+                if (uid, rev) not in self.changes:
                     res[uid].append(rev)
         return res
 

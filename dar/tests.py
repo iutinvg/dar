@@ -548,13 +548,16 @@ class DBTest(unittest.TestCase):
         changes = list(self.db.changes_get())
         print changes
 
-        self.assertEqual(changes[0].rev, res1.rev)
+        self.assertEqual(changes[0][0], res1.uid)
+        self.assertEqual(changes[0][1], res1.rev)
 
-        self.assertEqual(changes[1].rev, res2.rev)
+        self.assertEqual(changes[1][0], res2.uid)
+        self.assertEqual(changes[1][1], res2.rev)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].rev, res2.rev)
+        self.assertEqual(changes[0][0], res2.uid)
+        self.assertEqual(changes[0][1], res2.rev)
 
     def test_changes_update(self):
         res1 = self.db.put('val')
@@ -562,12 +565,16 @@ class DBTest(unittest.TestCase):
 
         changes = list(self.db.changes_get())
 
-        self.assertEqual(changes[0].rev, res1.rev)
-        self.assertEqual(changes[1].rev, res2.rev)
+        self.assertEqual(changes[0][0], res1.uid)
+        self.assertEqual(changes[0][1], res1.rev)
+
+        self.assertEqual(changes[1][0], res1.uid)  # <----- the same UID
+        self.assertEqual(changes[1][1], res2.rev)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].rev, res2.rev)
+        self.assertEqual(changes[0][0], res1.uid)
+        self.assertEqual(changes[0][1], res2.rev)
 
     def test_changes_remove(self):
         res1 = self.db.put('val')
@@ -575,12 +582,18 @@ class DBTest(unittest.TestCase):
 
         changes = list(self.db.changes_get())
 
-        self.assertEqual(changes[0].rev, res1.rev)
-        self.assertEqual(changes[1].rev, res2.rev)
+        print changes
+
+        self.assertEqual(changes[0][0], res1.uid)
+        self.assertEqual(changes[0][1], res1.rev)
+
+        self.assertEqual(changes[1][0], res1.uid)  # <----- the same UID
+        self.assertEqual(changes[1][1], res2.rev)
 
         changes = list(self.db.changes_get(1))
 
-        self.assertEqual(changes[0].rev, res2.rev)
+        self.assertEqual(changes[0][0], res1.uid)
+        self.assertEqual(changes[0][1], res2.rev)
 
     def test_changes_grouped(self):
         res1 = self.db.put('val1')
