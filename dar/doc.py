@@ -69,6 +69,19 @@ class Document(OrderedDict):
         self.update_winner(new_rev, revision)
         return new_rev
 
+    def put_existing(self, rev, revision):
+        # parent must be in leafs
+        if revision.parent is None:
+            if len(self):
+                raise exceptions.DataError('multiple roots is not allowed')
+        elif revision.parent not in self:
+            raise exceptions.DataError('unknown parent revision {}'.format(revision.parent))
+
+        self[rev] = revision
+        self.update_winner(rev, revision)
+
+        return rev
+
     def update_winner(self, new_rev, revision):
         leafs = set(self.conflicts)
         if self.winner:

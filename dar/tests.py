@@ -246,6 +246,48 @@ class DocTest(unittest.TestCase):
         with self.assertRaises(DataError):
             doc.remove(rev)
 
+    def test_put_existing(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        revision2 = doc[rev2]
+
+        doc = Document()
+        rev = doc.put('val1')
+
+        doc.put_existing(rev2, revision2)
+
+        self.assertEqual(doc.winner, rev2)
+
+    def test_put_existing_to_new(self):
+        doc = Document()
+        rev = doc.put('val1')
+        revision = doc[rev]
+
+        doc = Document()
+        doc.put_existing(rev, revision)
+
+        self.assertEqual(doc.winner, rev)
+
+    def test_put_existing_new_winner(self):
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        rev31 = doc.put('val31', rev2)
+        rev32 = doc.put('val32', rev2)
+
+        revision32 = doc[rev32]
+        self.assertTrue(rev31 < rev32)
+
+        doc = Document()
+        rev = doc.put('val1')
+        rev2 = doc.put('val2', rev)
+        rev31 = doc.put('val31', rev2)
+        doc.put_existing(rev32, revision32)
+
+        self.assertEqual(doc.winner, rev32)
+        self.assertEqual(doc[rev32].value, 'val32')
+
 
 class DBTest(unittest.TestCase):
     def setUp(self):
