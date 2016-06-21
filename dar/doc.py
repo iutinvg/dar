@@ -1,17 +1,11 @@
 from collections import namedtuple, OrderedDict
-from functools import partial
 import hashlib
 
 from asciitree import LeftAligned
 
 from . import exceptions
 
-# Result is operations result
-RevisionOld = namedtuple('RevisionOld', 'uid value rev deleted parent')
-Rev = partial(RevisionOld, deleted=False)
-
 Revision = namedtuple('Revision', 'value deleted parent')
-
 
 # agreement for code below:
 # `rev` is a string which is revision ID
@@ -29,7 +23,7 @@ class Document(OrderedDict):
             if len(self):
                 raise exceptions.DataError('multiple roots is not allowed')
         elif rev not in self:
-            raise exceptions.NotFoundError('unknown rev {}'.format(rev))
+            raise exceptions.DataError('unknown rev {}'.format(rev))
 
         new_rev = self.new_rev(value, rev)
 
@@ -40,15 +34,15 @@ class Document(OrderedDict):
         )
         self[new_rev] = revision
         self.update_winner(new_rev, revision)
-        return new_rev
+        return new_rev, revision
 
     def get(self, rev=None):
         # option 1
         if rev is None:
-            return self[self.winner]
+            return self.winner, self[self.winner]
 
         if rev in self:
-            return self[rev]
+            return rev, self[rev]
 
         raise exceptions.NotFoundError('unknow rev {}'.format(rev))
 
@@ -67,10 +61,12 @@ class Document(OrderedDict):
         )
         self[new_rev] = revision
         self.update_winner(new_rev, revision)
-        return new_rev
+        return new_rev, revision
 
     def put_existing(self, rev, revision):
-        # parent must be in leafs
+        if rev in self:
+            return rev
+
         if revision.parent is None:
             if len(self):
                 raise exceptions.DataError('multiple roots is not allowed')
@@ -102,6 +98,7 @@ class Document(OrderedDict):
     def _path_length(self, rev):
         l = 1
         if rev in self:
+            l += 1
             revision = self[rev]
             while revision.parent:
                 l += 1

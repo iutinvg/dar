@@ -1,9 +1,13 @@
-from collections import defaultdict, OrderedDict
+from collections import defaultdict, OrderedDict, namedtuple
 from itertools import islice
+from functools import partial
 import uuid
 
-from .doc import Rev, Document
+from .doc import Document, Revision
 from .exceptions import DataError, NotFoundError
+
+Result = namedtuple('Result', 'uid rev value deleted parent')
+Res = partial(Result, deleted=False)
 
 
 class DB(object):
@@ -17,26 +21,16 @@ class DB(object):
         if uid is None:
             uid = self.uid()
 
-        history = self.storage[uid]
+        document = self.storage[uid]
 
-        if len(history):
-            if next(reversed(history)) != rev:
-                raise DataError('rev not match')
-        elif rev:
-            raise DataError('rev does not make sense')
+        if not len(document) and rev is not None:
+            raise DataError('passing rev for new doc')
 
-        # new_rev = self.rev(value, rev)
-        new_rev = history.new_rev(value, rev)
-        item = Rev(
-            uid=uid,
-            value=value,
-            rev=new_rev,
-            parent=rev,
-        )
-        history[new_rev] = item
+        new_rev, _ = document.put(value, rev)
+
         self.changes_put(uid, new_rev)
 
-        return item
+        return Result(uid, new_rev, value, False, rev)
 
     def put_bulk(self, results):
         """Bulk adding of revisions.
@@ -47,69 +41,47 @@ class DB(object):
         Params:
             `results` list of `Result` tuples
         """
-        return [self._put_existing(i) for i in results]
+        return [self._put_existing(result) for result in results]
 
-    def _put_existing(self, i):
-        if i.uid in self.storage:
-            # ignore existing revisions
-            document = self.storage[i.uid]
-            if i.rev in document:
-                return i
-            rev = next(reversed(document))
-        else:
-            document = Document()
-            rev = None
+    def _put_existing(self, result):
+        rev = result.rev
+        revision = Revision(
+            value=result.value,
+            deleted=result.deleted,
+            parent=result.parent
+        )
 
-        if i.rev != document.new_rev(i.value, rev):
-            return DataError('bulk put broken integrity %s' % str(i))
-
-        self.storage[i.uid][i.rev] = i
-        self.changes_put(i.uid, i.rev)
-        return i
+        document = self.storage[result.uid]
+        try:
+            document.put_existing(rev, revision)
+        except DataError as e:
+            return e
+        self.changes_put(result.uid, rev)
+        return result
 
     def get(self, uid, rev=None):
         if uid not in self.storage:
             raise NotFoundError
 
-        history = self.storage[uid]
+        document = self.storage[uid]
+        rev, revision = document.get(rev)
 
-        if rev:
-            if rev not in history:
-                raise NotFoundError('unknown revision')
-        else:
-            rev = next(reversed(history))
+        if revision.deleted:
+            raise NotFoundError
 
-        item = history[rev]
-        if item.deleted:
-            raise NotFoundError('item deleted')
-
-        return item
+        return Result(uid, rev, revision.value, revision.deleted, revision.parent)
 
     def remove(self, uid, rev):
         if uid not in self.storage:
             raise NotFoundError
 
-        history = self.storage[uid]
+        document = self.storage[uid]
 
-        if len(history):
-            if next(reversed(history)) != rev:
-                raise DataError('rev not match')
-        else:
-            raise DataError('rev does not make sense')
+        new_rev, revision = document.remove(rev)
 
-        new_rev = history.new_rev(None, rev)
-        item = Rev(
-            uid=uid,
-            value=None,
-            rev=new_rev,
-            deleted=True,
-            parent=rev,
-        )
-
-        history[rev] = item
         self.changes_put(uid, new_rev)
 
-        return item
+        return Result(uid, new_rev, revision.value, revision.deleted, revision.parent)
 
     def changes_put(self, uid, rev):
         self.changes[(uid, rev)] = None

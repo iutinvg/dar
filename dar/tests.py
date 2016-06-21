@@ -4,9 +4,9 @@ import unittest
 from uuid import uuid4
 import random
 
-from .db import DB
+from .db import DB, Res
 from .exceptions import DataError, NotFoundError
-from .doc import Rev, new_rev, Document, Revision
+from .doc import new_rev, Document, Revision
 from .repl import Repl
 
 
@@ -149,7 +149,7 @@ class DocTest(unittest.TestCase):
 
     def test_put_first(self):
         doc = Document()
-        rev = doc.put('val1')
+        rev, _ = doc.put('val1')
         self.assertEqual(doc.winner, rev)
         self.assertEqual(doc[rev].value, 'val1')
         self.assertIsNone(doc[rev].parent)
@@ -163,9 +163,9 @@ class DocTest(unittest.TestCase):
 
     def test_put_second(self):
         doc = Document()
-        rev = doc.put('val1')
+        rev, _ = doc.put('val1')
 
-        rev2 = doc.put('val2', rev)
+        rev2, _ = doc.put('val2', rev)
         self.assertEqual(doc.winner, rev2)
         self.assertEqual(doc[rev2].value, 'val2')
         self.assertEqual(doc[rev2].parent, rev)
@@ -173,10 +173,10 @@ class DocTest(unittest.TestCase):
 
     def test_put_conflict(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        rev31 = doc.put('val31', rev2)
-        rev32 = doc.put('val32', rev2)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
+        rev31, _ = doc.put('val31', rev2)
+        rev32, _ = doc.put('val32', rev2)
 
         self.assertTrue(rev31 < rev32)
         self.assertEqual(doc.winner, rev32)
@@ -186,14 +186,14 @@ class DocTest(unittest.TestCase):
 
     def test_get_winner(self):
         doc = Document()
-        rev = doc.put('val1')
-        self.assertEqual(doc[rev], doc.get())
+        t = doc.put('val1')
+        self.assertEqual(t, doc.get())
 
     def test_get_other(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        self.assertEqual(doc[rev2], doc.get(rev2))
+        rev, _ = doc.put('val1')
+        t = doc.put('val2', rev)
+        self.assertEqual(t, doc.get(t[0]))
 
     def test_get_unknown(self):
         doc = Document()
@@ -204,42 +204,42 @@ class DocTest(unittest.TestCase):
     def test_remove_winner(self):
         doc = Document()
         doc.put('val1')
-        rev2 = doc.remove()
+        rev2, _ = doc.remove()
         self.assertTrue(doc[rev2].deleted)
         self.assertEqual(doc.winner, rev2)
 
     def test_remove_with_winner_change(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        rev31 = doc.put('val31', rev2)
-        rev32 = doc.put('val32', rev2)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
+        rev31, _ = doc.put('val31', rev2)
+        rev32, _ = doc.put('val32', rev2)
 
         self.assertEqual(doc.winner, rev32)
 
-        revd = doc.remove(rev32)
+        revd, _ = doc.remove(rev32)
         self.assertTrue(doc[revd].deleted)
         self.assertEqual(doc[revd].parent, rev32)
         self.assertEqual(doc.winner, rev31)
 
     def test_remove_conflicted(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        rev31 = doc.put('val31', rev2)
-        rev32 = doc.put('val32', rev2)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
+        rev31, _ = doc.put('val31', rev2)
+        rev32, _ = doc.put('val32', rev2)
 
         self.assertEqual(doc.winner, rev32)
 
-        revd = doc.remove(rev31)
+        revd, _ = doc.remove(rev31)
         self.assertTrue(doc[revd].deleted)
         self.assertEqual(doc[revd].parent, rev31)
         self.assertEqual(doc.winner, rev32)
 
     def test_remove_not_leaf(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
         doc.put('val31', rev2)
         doc.put('val32', rev2)
 
@@ -248,12 +248,11 @@ class DocTest(unittest.TestCase):
 
     def test_put_existing(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        revision2 = doc[rev2]
+        rev, _ = doc.put('val1')
+        rev2, revision2 = doc.put('val2', rev)
 
         doc = Document()
-        rev = doc.put('val1')
+        rev, _ = doc.put('val1')
 
         doc.put_existing(rev2, revision2)
 
@@ -261,8 +260,7 @@ class DocTest(unittest.TestCase):
 
     def test_put_existing_to_new(self):
         doc = Document()
-        rev = doc.put('val1')
-        revision = doc[rev]
+        rev, revision = doc.put('val1')
 
         doc = Document()
         doc.put_existing(rev, revision)
@@ -271,22 +269,35 @@ class DocTest(unittest.TestCase):
 
     def test_put_existing_new_winner(self):
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        rev31 = doc.put('val31', rev2)
-        rev32 = doc.put('val32', rev2)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
+        rev31, _ = doc.put('val31', rev2)
+        rev32, revision32 = doc.put('val32', rev2)
 
-        revision32 = doc[rev32]
         self.assertTrue(rev31 < rev32)
 
         doc = Document()
-        rev = doc.put('val1')
-        rev2 = doc.put('val2', rev)
-        rev31 = doc.put('val31', rev2)
+        rev, _ = doc.put('val1')
+        rev2, _ = doc.put('val2', rev)
+        rev31, _ = doc.put('val31', rev2)
         doc.put_existing(rev32, revision32)
 
         self.assertEqual(doc.winner, rev32)
         self.assertEqual(doc[rev32].value, 'val32')
+
+    def test_rev_num(self):
+        doc = Document()
+
+        rev1, _ = doc.put('val1')
+        self.assertEqual('1-', rev1[:2])
+
+        rev2, _ = doc.put('val2', rev1)
+        self.assertEqual('2-', rev2[:2])
+
+        rev31, _ = doc.put('val31', rev2)
+        self.assertEqual('3-', rev31[:2])
+        rev32, _ = doc.put('val32', rev2)
+        self.assertEqual('3-', rev32[:2])
 
 
 class DBTest(unittest.TestCase):
@@ -351,9 +362,9 @@ class DBTest(unittest.TestCase):
 
         items = []
 
-        for i in range(100):
+        for i in range(10):
             value = str(uuid4())
-            res = Rev(
+            res = Res(
                 uid=first.uid,
                 value=value,
                 rev=new_rev(value, rev, lambda: str(i + 2)),
@@ -373,7 +384,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(100):
             value = str(uuid4())
-            res = Rev(
+            res = Res(
                 uid=uid,
                 value=value,
                 rev=new_rev(value, rev, lambda: str(i + 1)),
@@ -393,7 +404,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 100):
             value = str(uuid4())
-            res = Rev(
+            res = Res(
                 uid=uid,
                 value=value,
                 rev=new_rev(value, rev),
@@ -402,7 +413,7 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        res = Rev(
+        res = Res(
             uid=uid,
             value=None,
             rev=new_rev(None, rev),
@@ -430,9 +441,18 @@ class DBTest(unittest.TestCase):
             rev = doc.rev
             items.append(doc)
 
-        statuses = self.db.put_bulk(items)
+        # print items
+        statuses = self.db.put_bulk(items[0:1])
         for i, e in enumerate(statuses):
             self.assertEqual(items[i], e)
+
+    def test_put_bulk_intersection_same_one(self):
+        rev = None
+        uid = 'same'
+        result = self.db.put('value', uid, rev)
+
+        results2 = self.db.put_bulk([result])
+        self.assertEqual(results2, [result])
 
     def test_put_bulk_intersection(self):
         """Test the case when existing revs are passed to put_bulk.
@@ -448,7 +468,7 @@ class DBTest(unittest.TestCase):
             rev = doc.rev
             items.append(doc)
 
-        doc = Rev(
+        doc = Res(
             uid=uid,
             value=10,
             rev=new_rev(10, rev, lambda: str(len(items) + 1)),
@@ -469,7 +489,7 @@ class DBTest(unittest.TestCase):
 
         for i in range(0, 10):
             value = str(uuid4())
-            res = Rev(
+            res = Res(
                 uid=first.uid,
                 value=value,
                 rev=new_rev(value, rev),
@@ -478,17 +498,15 @@ class DBTest(unittest.TestCase):
             rev = res.rev
             items.append(res)
 
-        items[4] = Rev(
+        items[4] = Res(
             uid=items[4].uid,
             value='val',
             rev='wrong-rev',
-            deleted=items[4].deleted,
-            parent=items[4].rev,
+            parent='unknow-parent',
         )
         statuses = self.db.put_bulk(items)
 
-        self.assertIn('broken', str(statuses[4]))
-        self.assertIn('wrong-rev', str(statuses[4]))
+        self.assertIsInstance(statuses[4], DataError)
 
     def test_get_not_found(self):
         with self.assertRaises(NotFoundError):
@@ -546,7 +564,6 @@ class DBTest(unittest.TestCase):
         res2 = self.db.put('val2')
 
         changes = list(self.db.changes_get())
-        print changes
 
         self.assertEqual(changes[0][0], res1.uid)
         self.assertEqual(changes[0][1], res1.rev)
@@ -581,8 +598,6 @@ class DBTest(unittest.TestCase):
         res2 = self.db.remove(res1.uid, res1.rev)
 
         changes = list(self.db.changes_get())
-
-        print changes
 
         self.assertEqual(changes[0][0], res1.uid)
         self.assertEqual(changes[0][1], res1.rev)
