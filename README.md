@@ -22,9 +22,10 @@ Further plans are to add support for MySQL and some big data NoSQL storages.
 The Roadmap
 -----------
 
-1. Create a versioned in-memory storage to test replication algorithm without dealing with a database server setup.
-2. Implement and properly test replication.
-3. Wrap the algorithm to server environment. Probably Twisted library will be used.
-4. Deal with a proper receipt of PostgreSQL setup and database structure, which would be efficient enough to work in backend.
-5. Add authentication support.
-6. Start mobile version implementation.
+1. ~~Create a versioned in-memory storage to test replication algorithm without dealing with a database server setup.~~
+2. ~~Implement and properly test replication.~~
+3. Try / adapt the code to work with a key-value persistent storage (start with SQlite).
+4. Wrap the algorithm to server environment.
+5. Deal with a proper receipt of PostgreSQL setup and database structure, which would be efficient enough to work in backend.
+6. Add authentication support.
+7. Start mobile version implementation. (Rewrite on C++ to build from the same code on Linux / iOS / Android?)
